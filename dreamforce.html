@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DreamForce — Career Accelerator</title>
+<title>FlyWay — Career Accelerator</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
@@ -597,6 +597,37 @@
   .qz-combo-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
   .qz-combo-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 24px; }
   .qz-combo-btn { padding: 12px 32px; border: none; border-radius: 100px; background: var(--q-blue); color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+  /* ── Email-gate screen + modal (shown between quiz completion and results) ── */
+  #page-quiz .qz-gate { max-width: 560px; margin: 60px auto 0; padding: 56px 44px; background: #fff; border-radius: 20px; box-shadow: var(--shadow-lg); text-align: center; }
+  #page-quiz .qz-gate-emoji { font-size: 56px; margin-bottom: 14px; }
+  #page-quiz .qz-gate-title { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 700; color: var(--text); margin-bottom: 14px; line-height: 1.18; letter-spacing: -0.02em; }
+  #page-quiz .qz-gate-sub { font-size: 15px; color: var(--text-secondary); line-height: 1.65; max-width: 440px; margin: 0 auto 32px; }
+  #page-quiz .qz-gate-actions { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  #page-quiz .qz-gate-primary { padding: 14px 36px; border: none; border-radius: 100px; background: var(--q-blue); color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; min-width: 240px; transition: transform .15s, box-shadow .15s; }
+  #page-quiz .qz-gate-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(26,86,219,.3); }
+  #page-quiz .qz-gate-secondary { padding: 11px 28px; background: none; border: 1px solid var(--q-border); border-radius: 100px; color: var(--text-secondary); font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; min-width: 240px; transition: all .15s; }
+  #page-quiz .qz-gate-secondary:hover { border-color: var(--q-lblue); color: var(--q-blue); }
+
+  .qz-email-overlay { position: fixed; inset: 0; background: rgba(15,23,42,.62); display: flex; align-items: center; justify-content: center; z-index: 3000; opacity: 0; transition: opacity .25s; pointer-events: none; padding: 20px; backdrop-filter: blur(4px); }
+  .qz-email-overlay.vis { opacity: 1; pointer-events: auto; }
+  .qz-email-modal { background: #fff; border-radius: 20px; padding: 40px 36px 32px; max-width: 440px; width: 100%; transform: scale(.9) translateY(10px); transition: transform .3s cubic-bezier(.34,1.56,.64,1); box-shadow: 0 30px 70px rgba(0,0,0,.35); }
+  .qz-email-overlay.vis .qz-email-modal { transform: scale(1) translateY(0); }
+  .qz-email-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--text); margin-bottom: 10px; text-align: center; letter-spacing: -.01em; }
+  .qz-email-sub { font-size: 14px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 22px; text-align: center; }
+  .qz-email-input { width: 100%; padding: 13px 16px; border: 2px solid var(--q-border); border-radius: 10px; font-size: 15px; font-family: inherit; transition: border-color .15s; background: #fff; box-sizing: border-box; }
+  .qz-email-input:focus { border-color: var(--q-lblue); outline: none; }
+  .qz-email-error { font-size: 13px; color: #dc2626; margin-top: 10px; min-height: 18px; text-align: center; }
+  .qz-email-btns { display: flex; gap: 10px; margin-top: 18px; }
+  .qz-email-submit { flex: 1; padding: 13px; border: none; border-radius: 10px; background: var(--q-blue); color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: background .15s; }
+  .qz-email-submit:hover:not(:disabled) { background: #1e40af; }
+  .qz-email-submit:disabled { background: #94a3b8; cursor: not-allowed; }
+  .qz-email-cancel { padding: 13px 20px; background: none; border: 1px solid var(--q-border); border-radius: 10px; color: var(--text-secondary); font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; }
+  .qz-email-cancel:hover { border-color: var(--q-lblue); color: var(--q-blue); }
+  .qz-email-success { text-align: center; padding: 10px 0; }
+  .qz-email-success-icon { font-size: 48px; margin-bottom: 12px; color: var(--q-green); }
+  .qz-email-success-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .qz-email-success-msg { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; }
 
   #page-quiz .res-hdr { text-align: center; margin-bottom: 24px; }
   #page-quiz .res-eye { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--q-lblue); margin-bottom: 10px; }
@@ -1240,8 +1271,20 @@
         </div>
         <div class="qz-resume-status" id="qz-resume-status"></div>
         <div class="qz-resume-btns">
-          <button class="qz-skip-btn" onclick="qzShowResults()">Just see results →</button>
-          <button class="qz-btn-next" id="qz-resume-go-btn" onclick="qzShowResults()" style="display:none">See my results →</button>
+          <button class="qz-skip-btn" onclick="qzShowGate()">Just see results →</button>
+          <button class="qz-btn-next" id="qz-resume-go-btn" onclick="qzShowGate()" style="display:none">See my results →</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="qz-gate" class="qz-hidden">
+      <div class="qz-gate">
+        <div class="qz-gate-emoji">📬</div>
+        <div class="qz-gate-title">Your results are ready.</div>
+        <div class="qz-gate-sub">We've finished scoring your career profile. Enter your email and we'll send you a private link to your personalized results.</div>
+        <div class="qz-gate-actions">
+          <button class="qz-gate-primary" onclick="qzOpenEmailModal()">📧 &nbsp;Email me my results</button>
+          <button class="qz-gate-secondary" onclick="showPage('home')">← Back to home</button>
         </div>
       </div>
     </div>
@@ -1250,6 +1293,30 @@
       <div class="qz-card" id="qz-rcard"></div>
     </div>
   </div>
+
+  <div class="qz-email-overlay" id="qz-email-overlay" onclick="qzEmailOverlayClick(event)">
+    <div class="qz-email-modal" id="qz-email-modal">
+      <div id="qz-email-form-wrap">
+        <div class="qz-email-title">Where should we send it?</div>
+        <div class="qz-email-sub">We'll email you a link to your full career-fit results. No spam, no newsletter — just your results.</div>
+        <input type="email" class="qz-email-input" id="qz-email-input" placeholder="you@example.com" autocomplete="email" onkeydown="if(event.key==='Enter')qzSubmitEmail()">
+        <div class="qz-email-error" id="qz-email-error"></div>
+        <div class="qz-email-btns">
+          <button class="qz-email-cancel" onclick="qzCloseEmailModal()">Cancel</button>
+          <button class="qz-email-submit" id="qz-email-submit-btn" onclick="qzSubmitEmail()">Send my results →</button>
+        </div>
+      </div>
+      <div id="qz-email-success-wrap" style="display:none">
+        <div class="qz-email-success">
+          <div class="qz-email-success-icon">✓</div>
+          <div class="qz-email-success-title">Check your inbox</div>
+          <div class="qz-email-success-msg" id="qz-email-success-msg">We just sent your results to <strong id="qz-email-sent-to"></strong>. Click the button in the email to view them.</div>
+          <button class="qz-email-submit" onclick="qzCloseEmailModal()">Got it</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="qz-combo-overlay" id="qz-combo-overlay">
     <div class="qz-combo-modal">
       <div class="qz-combo-lbl" id="qz-clbl"></div>
@@ -2275,9 +2342,38 @@ function qzDialClick(e){
   if(angle>0) angle = dx<0 ? -180 : 0;
   const v=Math.max(0,Math.min(100,((angle+180)/180)*100));
   qzSliders.intensity=qzR(v);
-  qzRenderQ(qzCur); qzCheckCombos();
+  // Sync the range input value too, then update visuals in-place.
+  const wrap=document.getElementById('qz-dial-svg')?.parentElement;
+  const range=wrap?.querySelector('input[type=range]');
+  if(range) range.value=qzSliders.intensity;
+  qzDialSlide(qzSliders.intensity);
 }
-function qzDialSlide(v){qzSliders.intensity=parseInt(v);qzRenderQ(qzCur);qzCheckCombos();}
+function qzDialSlide(v){
+  v=parseInt(v);
+  qzSliders.intensity=v;
+  // Update dial visuals in-place WITHOUT re-rendering the whole question
+  // (re-rendering destroys the <input type=range> mid-drag and breaks the slider).
+  const svg=document.getElementById('qz-dial-svg');
+  if(svg){
+    const labels=['Calm','Easy','Active','High','Pressure'];
+    const lblIdx=Math.max(0,Math.min(labels.length-1,Math.floor(v/(100/labels.length))));
+    const angleRad=(v/100*180-180)*Math.PI/180;
+    const cx=120,cy=120,rad=100;
+    const rx=cx+rad*Math.cos(angleRad), ry=cy+rad*Math.sin(angleRad);
+    const paths=svg.querySelectorAll('path');
+    if(paths[1]) paths[1].setAttribute('d',`M 20 120 A 100 100 0 0 1 ${rx.toFixed(2)} ${ry.toFixed(2)}`);
+    const line=svg.querySelector('line');
+    if(line){line.setAttribute('x2',rx.toFixed(2));line.setAttribute('y2',ry.toFixed(2));}
+    const wrap=svg.parentElement;
+    if(wrap){
+      const valEl=wrap.querySelector('.dial-val'); if(valEl) valEl.textContent=v;
+      const lblEl=wrap.querySelector('.dial-lbl'); if(lblEl) lblEl.textContent=labels[lblIdx];
+      const range=wrap.querySelector('input[type=range]');
+      if(range) range.style.background=`linear-gradient(90deg,#3b82f6 ${v}%,#e2e8f0 ${v}%)`;
+    }
+  }
+  qzCheckCombos();
+}
 
 function qzPickYesNo(i,val){
   qzAnswers.yesno[i]=val;
@@ -2306,9 +2402,33 @@ function qzYesNoToggleCustom(i){
   qzRenderQ(qzCur);
 }
 function qzYesNoCustomInput(i,val){
-  if(val&&val.trim()) qzAnswers.yesno[i]={custom:val.trim()};
+  // Store raw value (preserve whitespace while typing). Only treat fully-empty
+  // (after trim) as "no answer" so the Next button hides, but do NOT re-render
+  // the whole question on every keystroke — that destroys the textarea and
+  // makes it lose focus after each character.
+  const had=!!(qzAnswers.yesno[i]&&typeof qzAnswers.yesno[i]==='object'&&qzAnswers.yesno[i].custom);
+  if(val&&val.trim()) qzAnswers.yesno[i]={custom:val};
   else delete qzAnswers.yesno[i];
-  qzRenderQ(qzCur); qzCheckCombos();
+  const hasNow=!!(qzAnswers.yesno[i]&&typeof qzAnswers.yesno[i]==='object'&&qzAnswers.yesno[i].custom);
+  // Toggle the inline Next button without re-rendering, to keep focus.
+  if(had!==hasNow){
+    const ta=document.activeElement;
+    const wrap=ta&&ta.classList&&ta.classList.contains('yn-custom-input')?ta.parentElement:null;
+    if(wrap){
+      const existing=wrap.querySelector('button.qz-btn-next');
+      if(hasNow && !existing){
+        const btn=document.createElement('button');
+        btn.className='qz-btn-next';
+        btn.setAttribute('style','margin-top:8px;width:100%;padding:12px');
+        btn.textContent='Next →';
+        btn.onclick=qzYesNoAdvance;
+        wrap.appendChild(btn);
+      } else if(!hasNow && existing){
+        existing.remove();
+      }
+    }
+  }
+  qzCheckCombos();
 }
 function qzPickSpec(i){qzAnswers.spectrum=i;qzRenderQ(qzCur);qzCheckCombos();}
 
@@ -3125,8 +3245,172 @@ function qzRestart(){
   const resumeInput=document.getElementById('qz-resume-input'); if(resumeInput) resumeInput.value='';
   document.getElementById('qz-results').classList.add('qz-hidden');
   document.getElementById('qz-resume-screen').classList.add('qz-hidden');
+  const gateEl=document.getElementById('qz-gate'); if(gateEl) gateEl.classList.add('qz-hidden');
   document.getElementById('qz-intro').classList.remove('qz-hidden');
   document.getElementById('qz-quiz').classList.add('qz-hidden');
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   EMAIL-GATE + NETLIFY INTEGRATION
+   Flow:
+     1. Quiz finishes → qzShowGate() shows a screen with "Email me" + "Home" buttons.
+     2. "Email me" → qzOpenEmailModal() shows the email-prompt modal.
+     3. Submit → POST to /.netlify/functions/send-results with { email, token, results_url }.
+     4. The Netlify function emails the user a link of the form:
+            https://<your-site>/dreamforce.html#r=<token>
+     5. On page load, qzBootFromHash() detects #r=… and restores state + jumps
+        straight to qzShowResults().
+   The token is the entire quiz state, base64url-encoded — so results survive
+   even with zero persistence on the backend.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const QZ_NETLIFY_ENDPOINT = '/.netlify/functions/send-results';
+
+function qzShowGate(){
+  document.getElementById('qz-quiz').classList.add('qz-hidden');
+  document.getElementById('qz-resume-screen').classList.add('qz-hidden');
+  document.getElementById('qz-results').classList.add('qz-hidden');
+  document.getElementById('qz-gate').classList.remove('qz-hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function qzCaptureState(){
+  return {
+    v: 1,
+    answers: qzAnswers,
+    sliders: qzSliders,
+    budget: qzBudget,
+    gpa: qzGpa,
+    school: qzSchool,
+    schoolMatch: qzSchoolMatch ? qzSchoolMatch.name : null,
+    resumeBoosts: qzResumeBoosts || {},
+    ans: qzAns
+  };
+}
+
+function qzRestoreState(s){
+  if(!s || typeof s!=='object') return false;
+  try{
+    qzAnswers = Object.assign({pairs:{},tot:{},env:[],map:null,emoji:{},swipes:{},yesno:{},rank:{},spectrum:null,subjects:[]}, s.answers||{});
+    qzSliders = s.sliders || {};
+    qzBudget = Object.assign({salary:17,purpose:17,flex:16,growth:17,recog:16,security:17}, s.budget||{});
+    qzGpa = (s.gpa===null||s.gpa===undefined) ? null : s.gpa;
+    qzSchool = s.school || null;
+    if(s.schoolMatch && Array.isArray(QZ_SCHOOLS)){
+      qzSchoolMatch = QZ_SCHOOLS.find(x=>x.name===s.schoolMatch) || null;
+    } else { qzSchoolMatch = null; }
+    qzResumeBoosts = s.resumeBoosts || {};
+    qzAns = s.ans || {};
+    return true;
+  } catch(e){ console.warn('qz state restore failed', e); return false; }
+}
+
+// Base64URL helpers that handle Unicode safely
+function qzB64UrlEncode(str){
+  const bytes = new TextEncoder().encode(str);
+  let bin='';
+  for(let i=0;i<bytes.length;i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function qzB64UrlDecode(s){
+  s = s.replace(/-/g,'+').replace(/_/g,'/');
+  while(s.length % 4) s += '=';
+  const bin = atob(s);
+  const bytes = new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+
+function qzBuildResultsUrl(){
+  const state = qzCaptureState();
+  const token = qzB64UrlEncode(JSON.stringify(state));
+  const base = window.location.origin + window.location.pathname;
+  return { url: base + '#r=' + token, token };
+}
+
+function qzOpenEmailModal(){
+  const ov = document.getElementById('qz-email-overlay');
+  document.getElementById('qz-email-form-wrap').style.display='';
+  document.getElementById('qz-email-success-wrap').style.display='none';
+  document.getElementById('qz-email-error').textContent='';
+  const input = document.getElementById('qz-email-input');
+  input.value=''; input.disabled=false;
+  document.getElementById('qz-email-submit-btn').disabled=false;
+  document.getElementById('qz-email-submit-btn').textContent='Send my results →';
+  ov.classList.add('vis');
+  setTimeout(()=>input.focus(),100);
+}
+function qzCloseEmailModal(){
+  document.getElementById('qz-email-overlay').classList.remove('vis');
+}
+function qzEmailOverlayClick(e){
+  if(e.target && e.target.id==='qz-email-overlay') qzCloseEmailModal();
+}
+
+function qzValidateEmail(e){
+  if(!e || typeof e!=='string') return false;
+  // Simple but adequate RFC-ish check
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e.trim());
+}
+
+async function qzSubmitEmail(){
+  const input = document.getElementById('qz-email-input');
+  const errEl = document.getElementById('qz-email-error');
+  const btn = document.getElementById('qz-email-submit-btn');
+  const email = (input.value||'').trim();
+  errEl.textContent='';
+  if(!qzValidateEmail(email)){
+    errEl.textContent='Please enter a valid email address.';
+    return;
+  }
+  const { url, token } = qzBuildResultsUrl();
+  input.disabled=true; btn.disabled=true; btn.textContent='Sending…';
+  try{
+    const resp = await fetch(QZ_NETLIFY_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, results_url: url, token })
+    });
+    if(!resp.ok){
+      let msg = 'Could not send email. Please try again.';
+      try { const j = await resp.json(); if(j && j.error) msg = j.error; } catch(_){}
+      throw new Error(msg);
+    }
+    document.getElementById('qz-email-sent-to').textContent = email;
+    document.getElementById('qz-email-form-wrap').style.display='none';
+    document.getElementById('qz-email-success-wrap').style.display='';
+  } catch(err){
+    errEl.textContent = (err && err.message) ? err.message : 'Something went wrong. Please try again.';
+    input.disabled=false; btn.disabled=false; btn.textContent='Send my results →';
+  }
+}
+
+// On initial page load, if URL has #r=<token>, decode it and jump straight
+// to the results screen (this is the link sent in the email).
+function qzBootFromHash(){
+  const h = window.location.hash || '';
+  const m = h.match(/^#r=([A-Za-z0-9_-]+)$/);
+  if(!m) return false;
+  try{
+    const json = qzB64UrlDecode(m[1]);
+    const state = JSON.parse(json);
+    if(!qzRestoreState(state)) return false;
+    if(typeof showPage==='function') showPage('quiz');
+    document.getElementById('qz-intro').classList.add('qz-hidden');
+    document.getElementById('qz-quiz').classList.add('qz-hidden');
+    document.getElementById('qz-resume-screen').classList.add('qz-hidden');
+    const gateEl=document.getElementById('qz-gate'); if(gateEl) gateEl.classList.add('qz-hidden');
+    qzShowResults();
+    return true;
+  } catch(e){
+    console.warn('Bad results token in URL hash', e);
+    return false;
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', qzBootFromHash);
+} else {
+  qzBootFromHash();
 }
 </script>
 </body>
