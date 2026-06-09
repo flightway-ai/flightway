@@ -1313,8 +1313,9 @@
   <div class="qz-email-overlay" id="qz-email-overlay" onclick="qzEmailOverlayClick(event)">
     <div class="qz-email-modal" id="qz-email-modal">
       <div id="qz-email-form-wrap">
-        <div class="qz-email-title">Where should we send it?</div>
-        <div class="qz-email-sub">We'll email you a link to your full career-fit results. No spam, no newsletter — just your results.</div>
+        <div class="qz-email-title">Almost there — what's your name?</div>
+        <div class="qz-email-sub">We'll personalize your career hub and email you a private link to your results. No spam, no newsletter — just your results.</div>
+        <input type="text" class="qz-email-input" id="qz-name-input" placeholder="Your first name" autocomplete="given-name" style="margin-bottom:10px" onkeydown="if(event.key==='Enter')document.getElementById('qz-email-input').focus()">
         <input type="email" class="qz-email-input" id="qz-email-input" placeholder="you@example.com" autocomplete="email" onkeydown="if(event.key==='Enter')qzSubmitEmail()">
         <div class="qz-email-error" id="qz-email-error"></div>
         <div class="qz-email-btns">
@@ -3290,9 +3291,23 @@ function qzShowGate(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+let qzName = '';
+
+// Normalize the raw industry tallies to 0-100 (top industry = 100) so the
+// dashboard can consume them directly without replicating the scoring engine.
+function qzNormalizedScores(){
+  const sc = qzComputeScores();
+  let max = 1;
+  Object.values(sc).forEach(v => { if (v > max) max = v; });
+  const out = {};
+  Object.keys(sc).forEach(k => { out[k] = Math.max(0, Math.round((sc[k] / max) * 100)); });
+  return out;
+}
+
 function qzCaptureState(){
   return {
     v: 1,
+    name: qzName || '',
     answers: qzAnswers,
     sliders: qzSliders,
     budget: qzBudget,
@@ -3300,7 +3315,8 @@ function qzCaptureState(){
     school: qzSchool,
     schoolMatch: qzSchoolMatch ? qzSchoolMatch.name : null,
     resumeBoosts: qzResumeBoosts || {},
-    ans: qzAns
+    ans: qzAns,
+    scores: qzNormalizedScores()
   };
 }
 
@@ -3317,6 +3333,7 @@ function qzRestoreState(s){
     } else { qzSchoolMatch = null; }
     qzResumeBoosts = s.resumeBoosts || {};
     qzAns = s.ans || {};
+    qzName = s.name || '';
     return true;
   } catch(e){ console.warn('qz state restore failed', e); return false; }
 }
@@ -3340,8 +3357,11 @@ function qzB64UrlDecode(s){
 function qzBuildResultsUrl(){
   const state = qzCaptureState();
   const token = qzB64UrlEncode(JSON.stringify(state));
-  const base = window.location.origin + window.location.pathname;
-  return { url: base + '#r=' + token, token };
+  // Point the emailed link at the career hub (dashboard.html), not the quiz page.
+  const dir = window.location.pathname.replace(/[^/]*$/, '');
+  const base = window.location.origin + dir + 'dashboard.html';
+  const nameQ = state.name ? ('?name=' + encodeURIComponent(state.name)) : '';
+  return { url: base + nameQ + '#r=' + token, token };
 }
 
 function qzOpenEmailModal(){
@@ -3349,12 +3369,14 @@ function qzOpenEmailModal(){
   document.getElementById('qz-email-form-wrap').style.display='';
   document.getElementById('qz-email-success-wrap').style.display='none';
   document.getElementById('qz-email-error').textContent='';
+  const nameInput = document.getElementById('qz-name-input');
+  if(nameInput){ nameInput.value=''; nameInput.disabled=false; }
   const input = document.getElementById('qz-email-input');
   input.value=''; input.disabled=false;
   document.getElementById('qz-email-submit-btn').disabled=false;
   document.getElementById('qz-email-submit-btn').textContent='Send my results →';
   ov.classList.add('vis');
-  setTimeout(()=>input.focus(),100);
+  setTimeout(()=>(nameInput||input).focus(),100);
 }
 function qzCloseEmailModal(){
   document.getElementById('qz-email-overlay').classList.remove('vis');
@@ -3374,12 +3396,20 @@ async function qzSubmitEmail(){
   const errEl = document.getElementById('qz-email-error');
   const btn = document.getElementById('qz-email-submit-btn');
   const email = (input.value||'').trim();
+  const nameInput = document.getElementById('qz-name-input');
+  qzName = (nameInput && nameInput.value || '').trim();
   errEl.textContent='';
+  if(!qzName){
+    errEl.textContent='Please enter your name.';
+    if(nameInput) nameInput.focus();
+    return;
+  }
   if(!qzValidateEmail(email)){
     errEl.textContent='Please enter a valid email address.';
     return;
   }
   const { url, token } = qzBuildResultsUrl();
+  if(nameInput) nameInput.disabled=true;
   input.disabled=true; btn.disabled=true; btn.textContent='Sending…';
   try{
     const resp = await fetch(QZ_NETLIFY_ENDPOINT, {
@@ -3397,6 +3427,7 @@ async function qzSubmitEmail(){
     document.getElementById('qz-email-success-wrap').style.display='';
   } catch(err){
     errEl.textContent = (err && err.message) ? err.message : 'Something went wrong. Please try again.';
+    if(nameInput) nameInput.disabled=false;
     input.disabled=false; btn.disabled=false; btn.textContent='Send my results →';
   }
 }
