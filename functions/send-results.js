@@ -17,7 +17,6 @@
 
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 
-// Minimal email validator — same shape as the client check.
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 function cors(origin) {
@@ -36,7 +35,6 @@ function json(status, body, origin) {
   });
 }
 
-// Escape user-controllable strings before embedding in HTML.
 function esc(s) {
   return String(s)
     .replace(/&/g, '&amp;')
@@ -101,7 +99,6 @@ function buildText(resultsUrl) {
   ].join('\n');
 }
 
-// CORS preflight
 export async function onRequestOptions(context) {
   const origin = context.env.ALLOWED_ORIGIN || '*';
   return new Response(null, { status: 204, headers: cors(origin) });
@@ -124,7 +121,6 @@ export async function onRequestPost(context) {
   if (!EMAIL_RE.test(email)) {
     return json(400, { error: 'Please provide a valid email address.' }, origin);
   }
-  // Only allow http(s) URLs to prevent the email becoming an open redirect.
   if (!/^https?:\/\//i.test(resultsUrl) || resultsUrl.length > 8000) {
     return json(400, { error: 'Invalid results URL.' }, origin);
   }

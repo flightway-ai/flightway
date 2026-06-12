@@ -1,0 +1,9 @@
+{
+  "name": "flightway-site",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Flightway career-quiz site + AI coach (Cloudflare Pages Functions).",
+  "engines": {
+    "node": ">=18"
+  }
+}
