@@ -1504,10 +1504,11 @@
       <div class="qz-gate">
         <div class="qz-gate-emoji">📬</div>
         <div class="qz-gate-title">Your results are ready.</div>
-        <div class="qz-gate-sub">We've finished scoring your career profile. Enter your email and we'll send you a private link to your personalized results — then meet your <strong>AI career coach</strong>, who knows your results and chats with you 1-on-1.</div>
+        <div class="qz-gate-sub">We've finished scoring your career profile. Open your interactive <strong>Career Hub</strong>, or enter your email and we'll send you a link — then chat with your <strong>AI career coach</strong>, who knows your results.</div>
         <div class="qz-gate-actions">
-          <button class="qz-gate-primary" onclick="qzOpenEmailModal()">📧 &nbsp;Email me my results</button>
-          <button class="qz-gate-secondary" onclick="qzSkipEmailToResults()">Just show me my results →</button>
+          <button class="qz-gate-primary" onclick="qzOpenCareerHub()">🗺 &nbsp;Open my Career Hub</button>
+          <button class="qz-gate-primary" onclick="qzOpenEmailModal()">📧 &nbsp;Email me my link</button>
+          <button class="qz-gate-secondary" onclick="qzSkipEmailToResults()">View detailed results here →</button>
           <button class="qz-gate-secondary" onclick="showPage('home')">← Back to home</button>
         </div>
       </div>
@@ -3081,7 +3082,7 @@ function qzShowResults(){
       ${careerLinksHtml}
     </div>`;
   });
-  fb+=`<div style="text-align:center;margin-top:30px;padding-top:24px;border-top:1px solid var(--border-light)"><a class="cta-btn" onclick="showPage('coaching')">Book a Coach →</a></div>`;
+  fb+=`<div style="text-align:center;margin-top:30px;padding-top:24px;border-top:1px solid var(--border-light);display:flex;flex-wrap:wrap;gap:12px;justify-content:center"><a class="cta-btn" onclick="qzOpenCareerHub()">Open Career Hub →</a><a class="cta-btn cta-btn-outline" onclick="coachOpenFromNav()">Talk to AI Coach →</a><a class="cta-btn cta-btn-outline" onclick="showPage('coaching')">Book a Human Coach →</a></div>`;
   fb+=`<button class="qz-restart" onclick="qzRestart()">↺ Retake Assessment</button>`;
 
   h+=`<div class="full-breakdown" id="full-breakdown">${fb}</div>`;
@@ -3552,6 +3553,32 @@ function qzBuildResultsUrl(){
   return { url: base + '#r=' + token, token };
 }
 
+function qzNormalizeScores(sc){
+  const max = Math.max(...Object.values(sc || {}), 1);
+  const scores = {};
+  Object.entries(sc || {}).forEach(([k, v]) => {
+    scores[k] = Math.round((Number(v) / max) * 100);
+  });
+  return scores;
+}
+
+function qzBuildHubPayload(){
+  const sc = (typeof qzComputeScores === 'function') ? qzComputeScores() : {};
+  return { name: 'Student', scores: qzNormalizeScores(sc) };
+}
+
+function qzBuildHubUrl(){
+  const payload = qzBuildHubPayload();
+  const token = qzB64UrlEncode(JSON.stringify(payload));
+  const url = window.location.origin + '/dashboard.html#r=' + token;
+  try { localStorage.setItem('fw_hub_quiz_v1', JSON.stringify(payload)); } catch(_){}
+  return { url, token, payload };
+}
+
+function qzOpenCareerHub(){
+  window.location.href = qzBuildHubUrl().url;
+}
+
 function qzOpenEmailModal(){
   const ov = document.getElementById('qz-email-overlay');
   document.getElementById('qz-email-form-wrap').style.display='';
@@ -3587,7 +3614,7 @@ async function qzSubmitEmail(){
     errEl.textContent='Please enter a valid email address.';
     return;
   }
-  const { url, token } = qzBuildResultsUrl();
+  const { url, token } = qzBuildHubUrl();
   input.disabled=true; btn.disabled=true; btn.textContent='Sending…';
   try{
     const resp = await fetch(QZ_SEND_RESULTS_EP, {
@@ -3659,9 +3686,29 @@ const COACH_CHAT_EP    = '/chat';
 const COACH_DOSSIER_EP = '/dossier';
 const COACH_RESET_AT   = 5;
 const COACH_LS_KEY     = 'fw_coach_user_v1';
+const COACH_HUB_KEY    = 'fw_hub_quiz_v1';
 
 let coachUserId = null;
 let coachSending = false;
+
+function coachLoadHubQuiz(){
+  try {
+    const raw = localStorage.getItem(COACH_HUB_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (data && data.scores && typeof data.scores === 'object') return data;
+  } catch(_) {}
+  return null;
+}
+
+function coachHasQuizContext(){
+  try {
+    const hub = coachLoadHubQuiz();
+    if (hub && Object.values(hub.scores).some(v => Number(v) > 0)) return true;
+    const sc = (typeof qzComputeScores === 'function') ? qzComputeScores() : {};
+    return Object.values(sc).some(v => v > 0);
+  } catch(_) { return false; }
+}
 
 function coachInit(){
   try {
@@ -3669,6 +3716,9 @@ function coachInit(){
     if (raw) coachUserId = JSON.parse(raw).userId || null;
   } catch(_) { coachUserId = null; }
   coachUpdateNavLink();
+  if ((window.location.hash || '') === '#coach') {
+    setTimeout(() => coachOpenFromNav(), 150);
+  }
 }
 
 function coachUpdateNavLink(){
@@ -3831,7 +3881,10 @@ function qzRandomizeAndShowResults(){
 // Build a compact summary of the quiz results to seed the dossier.
 function coachExtractQuizResults(){
   try {
-    const sc = (typeof qzComputeScores === 'function') ? qzComputeScores() : {};
+    const hub = coachLoadHubQuiz();
+    const sc = hub && hub.scores
+      ? hub.scores
+      : ((typeof qzComputeScores === 'function') ? qzNormalizeScores(qzComputeScores()) : {});
     const sorted = Object.entries(sc).sort((a,b)=>b[1]-a[1]).slice(0,4);
     const topIndustries = sorted.map(([k]) => (window.QZ_IND && QZ_IND[k] && QZ_IND[k].name) || k);
     const recommendedMajors = [];
@@ -3971,22 +4024,16 @@ async function coachSignup(){
 
 function coachOpenFromNav(){
   if (!coachUserId){
-    // No account yet. The dossier is seeded from quiz results, so the user
-    // must complete the quiz first. If they already have fresh results in
-    // memory (just finished), go straight to signup; otherwise route to quiz.
-    const hasResults = (() => {
-      try {
-        const sc = (typeof qzComputeScores === 'function') ? qzComputeScores() : {};
-        return Object.values(sc).some(v => v > 0);
-      } catch(_) { return false; }
-    })();
-    if (hasResults) {
+    if (coachHasQuizContext()) {
       coachOpenSignup();
     } else {
       alert('Take the career quiz first — your AI coach is personalized from your results. It takes about 6 minutes (or use the dev skip button).');
       showPage('quiz');
     }
     return;
+  }
+  if (window.location.hash !== '#coach') {
+    try { history.replaceState(null, '', '#coach'); } catch(_) {}
   }
   showPage('coach');
   document.getElementById('coach-user-email').textContent = coachUserId;

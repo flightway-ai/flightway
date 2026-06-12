@@ -340,26 +340,9 @@
     gap: 10px;
   }
 
+  /* Inline Marco chat retired — trigger opens Flightway AI coach */
   #marco-chat {
-    width: 320px;
-    height: 420px;
-    background: #12122A;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 18px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transform-origin: bottom right;
-    transform: scale(0.85);
-    opacity: 0;
-    pointer-events: none;
-    transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease;
-  }
-  #marco-chat.open {
-    transform: scale(1);
-    opacity: 1;
-    pointer-events: all;
+    display: none !important;
   }
 
   .marco-header {
@@ -502,7 +485,10 @@
     font-size: 0.72rem;
     color: rgba(255,255,255,0.5);
     letter-spacing: 0.02em;
+    cursor: pointer;
+    user-select: none;
   }
+  .marco-trigger-label:hover { color: rgba(255,255,255,0.85); }
   #marco-trigger {
     width: 56px; height: 56px;
     border-radius: 50%;
@@ -618,8 +604,8 @@
     </div>
   </div>
   <div class="marco-trigger-wrap">
-    <span class="marco-trigger-label">Talk to Marco</span>
-    <button id="marco-trigger">
+    <span class="marco-trigger-label" role="button" tabindex="0" title="Open AI career advisor">Talk to Marco</span>
+    <button id="marco-trigger" type="button" title="Open AI career advisor" aria-label="Talk to Marco — open AI career advisor">
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
         <path d="M11 2C6.03 2 2 5.58 2 10c0 2.1.9 4 2.36 5.45L3 20l4.73-1.27A9.35 9.35 0 0011 19c4.97 0 9-3.58 9-8s-4.03-9-9-9z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>
         <circle cx="8" cy="10" r="1" fill="white"/>
@@ -712,9 +698,16 @@ let userName = 'Student';
   if (quizState && quizState.name) name = quizState.name;
   userName = (name || 'Student').trim() || 'Student';
 
+  if (quizState && quizState.scores) {
+    try {
+      localStorage.setItem('fw_hub_quiz_v1', JSON.stringify({ name: userName, scores: quizState.scores }));
+    } catch (e) { /* ignore quota */ }
+  }
+
   // Override hardcoded fit scores with the personalized ones when available.
   const scores = quizState && quizState.scores;
   if (scores && typeof scores === 'object') {
+    hubQuizScores = scores;
     careers.forEach(c => {
       const keys = careerToQuizKeys[c.id] || [];
       if (!keys.length) return;
@@ -1228,51 +1221,30 @@ document.getElementById('search').addEventListener('input', e => {
   state.searchQuery = e.target.value.trim();
 });
 
-// ── MARCO ──
-const marcoChat = document.getElementById('marco-chat');
-const marcoBubble = document.getElementById('marco-trigger');
-const marcoClose = document.getElementById('marco-close');
-const marcoMessages = document.getElementById('marco-messages');
-const marcoInput = document.getElementById('marco-input');
-const marcoSend = document.getElementById('marco-send');
-let marcoOpened = false;
-
-function addMessage(text, role) {
-  const wrap = document.createElement('div');
-  wrap.className = `msg ${role}`;
-  if (role === 'marco') {
-    wrap.innerHTML = `<div class="msg-avatar">M</div><div class="msg-bubble">${text}</div>`;
-  } else {
-    wrap.innerHTML = `<div class="msg-bubble">${text}</div>`;
-  }
-  marcoMessages.appendChild(wrap);
-  marcoMessages.scrollTop = marcoMessages.scrollHeight;
+// ── MARCO → AI ADVISOR (Flightway coach) ──
+function openMarcoAdvisor() {
+  try {
+    const m = (window.location.hash || '').match(/^#r=([A-Za-z0-9_-]+)$/);
+    if (m) {
+      const quizState = JSON.parse(b64UrlDecode(m[1]));
+      localStorage.setItem('fw_hub_quiz_v1', JSON.stringify({
+        name: userName,
+        scores: (quizState && quizState.scores) || {}
+      }));
+    } else if (hubQuizScores) {
+      localStorage.setItem('fw_hub_quiz_v1', JSON.stringify({ name: userName, scores: hubQuizScores }));
+    }
+  } catch (_) {}
+  window.location.href = 'Flightway.html#coach';
 }
 
-function sendUserMessage() {
-  const text = marcoInput.value.trim();
-  if (!text) return;
-  addMessage(text, 'user');
-  marcoInput.value = '';
-  setTimeout(() => {
-    addMessage("Good question, let me look into that for you... [full AI coming soon]", 'marco');
-  }, 600);
-}
+let hubQuizScores = null;
 
-marcoBubble.addEventListener('click', () => {
-  marcoChat.classList.add('open');
-  if (!marcoOpened) {
-    marcoOpened = true;
-    const greetName = (userName && userName !== 'Student') ? userName : 'there';
-    setTimeout(() => {
-      addMessage(`Hey ${greetName}! I'm Marco, your Flyway career coach. Your map is colored by how well each path fits your quiz results — click any career to dig in, or ask me anything.`, 'marco');
-    }, 300);
-  }
+document.getElementById('marco-trigger').addEventListener('click', openMarcoAdvisor);
+document.querySelector('.marco-trigger-label').addEventListener('click', openMarcoAdvisor);
+document.querySelector('.marco-trigger-label').addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMarcoAdvisor(); }
 });
-
-marcoClose.addEventListener('click', () => marcoChat.classList.remove('open'));
-marcoSend.addEventListener('click', sendUserMessage);
-marcoInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendUserMessage(); });
 
 // ── SIGNED-IN USER (resolved during personalization above) ──
 (function() {
