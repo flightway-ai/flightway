@@ -1328,3 +1328,125 @@ p, li, span, label, h1, h2, h3, h4, h5, h6,
   background: rgb(var(--surface)) !important;
   color: rgb(var(--text)) !important;
 }
+
+/* ── Quiz results: industry cards & school panels (dark/light contrast) ── */
+#page-quiz .ind-card {
+  background-color: rgb(var(--panel)) !important;
+  border: 2px solid rgb(var(--border-strong)) !important;
+  color: rgb(var(--text)) !important;
+}
+
+#page-quiz .ind-card.top {
+  border-color: rgb(var(--primary) / 0.55) !important;
+  background-color: rgb(var(--panel)) !important;
+  box-shadow: 0 8px 32px rgb(var(--primary) / 0.12) !important;
+}
+
+#page-quiz .ind-name,
+#page-quiz .ind-why,
+#page-quiz .ind-pct {
+  color: rgb(var(--text)) !important;
+}
+
+#page-quiz .ind-pct {
+  color: rgb(var(--primary)) !important;
+}
+
+#page-quiz .ind-rank {
+  background: rgb(var(--control)) !important;
+  color: rgb(var(--text-muted)) !important;
+  border: 1px solid rgb(var(--border-strong));
+}
+
+#page-quiz .ind-card.top .ind-rank {
+  background: rgb(var(--primary)) !important;
+  color: rgb(var(--primary-fg)) !important;
+  border-color: transparent !important;
+}
+
+#page-quiz .ind-bar {
+  background: rgb(var(--control)) !important;
+  border: 1px solid rgb(var(--border-strong));
+}
+
+#page-quiz .ind-bar-fill {
+  background: linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-hover))) !important;
+}
+
+#page-quiz .ind-school {
+  background: rgb(var(--control)) !important;
+  border: 1px solid rgb(var(--border-strong)) !important;
+  border-left: 4px solid rgb(var(--primary)) !important;
+  color: rgb(var(--text)) !important;
+}
+
+#page-quiz .ind-school strong {
+  color: rgb(var(--primary)) !important;
+}
+
+#page-quiz .ind-school .major {
+  color: rgb(var(--text)) !important;
+}
+
+#page-quiz .ind-classes {
+  color: rgb(var(--text-muted)) !important;
+}
+
+#page-quiz .ind-career-link {
+  background: rgb(var(--primary)) !important;
+  color: rgb(var(--primary-fg)) !important;
+  border: 2px solid rgb(var(--primary-hover)) !important;
+}
+
+#page-quiz .archetype-card {
+  background: linear-gradient(135deg, rgb(var(--primary)), rgb(var(--primary-hover))) !important;
+  color: rgb(var(--primary-fg)) !important;
+}
+
+#page-quiz .arche-eye,
+#page-quiz .arche-blurb {
+  color: rgb(var(--primary-fg)) !important;
+  opacity: 0.92;
+}
+
+#page-quiz .gpa-banner.elite {
+  background: rgb(var(--control)) !important;
+  color: rgb(var(--text)) !important;
+  border: 2px solid rgb(var(--primary) / 0.5) !important;
+}
+
+#page-quiz .gpa-banner.great {
+  background: rgb(var(--control)) !important;
+  color: rgb(var(--text)) !important;
+  border: 2px solid rgb(74 222 128 / 0.5) !important;
+}
+
+#page-quiz .gpa-banner.good,
+#page-quiz .gpa-banner.solid {
+  background: rgb(var(--control)) !important;
+  color: rgb(var(--text)) !important;
+  border: 2px solid rgb(var(--border-strong)) !important;
+}
+
+[data-theme="light"] #page-quiz .ind-card,
+[data-theme="light"] #page-quiz .ind-school {
+  background-color: rgb(var(--panel)) !important;
+}
+
+[data-theme="light"] #page-quiz .ind-school {
+  background: rgb(240 248 255) !important;
+  border-left-color: rgb(56 189 248) !important;
+}
+
+/* App home cards */
+.app-home-card {
+  background: rgb(var(--panel)) !important;
+  border-color: rgb(var(--border-strong)) !important;
+}
+
+.app-home-card h3 { color: rgb(var(--text)) !important; }
+.app-home-card p { color: rgb(var(--text-muted)) !important; }
+.app-home-card:hover {
+  border-color: rgb(var(--primary) / 0.5) !important;
+  background: rgb(var(--surface-hover)) !important;
+}

@@ -1,3 +1,4 @@
 # Cloudflare Pages — static routes (Functions in /functions/ are auto-mounted)
 /dashboard.html  /dashboard.html  200
 /Flightway.html  /Flightway.html  200
+/dreamforce.html /Flightway.html  301
