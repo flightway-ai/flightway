@@ -29,6 +29,10 @@
   --text-muted: 148 137 129;
   --border: 39 34 30;
 
+  --panel: 24 21 19;
+  --control: 38 34 30;
+  --border-strong: 72 64 58;
+
   --canvas-opacity: 1;
   --nav-bg: rgb(13 11 10 / 0.96);
   --nav-border: rgb(var(--border));
@@ -62,6 +66,10 @@
   --text: 20 12 9;
   --text-muted: 90 81 75;
   --border: 228 219 212;
+
+  --panel: 255 255 255;
+  --control: 245 238 233;
+  --border-strong: 198 187 179;
 
   --canvas-opacity: 0.45;
   --nav-bg: rgb(255 250 247 / 0.94);
@@ -135,11 +143,11 @@ body {
   position: relative;
 }
 
-/* Layering: canvas (0) → page content (10) → nav (100) → modals (200+) */
+/* Layering: canvas (-1) → page content (10) → nav (100) → modals (200+) */
 #fw-data-field {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
   opacity: var(--canvas-opacity, 1);
   transition: opacity 0.25s ease;
@@ -1040,28 +1048,73 @@ nav {
 }
 
 /* ── Quiz dark / theme overrides ── */
-#page-quiz { background: rgb(var(--bg)) !important; }
+/* Page bg transparent so constellations show in margins; panels block canvas on cards */
+#page-quiz {
+  background: transparent !important;
+  isolation: isolate;
+}
 
+#page-quiz .qz-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+/* Opaque panels — constellation must not show through */
 #page-quiz .qz-intro-card,
 #page-quiz .qz-card,
 #page-quiz .qz-resume-card,
-#page-quiz .vcard,
 #page-quiz .qz-results-wrap,
+#page-quiz .qz-gate,
 #page-quiz .qz-gate-card,
 #page-quiz .qz-combo-card,
-#page-quiz .qz-email-card,
+#page-quiz .qz-email-card {
+  background-color: rgb(var(--panel)) !important;
+  background-image: none !important;
+  color: rgb(var(--text)) !important;
+  border: 1px solid rgb(var(--border-strong)) !important;
+  isolation: isolate;
+  position: relative;
+  z-index: 2;
+  box-shadow:
+    0 12px 48px rgb(0 0 0 / 0.55),
+    0 0 0 1px rgb(var(--border-strong) / 0.5) !important;
+}
+
+#page-quiz .qz-card::before,
+#page-quiz .qz-resume-card::before {
+  background: linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-hover))) !important;
+}
+
+/* Interactive controls — distinct body from panel */
+#page-quiz .vcard,
+#page-quiz .vpick,
+#page-quiz .qtag,
 #page-quiz .opt,
 #page-quiz .pair-card,
 #page-quiz .tot-card,
-#page-quiz .qtag,
+#page-quiz .swipe-card,
 #page-quiz .text-input,
 #page-quiz .qz-skip-btn,
+#page-quiz .qz-btn-back,
+#page-quiz .qz-skip-quiz-btn,
+#page-quiz .qz-restart,
 #page-quiz .school-suggest,
 #page-quiz .bucket-item,
-#page-quiz .spec-marker {
-  background: rgb(var(--surface)) !important;
+#page-quiz .qz-gate-secondary,
+#page-quiz .back-btn {
+  background-color: rgb(var(--control)) !important;
   color: rgb(var(--text)) !important;
-  border-color: rgb(var(--border)) !important;
+  border: 2px solid rgb(var(--border-strong)) !important;
+}
+
+#page-quiz .qz-upload-zone {
+  background-color: rgb(var(--control) / 0.5) !important;
+  border: 2px dashed rgb(var(--border-strong)) !important;
+}
+
+#page-quiz .spec-marker {
+  background: rgb(var(--panel)) !important;
+  border-color: rgb(var(--primary)) !important;
 }
 
 #page-quiz .qz-logo-line,
@@ -1076,6 +1129,11 @@ nav {
   color: rgb(var(--primary)) !important;
 }
 
+#page-quiz .qz-prog-track {
+  background: rgb(var(--control)) !important;
+  border: 1px solid rgb(var(--border-strong));
+}
+
 #page-quiz .qz-prog-fill {
   background: linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-hover))) !important;
 }
@@ -1086,6 +1144,7 @@ nav {
 .coach-send-btn {
   background: rgb(var(--primary)) !important;
   color: rgb(var(--primary-fg)) !important;
+  border: 2px solid rgb(var(--primary-hover)) !important;
   box-shadow: 0 8px 24px rgb(var(--primary) / 0.25) !important;
 }
 
@@ -1096,8 +1155,11 @@ nav {
 }
 
 #page-quiz .qz-btn-next:disabled {
-  background: rgb(var(--border)) !important;
+  background: rgb(var(--control)) !important;
   color: rgb(var(--text-muted)) !important;
+  border: 2px solid rgb(var(--border-strong)) !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
 }
 
 #page-quiz .vcard:hover,
@@ -1105,17 +1167,21 @@ nav {
 #page-quiz .opt:hover,
 #page-quiz .pair-card:hover,
 #page-quiz .tot-card:hover,
-#page-quiz .qz-upload-zone:hover {
-  border-color: rgb(var(--primary) / 0.45) !important;
-  background: rgb(var(--surface-hover)) !important;
+#page-quiz .qz-upload-zone:hover,
+#page-quiz .qz-btn-back:hover,
+#page-quiz .back-btn:hover,
+#page-quiz .qz-skip-quiz-btn:hover {
+  border-color: rgb(var(--primary) / 0.55) !important;
+  background-color: rgb(var(--surface-hover)) !important;
+  color: rgb(var(--text)) !important;
 }
 
 #page-quiz .vcard.sel,
 #page-quiz .opt.sel,
 #page-quiz .bucket.active {
   border-color: rgb(var(--primary)) !important;
-  background: rgb(var(--primary) / 0.12) !important;
-  box-shadow: 0 8px 20px rgb(var(--primary) / 0.15) !important;
+  background-color: rgb(var(--primary) / 0.14) !important;
+  box-shadow: 0 8px 20px rgb(var(--primary) / 0.18) !important;
 }
 
 #page-quiz .qtag.sel {
@@ -1129,8 +1195,19 @@ nav {
   color: rgb(var(--primary-fg)) !important;
 }
 
+#page-quiz .opt-letter {
+  background: rgb(var(--surface-2)) !important;
+  color: rgb(var(--text-muted)) !important;
+  border: 1px solid rgb(var(--border-strong));
+}
+
 #page-quiz .text-input:focus {
   border-color: rgb(var(--primary)) !important;
+}
+
+#page-quiz .sug-item {
+  background: rgb(var(--control)) !important;
+  border-color: rgb(var(--border)) !important;
 }
 
 #page-quiz .sug-item:hover {
@@ -1147,23 +1224,60 @@ nav {
 }
 
 #page-quiz .qz-skip-quiz-btn {
+  border-style: dashed !important;
   color: rgb(var(--text-muted)) !important;
-  border-color: rgb(var(--border)) !important;
 }
 
-#page-quiz .qz-skip-quiz-btn:hover {
-  color: rgb(var(--text)) !important;
-  background: rgb(var(--surface-hover)) !important;
-}
-
-#page-quiz .qz-btn-back {
+#page-quiz .qz-btn-back,
+#page-quiz .back-btn {
+  padding: 10px 18px !important;
+  border-radius: 9999px !important;
+  font-weight: 500 !important;
   color: rgb(var(--text-muted)) !important;
-  border-color: rgb(var(--border)) !important;
+  cursor: pointer;
 }
 
-#page-quiz .qz-btn-back:hover {
-  color: rgb(var(--text)) !important;
-  border-color: rgb(var(--text-muted)) !important;
+#page-quiz .qz-gate-secondary {
+  border-radius: 9999px !important;
+  padding: 12px 22px !important;
+  color: rgb(var(--text-muted)) !important;
+  cursor: pointer;
+}
+
+#page-quiz .qz-gate-primary {
+  background: rgb(var(--primary)) !important;
+  color: rgb(var(--primary-fg)) !important;
+  border: 2px solid rgb(var(--primary-hover)) !important;
+}
+
+#page-quiz .map2d {
+  background: linear-gradient(135deg, rgb(var(--neutral-100)), rgb(var(--neutral-50))) !important;
+  border: 2px solid rgb(var(--border-strong)) !important;
+}
+
+#page-quiz .map-dot {
+  background: rgb(var(--primary)) !important;
+  border-color: rgb(var(--panel)) !important;
+}
+
+#page-quiz .map-lbl {
+  color: rgb(var(--neutral-600)) !important;
+}
+
+#page-quiz .vpick.sel,
+#page-quiz .vpick:hover {
+  border-color: rgb(var(--primary) / 0.55) !important;
+  background-color: rgb(var(--surface-hover)) !important;
+}
+
+#page-quiz .vpick.sel {
+  border-color: rgb(var(--primary)) !important;
+  background-color: rgb(var(--primary) / 0.14) !important;
+}
+
+#page-quiz .bucket {
+  background-color: rgb(var(--control)) !important;
+  border: 2px solid rgb(var(--border-strong)) !important;
 }
 
 .coach-msg.user {
