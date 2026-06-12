@@ -164,8 +164,8 @@ body.hub-page .hub-home-link:hover {
   border-color: rgb(var(--primary) / 0.4);
 }
 
-/* Marco → AI advisor trigger */
-body.hub-page .marco-trigger-label {
+/* Career advisor trigger */
+body.hub-page .advisor-trigger-label {
   color: var(--hub-text) !important;
   font-weight: 600;
   padding: 4px 10px;
@@ -174,28 +174,18 @@ body.hub-page .marco-trigger-label {
   border: 1px solid var(--hub-border);
 }
 
-body.hub-page .marco-trigger-label:hover {
+body.hub-page .advisor-trigger-label:hover {
   color: var(--hub-text) !important;
   border-color: rgb(var(--primary) / 0.45);
 }
 
-body.hub-page #marco-trigger {
+body.hub-page #advisor-trigger {
   background: linear-gradient(135deg, var(--hub-accent), var(--hub-accent-hover)) !important;
   color: var(--hub-accent-fg) !important;
   box-shadow: 0 4px 20px rgb(var(--primary) / 0.35) !important;
   border: 2px solid rgb(var(--primary) / 0.3);
 }
 
-body.hub-page #marco-trigger:hover {
+body.hub-page #advisor-trigger:hover {
   box-shadow: 0 6px 28px rgb(var(--primary) / 0.5) !important;
-}
-
-@keyframes hub-marco-pulse {
-  0%   { box-shadow: 0 4px 20px rgb(var(--primary) / 0.35); }
-  50%  { box-shadow: 0 4px 32px rgb(var(--primary) / 0.55), 0 0 0 10px rgb(var(--primary) / 0.08); }
-  100% { box-shadow: 0 4px 20px rgb(var(--primary) / 0.35); }
-}
-
-body.hub-page #marco-trigger {
-  animation: hub-marco-pulse 2s ease-out 3;
 }

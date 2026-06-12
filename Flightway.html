@@ -6,8 +6,8 @@
 <title>FlightWay — Career Quiz &amp; AI Coach</title>
 <link rel="stylesheet" href="assets/flightway-theme.css">
 <script>(function(){try{var t=localStorage.getItem('flightway-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
-<script>(function(){var h=(location.hash||'').slice(1);if(h==='coach')document.documentElement.setAttribute('data-fw-page','coach');else if(h==='quiz')document.documentElement.setAttribute('data-fw-page','quiz');else if(h==='app'||h==='home'||!h)document.documentElement.setAttribute('data-fw-page','home');else if(/^r=/.test(h))document.documentElement.setAttribute('data-fw-page','quiz');})();</script>
-<style>html[data-fw-page="coach"] .page{display:none!important}html[data-fw-page="coach"] #page-coach{display:block!important}html[data-fw-page="quiz"] .page{display:none!important}html[data-fw-page="quiz"] #page-quiz{display:block!important}</style>
+<script>(function(){var h=(location.hash||'').replace(/^#/,'');if(['coach','portal','signin','quiz'].indexOf(h)!==-1)document.documentElement.setAttribute('data-boot-page',h);})();</script>
+<style id="fw-boot-css">html[data-boot-page] .page{display:none!important}html[data-boot-page="coach"] #page-coach{display:block!important}html[data-boot-page="portal"] #page-portal{display:block!important}html[data-boot-page="signin"] #page-signin{display:block!important}html[data-boot-page="quiz"] #page-quiz{display:block!important}</style>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
@@ -218,25 +218,6 @@
 
   .back-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-tertiary); cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; margin-bottom: 48px; transition: all var(--transition); }
   .back-btn:hover { color: var(--text-solid); gap: 4px; }
-
-  /* ── APP HOME (signed-in dashboard) ── */
-  .app-home { min-height: 100vh; padding: 120px 24px 80px; display: flex; flex-direction: column; align-items: center; }
-  .app-home-inner { width: 100%; max-width: 880px; }
-  .app-home h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 600; margin-bottom: 8px; text-align: center; color: var(--text-solid); }
-  .app-home .app-sub { text-align: center; color: var(--text-secondary); margin-bottom: 48px; font-size: 1.05rem; }
-  .app-home-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  @media (max-width: 768px) { .app-home-grid { grid-template-columns: 1fr; } }
-  .app-home-card {
-    background: var(--surface-solid); border: 2px solid var(--border); border-radius: var(--radius);
-    padding: 32px 24px; cursor: pointer; transition: all var(--transition); text-align: center;
-  }
-  .app-home-card:hover { border-color: var(--primary-solid); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-  .app-home-card .app-icon { font-size: 2rem; margin-bottom: 12px; }
-  .app-home-card h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-solid); margin-bottom: 8px; }
-  .app-home-card p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; }
-  .app-home-links { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 40px; }
-  .app-home-links a { font-size: 0.85rem; color: var(--text-tertiary); text-decoration: none; padding: 8px 14px; border-radius: 9999px; border: 1px solid var(--border); }
-  .app-home-links a:hover { color: var(--text-solid); border-color: var(--text-tertiary); }
 
   /* Career deep-dive */
   .career-hero { padding: 140px 40px 80px; text-align: center; }
@@ -760,18 +741,18 @@
   #page-quiz .arche-eye { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; opacity: .85; margin-bottom: 8px; }
   #page-quiz .arche-name { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; margin-bottom: 10px; letter-spacing: -.5px; }
   #page-quiz .arche-blurb { font-size: 15px; line-height: 1.65; opacity: .95; }
-  #page-quiz .ind-card { padding: 20px; border-radius: 14px; margin-bottom: 14px; border: 2px solid var(--border); background: #fff; transition: all .2s; }
-  #page-quiz .ind-card.top { border-color: var(--q-blue); background: linear-gradient(135deg,#eff6ff,#fff); }
+  #page-quiz .ind-card { padding: 20px; border-radius: 14px; margin-bottom: 14px; border: 2px solid var(--border); background: var(--surface-solid); transition: all .2s; }
+  #page-quiz .ind-card.top { border-color: var(--q-blue); background: linear-gradient(135deg, var(--bg-alt), var(--surface-solid)); }
   #page-quiz .ind-head { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
   #page-quiz .ind-rank { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0; background: var(--q-s2); color: var(--text-tertiary); }
   #page-quiz .ind-card.top .ind-rank { background: var(--q-blue); color: #fff; }
   #page-quiz .ind-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--text-solid); flex: 1; }
-  #page-quiz .ind-pct { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--q-blue); }
+  #page-quiz .ind-pct { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--accent-solid); }
   #page-quiz .ind-bar { height: 5px; background: var(--q-s2); border-radius: 3px; overflow: hidden; margin-bottom: 14px; }
   #page-quiz .ind-bar-fill { height: 100%; background: linear-gradient(90deg,var(--q-blue),var(--q-lblue)); border-radius: 3px; }
   #page-quiz .ind-why { font-size: 14px; color: var(--text-solid); line-height: 1.6; margin-bottom: 12px; }
-  #page-quiz .ind-school { padding: 14px; background: #fef9e7; border-left: 3px solid var(--q-accent); border-radius: 8px; font-size: 13px; line-height: 1.6; color: var(--text-solid); margin-bottom: 12px; }
-  #page-quiz .ind-school strong { color: var(--q-accent); display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+  #page-quiz .ind-school { padding: 14px; background: var(--bg-alt); border-left: 3px solid var(--accent-solid); border-radius: 8px; font-size: 13px; line-height: 1.6; color: var(--text-solid); margin-bottom: 12px; }
+  #page-quiz .ind-school strong { color: var(--accent-solid); display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
   #page-quiz .ind-school .major { font-weight: 800; color: var(--text-solid); font-size: 14px; }
   #page-quiz .ind-classes { margin-top: 8px; font-size: 12px; color: var(--text-secondary); }
   #page-quiz .ind-classes strong { color: var(--text-solid); }
@@ -1075,10 +1056,10 @@
     </a>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a onclick="fwOpenCareerHub()">Career Hub</a>
-      <a onclick="coachOpenFromNav()">Career Advisor</a>
-      <a onclick="showPage('students')">Guides</a>
+      <a onclick="showPage('students')">For Students</a>
+      <a onclick="showPage('educators')">For Career Centers</a>
       <a onclick="showPage('coaching')">Coaching</a>
+      <a onclick="coachOpenFromNav()">Career advisor</a>
       <button type="button" class="fw-theme-toggle" aria-label="Switch to light mode" aria-pressed="true">
         <span class="fw-theme-icon" aria-hidden="true"></span>
       </button>
@@ -1087,33 +1068,165 @@
   </div>
 </nav>
 
+<div id="page-signin" class="page">
+  <section class="hero" style="padding-top:120px;min-height:85vh">
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,2.75rem);margin-bottom:12px">Sign in to FlightWay</h1>
+    <p style="color:var(--text-secondary);max-width:420px;margin:0 auto 32px;font-size:1.05rem">Enter your email to access your Career Hub and AI career advisor. The quiz is optional.</p>
+    <div style="max-width:400px;margin:0 auto;text-align:left">
+      <input type="email" id="signin-email" class="coach-email-input" placeholder="you@example.com" autocomplete="email" style="width:100%;margin-bottom:12px" onkeydown="if(event.key==='Enter')coachSignInFromPage()">
+      <div class="coach-error" id="signin-error"></div>
+      <button type="button" class="coach-primary-btn" id="signin-btn" style="width:100%" onclick="coachSignInFromPage()">Sign in →</button>
+      <p style="text-align:center;margin-top:20px;font-size:0.85rem;color:var(--text-tertiary)"><a href="index.html" style="color:var(--text-secondary);text-decoration:none">← Back to home page</a></p>
+    </div>
+  </section>
+</div>
+
+<div id="page-portal" class="page">
+  <section class="hero" style="padding-top:120px;min-height:85vh">
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,2.75rem);margin-bottom:12px">Your FlightWay home</h1>
+    <p id="portal-greeting" style="color:var(--text-secondary);max-width:480px;margin:0 auto 40px;font-size:1.05rem">Welcome back. Pick up where you left off.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;max-width:720px;margin:0 auto">
+      <a href="dashboard.html" class="cta-btn" style="min-width:220px;text-align:center">Career Hub →</a>
+      <button type="button" class="cta-btn cta-btn-outline" onclick="coachOpenFromNav()" style="min-width:220px">Talk to career advisor →</button>
+      <button type="button" class="cta-btn cta-btn-outline" onclick="showPage('quiz')" style="min-width:220px">Take the quiz (optional)</button>
+    </div>
+  </section>
+</div>
+
 <div id="page-home" class="page active">
-  <section class="app-home">
-    <div class="app-home-inner">
-      <h1>Welcome<span id="app-home-name"></span></h1>
-      <p class="app-sub">Your career toolkit — explore your map, talk to your advisor, or take the quiz.</p>
-      <div class="app-home-grid">
-        <div class="app-home-card" onclick="fwOpenCareerHub()">
-          <div class="app-icon">🗺</div>
-          <h3>Career Hub</h3>
-          <p>Interactive map personalized to your industry matches</p>
-        </div>
-        <div class="app-home-card" onclick="coachOpenFromNav()">
-          <div class="app-icon">💬</div>
-          <h3>Career Advisor</h3>
-          <p>Chat 1-on-1 with an AI coach that knows your results</p>
-        </div>
-        <div class="app-home-card" onclick="showPage('quiz')">
-          <div class="app-icon">✨</div>
-          <h3>Career Quiz</h3>
-          <p>Take or retake the 6-minute assessment</p>
+  <section class="hero">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-blob hero-blob-3"></div>
+    <div class="hero-badge"><span class="dot"></span>Free &middot; 6 minutes &middot; 19 interactive questions</div>
+    <h1 class="gradient-text">Find the career<br>you were made for.</h1>
+    <p>Our AI-powered quiz analyzes your personality, skills, and ambitions &mdash; then matches you to industries and recommends specific majors and classes tailored to your school.</p>
+    <a class="cta-btn quiz-cta" onclick="showPage('quiz')" style="font-size:1.05rem;padding:20px 56px;margin-bottom:28px;">Take the Quiz &mdash; Free &rarr;</a>
+    <div style="display:flex;gap:28px;font-size:0.85rem;color:var(--text-tertiary);justify-content:center;flex-wrap:wrap;margin-top:8px;">
+      <span style="display:inline-flex;align-items:center;gap:5px"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 14 interactive input types</span>
+      <span style="display:inline-flex;align-items:center;gap:5px"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> 12 industries matched</span>
+      <span style="display:inline-flex;align-items:center;gap:5px"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> School-specific majors</span>
+    </div>
+  </section>
+
+  <section style="padding-top: 20px; padding-bottom: 10px;">
+    <div class="section-inner">
+      <div class="coach-results-card fade-in" style="margin: 0;">
+        <div class="coach-results-eye">New &middot; AI Career Coach</div>
+        <div class="coach-results-title">Your results are just the beginning. Meet your AI coach.</div>
+        <div class="coach-results-sub">After the quiz, chat 1-on-1 with an AI coach that knows your results, remembers you between sessions, and searches the web to answer questions about real majors, programs, and deadlines.</div>
+        <div class="coach-results-actions">
+          <button class="primary" onclick="coachOpenFromNav()">Chat with your coach &rarr;</button>
+          <button class="ghost" onclick="showPage('quiz')">Take the quiz first</button>
         </div>
       </div>
-      <div class="app-home-links">
-        <a href="index.html">Marketing site</a>
-        <a href="#" onclick="showPage('students');return false">Career guides</a>
-        <a href="#" onclick="showPage('coaching');return false">Human coaches</a>
+    </div>
+  </section>
+
+  <section style="padding-top: 40px;">
+    <div class="section-inner">
+      <div class="quiz-layout">
+        <div>
+          <div class="section-tag fade-in">How It Works</div>
+          <h2 class="section-title fade-in">Not your typical career quiz</h2>
+          <p class="section-desc fade-in">Sliders, dial inputs, tier lists, swipe stacks, 2D personality maps, budget allocators &mdash; 14 distinct ways to surface what you actually want from your career.</p>
+          <div class="features-grid" style="grid-template-columns: 1fr; gap: 12px;">
+            <div class="feature-card fade-in" style="padding: 22px 26px; display: flex; align-items: flex-start; gap: 16px;">
+              <div class="feature-icon" style="flex-shrink: 0; margin-bottom: 0;"><i data-lucide="brain"></i></div>
+              <div><h4>Personality &amp; work style</h4><p style="font-size:0.85rem">Map yourself on solo-vs-team and creative-vs-structured. Surface what energizes you.</p></div>
+            </div>
+            <div class="feature-card fade-in" style="padding: 22px 26px; display: flex; align-items: flex-start; gap: 16px;">
+              <div class="feature-icon" style="flex-shrink: 0; margin-bottom: 0;"><i data-lucide="bar-chart-2"></i></div>
+              <div><h4>Skills, interests &amp; GPA</h4><p style="font-size:0.85rem">Your school, subjects, and grades all factor in. Live GPA flattery built in.</p></div>
+            </div>
+            <div class="feature-card fade-in" style="padding: 22px 26px; display: flex; align-items: flex-start; gap: 16px;">
+              <div class="feature-icon" style="flex-shrink: 0; margin-bottom: 0;"><i data-lucide="target"></i></div>
+              <div><h4>Industries + majors + classes</h4><p style="font-size:0.85rem">Top 4 matched industries with personalized reasons and school-specific course recommendations.</p></div>
+            </div>
+          </div>
+          <div style="margin-top: 32px;">
+            <a class="cta-btn quiz-cta" onclick="showPage('quiz')">Start the Quiz &rarr;</a>
+          </div>
+        </div>
+        <div class="quiz-preview fade-in" onclick="showPage('quiz')" style="cursor:pointer;transition:all 0.3s">
+          <div class="quiz-preview-header"><div class="quiz-preview-dot"></div><div class="quiz-preview-label">Question 8 of 19 &middot; 42%</div></div>
+          <div style="font-family:'Playfair Display',serif;font-size: 1.15rem; font-weight: 600; margin-bottom: 8px;">Where do you sit on these two dimensions?</div>
+          <div style="font-size:0.8rem;color:var(--text-tertiary);margin-bottom:20px">Click or drag anywhere on the grid.</div>
+          <div style="position:relative;width:100%;aspect-ratio:1;background:linear-gradient(135deg,#f1f5f9,#fff);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+            <div style="position:absolute;left:0;right:0;top:50%;height:1px;background:var(--border)"></div>
+            <div style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:var(--border)"></div>
+            <div style="position:absolute;top:8px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1px">Creative</div>
+            <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1px">Structured</div>
+            <div style="position:absolute;left:34%;top:32%;width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,0.2);transform:translate(-50%,-50%)"></div>
+          </div>
+          <div class="quiz-progress" style="margin-top:20px"><div class="quiz-progress-bar" style="width:42%"></div></div>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <section style="padding-top: 60px;">
+    <div class="section-inner">
+      <div class="stats-bar fade-in">
+        <div class="stat-item"><div class="stat-number">50+</div><div class="stat-label">Career guides</div></div>
+        <div class="stat-item"><div class="stat-number">12k</div><div class="stat-label">Students guided</div></div>
+        <div class="stat-item"><div class="stat-number">94%</div><div class="stat-label">Satisfaction rate</div></div>
+        <div class="stat-item"><div class="stat-number">200+</div><div class="stat-label">Expert coaches</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: var(--surface-solid);">
+    <div class="section-inner">
+      <div class="section-tag fade-in" style="text-align:center">After the Quiz</div>
+      <h2 class="section-title fade-in" style="margin:0 auto 20px;text-align:center">Your matches unlock everything</h2>
+      <p class="section-desc fade-in" style="margin:0 auto 60px;text-align:center">Career deep dives, expert coaches, and a path forward &mdash; all personalized to your results.</p>
+      <div class="features-grid fade-in">
+        <div class="feature-card" style="cursor:pointer" onclick="showPage('students')">
+          <div class="feature-icon"><i data-lucide="book-open"></i></div>
+          <h4>Deep career guides</h4>
+          <p>Day-in-the-life timelines, salary ranges, skills required, and AI automation risk for 50+ careers.</p>
+        </div>
+        <div class="feature-card" style="cursor:pointer" onclick="showPage('coaching')">
+          <div class="feature-icon"><i data-lucide="users"></i></div>
+          <h4>1-on-1 expert coaching</h4>
+          <p>Book sessions with PMs at Stripe, engineers at Google, VPs at McKinsey, designers at Apple.</p>
+        </div>
+        <div class="feature-card" style="cursor:pointer" onclick="showPage('quiz')">
+          <div class="feature-icon"><i data-lucide="graduation-cap"></i></div>
+          <h4>School-tailored recs</h4>
+          <p>Specific majors and classes recommended for your school &mdash; with flattering context on why you're lucky to be there.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="text-align:center">
+    <div class="section-inner">
+      <div class="section-tag fade-in" style="text-align:center">Or explore another way</div>
+      <h2 class="section-title fade-in" style="margin:0 auto 60px;text-align:center">Choose your path</h2>
+      <div class="role-cards fade-in" style="margin:0 auto">
+        <div class="role-card" onclick="showPage('students')">
+          <div class="icon"><i data-lucide="graduation-cap"></i></div>
+          <h3>I'm a Student</h3>
+          <p>Browse career guides, meet coaches, and explore the full student experience.</p>
+          <span class="arrow">Explore &rarr;</span>
+        </div>
+        <div class="role-card" onclick="showPage('educators')">
+          <div class="icon"><i data-lucide="building-2"></i></div>
+          <h3>I run a Career Center</h3>
+          <p>Equip your students with AI-driven career guidance at scale.</p>
+          <span class="arrow">Learn more &rarr;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section" style="background: var(--surface-solid);">
+    <div class="section-inner">
+      <h2 class="section-title fade-in" style="text-align:center;margin:0 auto 20px">Ready to find your career?</h2>
+      <p class="section-desc fade-in" style="text-align:center;margin:0 auto 48px">No fluff. No filler. Just 6 minutes of clarity.</p>
+      <div class="fade-in"><a class="cta-btn quiz-cta" onclick="showPage('quiz')" style="font-size:1rem;padding:18px 52px">Take the Quiz &mdash; Free &rarr;</a></div>
     </div>
   </section>
 </div>
@@ -1185,7 +1298,7 @@
       <h2 class="section-title fade-in">They found their path</h2>
       <div class="testimonial-grid fade-in">
         <div class="testimonial-card"><blockquote>"I was torn between three paths. The quiz narrowed it down, and my coach helped me commit. I start at Deloitte this fall."</blockquote><div class="testimonial-author"><div class="testimonial-avatar">JL</div><div><div class="testimonial-name">Jamie L.</div><div class="testimonial-role">UC Berkeley, Class of '25</div></div></div></div>
-        <div class="testimonial-card"><blockquote>"The career guides are incredibly detailed. I didn't even know product management existed until Flightway."</blockquote><div class="testimonial-author"><div class="testimonial-avatar">PR</div><div><div class="testimonial-name">Priya R.</div><div class="testimonial-role">NYU Stern, Class of '26</div></div></div></div>
+        <div class="testimonial-card"><blockquote>"The career guides are incredibly detailed. I didn't even know product management existed until FlightWay."</blockquote><div class="testimonial-author"><div class="testimonial-avatar">PR</div><div><div class="testimonial-name">Priya R.</div><div class="testimonial-role">NYU Stern, Class of '26</div></div></div></div>
       </div>
     </div>
   </section>
@@ -1202,7 +1315,7 @@
   <section class="hero" style="min-height: auto; padding-top: 140px; padding-bottom: 80px;">
     <button class="back-btn" onclick="showPage('home')">&larr; Back</button>
     <h1 style="font-size: clamp(2.4rem, 5vw, 3.5rem);">Give every student a career advisor.</h1>
-    <p>Flightway's AI-powered platform scales your career center's impact.</p>
+    <p>FlightWay's AI-powered platform scales your career center's impact.</p>
     <a class="cta-btn" href="#">Request a Demo</a>
   </section>
   <section>
@@ -1238,7 +1351,7 @@
   </section>
   <section class="cta-section">
     <div class="section-inner">
-      <h2 class="section-title fade-in" style="text-align:center;">Bring Flightway to your campus</h2>
+      <h2 class="section-title fade-in" style="text-align:center;">Bring FlightWay to your campus</h2>
       <div class="fade-in"><a class="cta-btn" href="#">Request a Demo</a></div>
     </div>
   </section>
@@ -1271,7 +1384,7 @@
     <div class="coach-header">
       <div>
         <div class="coach-eye">Your AI Career Coach</div>
-        <h2 class="coach-title" id="coach-title">Flightway Coach</h2>
+        <h2 class="coach-title" id="coach-title">FlightWay Coach</h2>
         <div class="coach-sub" id="coach-sub">Personalized for <span id="coach-user-email">your account</span>.</div>
       </div>
       <div class="coach-header-actions">
@@ -1361,7 +1474,7 @@
 
     <div id="qz-intro">
       <div class="qz-intro-card">
-        <div class="qz-badge">Flightway</div>
+        <div class="qz-badge">FlightWay</div>
         <h1 class="qz-intro-title">Find the Career<br>You Were Built For</h1>
         <p class="qz-intro-desc">18 interactive questions — sliders, sorts, swipes, dials, and more. We'll match you to industries and recommend specific majors and classes at your school.</p>
         <div class="qz-intro-meta">
@@ -1379,7 +1492,7 @@
     </div>
 
     <div id="qz-quiz" class="qz-hidden">
-      <div class="qz-hdr"><div class="qz-logo-line">Flightway</div></div>
+      <div class="qz-hdr"><div class="qz-logo-line">FlightWay</div></div>
       <div id="qz-encouragement" class="qz-encouragement"></div>
       <div class="qz-prog-wrap">
         <div class="qz-prog-meta">
@@ -1466,7 +1579,7 @@
   <div class="footer-inner">
     <div class="footer-left">
       <a class="logo" onclick="showPage('home')">FlightWay</a>
-      <p>&copy; 2026 Flightway. All rights reserved.</p>
+      <p>&copy; 2026 FlightWay. All rights reserved.</p>
     </div>
     <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a><a href="#">Blog</a></div>
   </div>
@@ -3490,37 +3603,6 @@ function qzOpenCareerHub(){
   window.location.href = qzBuildHubUrl().url;
 }
 
-function fwOpenCareerHub(){
-  try {
-    const hub = (typeof coachLoadHubQuiz === 'function') ? coachLoadHubQuiz() : null;
-    if (hub && hub.scores && Object.values(hub.scores).some(v => Number(v) > 0)) {
-      const token = qzB64UrlEncode(JSON.stringify({ name: hub.name || 'Student', scores: hub.scores }));
-      window.location.href = window.location.origin + '/dashboard.html#r=' + token;
-      return;
-    }
-    if (typeof qzComputeScores === 'function') {
-      const sc = qzComputeScores();
-      if (Object.values(sc).some(v => v > 0)) {
-        window.location.href = qzBuildHubUrl().url;
-        return;
-      }
-    }
-  } catch(_) {}
-  alert('Take the career quiz first to personalize your Career Hub — it takes about 6 minutes.');
-  showPage('quiz');
-}
-
-function fwInitAppHome(){
-  const el = document.getElementById('app-home-name');
-  if (!el) return;
-  let name = '';
-  try {
-    const hub = localStorage.getItem('fw_hub_quiz_v1');
-    if (hub) name = JSON.parse(hub).name || '';
-  } catch(_) {}
-  el.textContent = name ? ', ' + name : '';
-}
-
 function qzOpenEmailModal(){
   const ov = document.getElementById('qz-email-overlay');
   document.getElementById('qz-email-form-wrap').style.display='';
@@ -3593,22 +3675,6 @@ async function qzSubmitEmail(){
 // to the results screen (this is the link sent in the email).
 function qzBootFromHash(){
   const h = window.location.hash || '';
-  if (h === '#app' || h === '#home') {
-    if (typeof showPage === 'function') showPage('home');
-    if (typeof fwInitAppHome === 'function') fwInitAppHome();
-    document.documentElement.removeAttribute('data-fw-page');
-    return true;
-  }
-  if (h === '#coach') {
-    document.documentElement.setAttribute('data-fw-page', 'coach');
-    return false;
-  }
-  // #quiz → jump straight to the quiz page (used by links from index.html).
-  if (h === '#quiz') {
-    if (typeof showPage === 'function') showPage('quiz');
-    document.documentElement.removeAttribute('data-fw-page');
-    return true;
-  }
   const m = h.match(/^#r=([A-Za-z0-9_-]+)$/);
   if(!m) return false;
   try{
@@ -3627,12 +3693,6 @@ function qzBootFromHash(){
     return false;
   }
 }
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded', qzBootFromHash);
-} else {
-  qzBootFromHash();
-}
-
 /* ═════════════════════════════════════════════════════════════════════════
    AI COACH MODULE
    ─────────────
@@ -3654,6 +3714,36 @@ const COACH_HUB_KEY    = 'fw_hub_quiz_v1';
 
 let coachUserId = null;
 let coachSending = false;
+let coachPostSignupTarget = 'coach';
+
+function portalUpdateGreeting(){
+  const el = document.getElementById('portal-greeting');
+  if (!el) return;
+  const hub = coachLoadHubQuiz();
+  const name = (hub && hub.name) ? hub.name : 'there';
+  el.textContent = 'Welcome back, ' + name + '. Pick up where you left off — explore your Career Hub or chat with your advisor.';
+}
+
+function fwRouteBoot(){
+  const h = (location.hash || '').replace(/^#/, '');
+  if (h === 'signin') { showPage('signin'); return true; }
+  if (h === 'portal') {
+    if (coachUserId) { showPage('portal'); portalUpdateGreeting(); }
+    else showPage('signin');
+    return true;
+  }
+  if (h === 'coach') {
+    if (coachUserId) coachOpenFromNav();
+    else if (coachHasQuizContext()) coachOpenSignup();
+    else showPage('signin');
+    return true;
+  }
+  if (h === 'quiz' && typeof showPage === 'function') {
+    showPage('quiz');
+    return true;
+  }
+  return false;
+}
 
 function coachLoadHubQuiz(){
   try {
@@ -3680,16 +3770,13 @@ function coachInit(){
     if (raw) coachUserId = JSON.parse(raw).userId || null;
   } catch(_) { coachUserId = null; }
   coachUpdateNavLink();
-  if ((window.location.hash || '') === '#coach') {
-    document.documentElement.removeAttribute('data-fw-page');
-    showPage('coach');
-    document.getElementById('coach-user-email').textContent = coachUserId || '';
-    document.getElementById('coach-empty').style.display = '';
-    coachSetProgress(0);
-    setTimeout(()=>{ document.getElementById('coach-input').focus(); }, 50);
-    return;
+  if (fwRouteBoot()) {
+    document.documentElement.removeAttribute('data-boot-page');
+  } else if (qzBootFromHash()) {
+    document.documentElement.removeAttribute('data-boot-page');
+  } else {
+    document.documentElement.removeAttribute('data-boot-page');
   }
-  if (typeof fwInitAppHome === 'function') fwInitAppHome();
 }
 
 function coachUpdateNavLink(){
@@ -3935,17 +4022,31 @@ function coachSignupOverlayClick(e){
   if (e.target && e.target.id === 'coach-signup-overlay') coachCloseSignup();
 }
 
-async function coachSignup(){
-  const input = document.getElementById('coach-signup-email');
-  const errEl = document.getElementById('coach-signup-error');
-  const btn = document.getElementById('coach-signup-btn');
+async function coachSignInFromPage(){
+  coachPostSignupTarget = 'portal';
+  await coachSignup({
+    inputEl: document.getElementById('signin-email'),
+    errEl: document.getElementById('signin-error'),
+    btnEl: document.getElementById('signin-btn'),
+    btnLabel: 'Sign in →',
+    btnBusy: 'Signing in…'
+  });
+}
+
+async function coachSignup(opts){
+  opts = opts || {};
+  const input = opts.inputEl || document.getElementById('coach-signup-email');
+  const errEl = opts.errEl || document.getElementById('coach-signup-error');
+  const btn = opts.btnEl || document.getElementById('coach-signup-btn');
+  const btnLabel = opts.btnLabel || 'Create account →';
+  const btnBusy = opts.btnBusy || 'Creating…';
   const email = (input.value||'').trim();
   errEl.textContent = '';
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){
     errEl.textContent = 'Please enter a valid email address.';
     return;
   }
-  input.disabled = true; btn.disabled = true; btn.textContent = 'Creating…';
+  input.disabled = true; btn.disabled = true; btn.textContent = btnBusy;
   try {
     let resp;
     try {
@@ -3982,12 +4083,19 @@ async function coachSignup(){
 
     coachSetUser(data.userId);
     coachCloseSignup();
-    coachOpenFromNav();
+    if (coachPostSignupTarget === 'portal') {
+      showPage('portal');
+      portalUpdateGreeting();
+      try { history.replaceState(null, '', '#portal'); } catch(_) {}
+      coachPostSignupTarget = 'coach';
+    } else {
+      coachOpenFromNav();
+    }
   } catch(err){
     const msg = (err && err.message) || String(err) || 'Something went wrong.';
     errEl.textContent = msg;
     console.error('coachSignup failed:', err);
-    input.disabled = false; btn.disabled = false; btn.textContent = 'Create account →';
+    input.disabled = false; btn.disabled = false; btn.textContent = btnLabel;
   }
 }
 
@@ -3998,8 +4106,8 @@ function coachOpenFromNav(){
     if (coachHasQuizContext()) {
       coachOpenSignup();
     } else {
-      alert('Take the career quiz first — your AI coach is personalized from your results. It takes about 6 minutes (or use the dev skip button).');
-      showPage('quiz');
+      showPage('signin');
+      try { history.replaceState(null, '', '#signin'); } catch(_) {}
     }
     return;
   }
