@@ -918,6 +918,12 @@ nav {
   background: rgb(var(--bg));
 }
 
+/* Home page: transparent like the landing page so the constellation shows in
+   the margins — cards, panels and buttons above remain fully opaque. */
+#page-home {
+  background: transparent !important;
+}
+
 .coach-overlay {
   background: var(--overlay-bg) !important;
   z-index: 200 !important;
