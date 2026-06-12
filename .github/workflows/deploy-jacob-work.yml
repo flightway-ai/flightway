@@ -1,4 +1,4 @@
-name: Deploy prototype (Jacob_Work)
+name: Deploy Jacob_Work prototype to Cloudflare Pages
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy to Cloudflare Pages (prototype)
+      - name: Deploy prototype branch to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}

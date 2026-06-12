@@ -684,6 +684,8 @@ const careerToQuizKeys = {
 };
 
 let userName = 'Student';
+let hubQuizScores = null;
+
 (function initPersonalization() {
   const params = new URLSearchParams(window.location.search);
   let name = params.get('name') || '';
@@ -1237,8 +1239,6 @@ function openMarcoAdvisor() {
   } catch (_) {}
   window.location.href = 'Flightway.html#coach';
 }
-
-let hubQuizScores = null;
 
 document.getElementById('marco-trigger').addEventListener('click', openMarcoAdvisor);
 document.querySelector('.marco-trigger-label').addEventListener('click', openMarcoAdvisor);

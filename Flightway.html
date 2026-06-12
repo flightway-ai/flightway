@@ -1522,8 +1522,9 @@
   <div class="qz-email-overlay" id="qz-email-overlay" onclick="qzEmailOverlayClick(event)">
     <div class="qz-email-modal" id="qz-email-modal">
       <div id="qz-email-form-wrap">
-        <div class="qz-email-title">Where should we send it?</div>
-        <div class="qz-email-sub">We'll email you a link to your full career-fit results. No spam, no newsletter — just your results.</div>
+        <div class="qz-email-title">Almost there — what's your name?</div>
+        <div class="qz-email-sub">We'll personalize your Career Hub and email you a private link. No spam — just your results.</div>
+        <input type="text" class="qz-email-input" id="qz-name-input" placeholder="Your first name" autocomplete="given-name" style="margin-bottom:10px" onkeydown="if(event.key==='Enter')document.getElementById('qz-email-input').focus()">
         <input type="email" class="qz-email-input" id="qz-email-input" placeholder="you@example.com" autocomplete="email" onkeydown="if(event.key==='Enter')qzSubmitEmail()">
         <div class="qz-email-error" id="qz-email-error"></div>
         <div class="qz-email-btns">
@@ -2340,6 +2341,7 @@ const QZ_COMBOS = [
 // Quiz state
 let qzCur=0, qzAns={}, qzSliders={};
 let qzAnswers={pairs:{},tot:{},env:[],map:null,emoji:{},swipes:{},yesno:{},rank:{},spectrum:null,subjects:[]};
+let qzName='';
 let qzBudget={salary:17,purpose:17,flex:16,growth:17,recog:16,security:17};
 let qzGpa=null, qzSchool=null, qzSchoolMatch=null, qzStage=null;
 let qzShownCombos=new Set();
@@ -3476,13 +3478,13 @@ function qzRestart(){
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   EMAIL-GATE + NETLIFY INTEGRATION
+   EMAIL-GATE + CLOUDFLARE PAGES INTEGRATION
    Flow:
      1. Quiz finishes → qzShowGate() shows a screen with "Email me" + "Home" buttons.
      2. "Email me" → qzOpenEmailModal() shows the email-prompt modal.
      3. Submit → POST to /send-results with { email, token, results_url }.
      4. The Cloudflare Pages function emails the user a link of the form:
-            https://<your-site>/flightway.html#r=<token>
+            https://<your-site>/dashboard.html#r=<token>
      5. On page load, qzBootFromHash() detects #r=… and restores state + jumps
         straight to qzShowResults().
    The token is the entire quiz state, base64url-encoded — so results survive
@@ -3564,7 +3566,7 @@ function qzNormalizeScores(sc){
 
 function qzBuildHubPayload(){
   const sc = (typeof qzComputeScores === 'function') ? qzComputeScores() : {};
-  return { name: 'Student', scores: qzNormalizeScores(sc) };
+  return { name: (qzName || 'Student').trim() || 'Student', scores: qzNormalizeScores(sc) };
 }
 
 function qzBuildHubUrl(){
@@ -3584,12 +3586,14 @@ function qzOpenEmailModal(){
   document.getElementById('qz-email-form-wrap').style.display='';
   document.getElementById('qz-email-success-wrap').style.display='none';
   document.getElementById('qz-email-error').textContent='';
+  const nameInput = document.getElementById('qz-name-input');
+  if (nameInput) { nameInput.value = qzName || ''; nameInput.disabled = false; }
   const input = document.getElementById('qz-email-input');
   input.value=''; input.disabled=false;
   document.getElementById('qz-email-submit-btn').disabled=false;
   document.getElementById('qz-email-submit-btn').textContent='Send my results →';
   ov.classList.add('vis');
-  setTimeout(()=>input.focus(),100);
+  setTimeout(()=>(nameInput || input).focus(),100);
 }
 function qzCloseEmailModal(){
   document.getElementById('qz-email-overlay').classList.remove('vis');
@@ -3608,13 +3612,21 @@ async function qzSubmitEmail(){
   const input = document.getElementById('qz-email-input');
   const errEl = document.getElementById('qz-email-error');
   const btn = document.getElementById('qz-email-submit-btn');
+  const nameInput = document.getElementById('qz-name-input');
   const email = (input.value||'').trim();
+  qzName = (nameInput && nameInput.value || '').trim();
   errEl.textContent='';
+  if (!qzName) {
+    errEl.textContent='Please enter your name.';
+    if (nameInput) nameInput.focus();
+    return;
+  }
   if(!qzValidateEmail(email)){
     errEl.textContent='Please enter a valid email address.';
     return;
   }
   const { url, token } = qzBuildHubUrl();
+  if (nameInput) nameInput.disabled=true;
   input.disabled=true; btn.disabled=true; btn.textContent='Sending…';
   try{
     const resp = await fetch(QZ_SEND_RESULTS_EP, {
@@ -3632,6 +3644,7 @@ async function qzSubmitEmail(){
     document.getElementById('qz-email-success-wrap').style.display='';
   } catch(err){
     errEl.textContent = (err && err.message) ? err.message : 'Something went wrong. Please try again.';
+    if (nameInput) nameInput.disabled=false;
     input.disabled=false; btn.disabled=false; btn.textContent='Send my results →';
   }
 }

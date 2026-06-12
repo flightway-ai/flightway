@@ -1,2 +1,4 @@
 .dev.vars
 .wrangler/
+netlify.toml
+Netlify/
