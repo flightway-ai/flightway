@@ -30,8 +30,10 @@
   --border: 39 34 30;
 
   --canvas-opacity: 1;
-  --nav-bg: rgb(8 7 6 / 0.82);
-  --overlay-bg: rgb(8 7 6 / 0.55);
+  --nav-bg: rgb(13 11 10 / 0.96);
+  --nav-border: rgb(var(--border));
+  --overlay-bg: rgb(8 7 6 / 0.72);
+  --content-elevated: rgb(var(--surface));
 }
 
 /* ── Light (warm cream + peach) ── */
@@ -62,8 +64,10 @@
   --border: 228 219 212;
 
   --canvas-opacity: 0.45;
-  --nav-bg: rgb(255 250 247 / 0.88);
+  --nav-bg: rgb(255 250 247 / 0.94);
+  --nav-border: rgb(var(--border));
   --overlay-bg: rgb(20 12 9 / 0.35);
+  --content-elevated: rgb(var(--surface));
 }
 
 /* Solid aliases for Flightway.html legacy var(--bg) usage */
@@ -128,6 +132,40 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   transition: background 0.25s ease, color 0.25s ease;
+  position: relative;
+}
+
+/* Layering: canvas (0) → page content (10) → nav (100) → modals (200+) */
+#fw-data-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--canvas-opacity, 1);
+  transition: opacity 0.25s ease;
+}
+
+main,
+.page,
+.fw-hero,
+.fw-section,
+.fw-footer,
+footer,
+.coach-overlay {
+  position: relative;
+  z-index: 10;
+}
+
+nav,
+.fw-nav {
+  z-index: 100 !important;
+  border-bottom: 1px solid var(--nav-border) !important;
+  box-shadow: 0 1px 0 rgb(0 0 0 / 0.06);
+}
+
+[data-theme="dark"] nav,
+[data-theme="dark"] .fw-nav {
+  box-shadow: 0 4px 24px rgb(0 0 0 / 0.35);
 }
 
 /* Theme toggle */
@@ -191,18 +229,20 @@ body {
 .fw-nav {
   position: fixed;
   inset: 0 0 auto 0;
-  z-index: 50;
+  z-index: 100;
   height: 64px;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid var(--nav-border);
   background: var(--nav-bg);
-  transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s, box-shadow 0.3s;
 }
 
 .fw-nav.scrolled {
-  border-bottom-color: rgb(var(--border));
+  border-bottom-color: var(--nav-border);
   background: var(--nav-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .fw-nav-inner {
@@ -247,14 +287,36 @@ body {
   .fw-nav-links { display: flex; }
 }
 
-.fw-nav-links a {
+.fw-nav-links a:not(.fw-btn) {
   font-size: 0.875rem;
-  color: rgb(var(--text-muted));
+  color: rgb(var(--text));
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--border));
+  background: var(--content-elevated);
 }
 
-.fw-nav-links a:hover { color: rgb(var(--text)); }
+.fw-nav-links a:not(.fw-btn):hover {
+  color: rgb(var(--text));
+  border-color: rgb(var(--primary) / 0.4);
+  background: rgb(var(--surface-hover));
+}
+
+.fw-mobile-menu a:not(.fw-btn) {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--border));
+  background: var(--content-elevated);
+  color: rgb(var(--text));
+}
+
+.fw-mobile-menu a:not(.fw-btn):hover {
+  background: rgb(var(--surface-hover));
+  border-color: rgb(var(--primary) / 0.4);
+}
 
 .fw-nav-actions {
   display: none;
@@ -287,7 +349,11 @@ body {
   display: none;
   overflow: hidden;
   border-bottom: 1px solid rgb(var(--border));
-  background: rgb(var(--bg));
+  background: var(--nav-bg);
+  position: relative;
+  z-index: 99;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .fw-mobile-menu.open { display: block; }
@@ -827,27 +893,26 @@ body {
   }
 }
 
-/* Data field canvas */
-#fw-data-field {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: var(--canvas-opacity, 1);
-  transition: opacity 0.25s ease;
-}
+/* Data field canvas — duplicate removed; see stacking rules near body */
 
 /* Flightway.html overrides */
 nav {
   background: var(--nav-bg) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom-color: rgb(var(--border)) !important;
-  transition: background 0.25s ease, border-color 0.25s ease;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: var(--nav-border) !important;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.page {
+  position: relative;
+  z-index: 10;
+  background: rgb(var(--bg));
 }
 
 .coach-overlay {
   background: var(--overlay-bg) !important;
+  z-index: 200 !important;
 }
 
 .coach-results-card {
@@ -856,9 +921,25 @@ nav {
   box-shadow: 0 12px 28px rgb(var(--primary) / 0.25) !important;
 }
 
+.coach-results-card .coach-results-title,
+.coach-results-card .coach-results-sub,
+.coach-results-card .coach-results-eye {
+  color: rgb(var(--primary-fg)) !important;
+}
+
 .coach-results-actions .primary {
   background: rgb(var(--surface)) !important;
   color: rgb(var(--primary)) !important;
+}
+
+.coach-results-actions .ghost {
+  background: rgb(var(--primary-fg) / 0.12) !important;
+  color: rgb(var(--primary-fg)) !important;
+  border: 1px solid rgb(var(--primary-fg) / 0.35) !important;
+}
+
+.coach-results-actions .ghost:hover {
+  background: rgb(var(--primary-fg) / 0.22) !important;
 }
 
 .coach-updating {
@@ -871,19 +952,40 @@ nav {
   border-top-color: rgb(var(--primary)) !important;
 }
 
-.logo, .nav-links a { color: rgb(var(--text-muted)) !important; }
-.logo:hover, .nav-links a:hover { color: rgb(var(--text)) !important; }
+.logo {
+  color: rgb(var(--text)) !important;
+}
+
+.logo:hover {
+  color: rgb(var(--text)) !important;
+}
+
+.nav-links a:not(.nav-cta):not(.quiz-cta) {
+  color: rgb(var(--text)) !important;
+  padding: 8px 14px !important;
+  border-radius: 9999px !important;
+  border: 1px solid rgb(var(--border)) !important;
+  background: var(--content-elevated) !important;
+  font-weight: 500 !important;
+}
+
+.nav-links a:not(.nav-cta):not(.quiz-cta):hover {
+  color: rgb(var(--text)) !important;
+  background: rgb(var(--surface-hover)) !important;
+  border-color: rgb(var(--primary) / 0.4) !important;
+}
 
 .nav-cta, .cta-btn, .quiz-cta {
   background: rgb(var(--primary)) !important;
   color: rgb(var(--primary-fg)) !important;
   border-color: transparent !important;
-  box-shadow: none !important;
+  box-shadow: 0 4px 16px rgb(var(--primary) / 0.3) !important;
   animation: none !important;
 }
 
 .nav-cta:hover, .cta-btn:hover, .quiz-cta:hover {
   background: rgb(var(--primary-hover)) !important;
+  color: rgb(var(--primary-fg)) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -904,6 +1006,7 @@ nav {
 
 .hero h1, .section-title, .coach-title, .qz-intro-title, .qz-q-text {
   font-family: 'Inter', system-ui, sans-serif !important;
+  color: rgb(var(--text)) !important;
 }
 
 .hero, #page-home .hero { background: transparent !important; }
@@ -914,13 +1017,21 @@ nav {
   color: rgb(var(--primary)) !important;
 }
 
+.hero p, .section-sub, .role-card p, .feature-card p {
+  color: rgb(var(--text-muted)) !important;
+}
+
 .role-card, .feature-card, .coach-card, .stat-item, .testimonial-card,
 .quiz-preview, .career-chip, .mp-coach-card, .metric-card, .overview-sidebar,
 .timeline-content, .ai-outlook-card, .coach-shell, .coach-settings-modal,
 .coach-signup-modal {
   background: rgb(var(--surface)) !important;
   border-color: rgb(var(--border)) !important;
-  color: rgb(var(--text));
+  color: rgb(var(--text)) !important;
+}
+
+.role-card h3, .feature-card h3, .stat-item .stat-val {
+  color: rgb(var(--text)) !important;
 }
 
 .role-card:hover, .feature-card:hover, .career-chip:hover {
@@ -928,6 +1039,7 @@ nav {
   box-shadow: 0 0 48px rgb(var(--primary) / 0.07) !important;
 }
 
+/* ── Quiz dark / theme overrides ── */
 #page-quiz { background: rgb(var(--bg)) !important; }
 
 #page-quiz .qz-intro-card,
@@ -935,33 +1047,164 @@ nav {
 #page-quiz .qz-resume-card,
 #page-quiz .vcard,
 #page-quiz .qz-results-wrap,
-#page-quiz .qz-gate-card {
+#page-quiz .qz-gate-card,
+#page-quiz .qz-combo-card,
+#page-quiz .qz-email-card,
+#page-quiz .opt,
+#page-quiz .pair-card,
+#page-quiz .tot-card,
+#page-quiz .qtag,
+#page-quiz .text-input,
+#page-quiz .qz-skip-btn,
+#page-quiz .school-suggest,
+#page-quiz .bucket-item,
+#page-quiz .spec-marker {
   background: rgb(var(--surface)) !important;
-  color: rgb(var(--text));
+  color: rgb(var(--text)) !important;
+  border-color: rgb(var(--border)) !important;
 }
 
-#page-quiz .qz-badge { background: rgb(var(--primary) / 0.12); color: rgb(var(--primary)); }
-#page-quiz .qz-start-btn, #page-quiz .qz-btn-next, .coach-primary-btn, .coach-send-btn {
+#page-quiz .qz-logo-line,
+#page-quiz .qz-q-num,
+#page-quiz .qz-upload-label,
+#page-quiz .qz-ri-title {
+  color: rgb(var(--primary)) !important;
+}
+
+#page-quiz .qz-badge {
+  background: rgb(var(--primary) / 0.12) !important;
+  color: rgb(var(--primary)) !important;
+}
+
+#page-quiz .qz-prog-fill {
+  background: linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-hover))) !important;
+}
+
+#page-quiz .qz-start-btn,
+#page-quiz .qz-btn-next,
+.coach-primary-btn,
+.coach-send-btn {
   background: rgb(var(--primary)) !important;
   color: rgb(var(--primary-fg)) !important;
   box-shadow: 0 8px 24px rgb(var(--primary) / 0.25) !important;
 }
 
-.coach-msg.user { background: rgb(var(--primary)) !important; }
-.coach-results-card {
-  background: linear-gradient(135deg, rgb(var(--surface-2)), rgb(var(--surface))) !important;
-  border: 1px solid rgb(var(--primary) / 0.3) !important;
-  box-shadow: 0 0 48px rgb(var(--primary) / 0.1) !important;
-  color: rgb(var(--text)) !important;
+#page-quiz .qz-start-btn:hover,
+#page-quiz .qz-btn-next:hover:not(:disabled) {
+  background: rgb(var(--primary-hover)) !important;
+  color: rgb(var(--primary-fg)) !important;
 }
 
-.coach-results-actions .primary {
+#page-quiz .qz-btn-next:disabled {
+  background: rgb(var(--border)) !important;
+  color: rgb(var(--text-muted)) !important;
+}
+
+#page-quiz .vcard:hover,
+#page-quiz .qtag:hover,
+#page-quiz .opt:hover,
+#page-quiz .pair-card:hover,
+#page-quiz .tot-card:hover,
+#page-quiz .qz-upload-zone:hover {
+  border-color: rgb(var(--primary) / 0.45) !important;
+  background: rgb(var(--surface-hover)) !important;
+}
+
+#page-quiz .vcard.sel,
+#page-quiz .opt.sel,
+#page-quiz .bucket.active {
+  border-color: rgb(var(--primary)) !important;
+  background: rgb(var(--primary) / 0.12) !important;
+  box-shadow: 0 8px 20px rgb(var(--primary) / 0.15) !important;
+}
+
+#page-quiz .qtag.sel {
+  border-color: rgb(var(--primary)) !important;
   background: rgb(var(--primary)) !important;
   color: rgb(var(--primary-fg)) !important;
+}
+
+#page-quiz .opt.sel .opt-letter {
+  background: rgb(var(--primary)) !important;
+  color: rgb(var(--primary-fg)) !important;
+}
+
+#page-quiz .text-input:focus {
+  border-color: rgb(var(--primary)) !important;
+}
+
+#page-quiz .sug-item:hover {
+  background: rgb(var(--surface-hover)) !important;
+}
+
+#page-quiz .qz-resume-insight {
+  background: rgb(var(--primary) / 0.08) !important;
+  border-color: rgb(var(--primary) / 0.25) !important;
+}
+
+#page-quiz .qz-ri-text {
+  color: rgb(var(--text-muted)) !important;
+}
+
+#page-quiz .qz-skip-quiz-btn {
+  color: rgb(var(--text-muted)) !important;
+  border-color: rgb(var(--border)) !important;
+}
+
+#page-quiz .qz-skip-quiz-btn:hover {
+  color: rgb(var(--text)) !important;
+  background: rgb(var(--surface-hover)) !important;
+}
+
+#page-quiz .qz-btn-back {
+  color: rgb(var(--text-muted)) !important;
+  border-color: rgb(var(--border)) !important;
+}
+
+#page-quiz .qz-btn-back:hover {
+  color: rgb(var(--text)) !important;
+  border-color: rgb(var(--text-muted)) !important;
+}
+
+.coach-msg.user {
+  background: rgb(var(--primary)) !important;
+  color: rgb(var(--primary-fg)) !important;
+}
+
+.coach-msg.assistant {
+  background: rgb(var(--surface)) !important;
+  color: rgb(var(--text)) !important;
 }
 
 .coach-progress-fill {
   background: linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-hover))) !important;
 }
 
-footer { border-top-color: rgb(var(--border)) !important; }
+footer {
+  border-top-color: rgb(var(--border)) !important;
+  background: rgb(var(--bg)) !important;
+  color: rgb(var(--text-muted)) !important;
+}
+
+/* Contrast guard: body copy inherits from parent surfaces */
+p, li, span, label, h1, h2, h3, h4, h5, h6,
+.qz-q-sub, .qz-intro-desc, .coach-msg.assistant {
+  color: inherit;
+}
+
+.coach-gear:hover {
+  background: rgb(var(--primary)) !important;
+  color: rgb(var(--primary-fg)) !important;
+  border-color: rgb(var(--primary)) !important;
+}
+
+[data-theme="dark"] .fw-section,
+[data-theme="dark"] .fw-hero {
+  background: transparent;
+}
+
+[data-theme="dark"] .fw-card,
+[data-theme="dark"] .fw-feature-card {
+  background: rgb(var(--surface)) !important;
+  color: rgb(var(--text)) !important;
+}
