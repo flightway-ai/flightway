@@ -1,0 +1,201 @@
+/* Career Hub (dashboard.html) — theme-aligned overrides */
+
+:root,
+[data-theme="dark"] {
+  --hub-canvas-bg: rgb(8 7 6);
+  --hub-topbar-bg: rgb(13 11 10 / 0.92);
+  --hub-panel-bg: rgb(24 21 19);
+  --hub-control-bg: rgb(38 34 30);
+  --hub-border: rgb(72 64 58);
+  --hub-text: rgb(245 238 233);
+  --hub-text-muted: rgb(148 137 129);
+  --hub-accent: rgb(255 178 153);
+  --hub-accent-hover: rgb(255 203 184);
+  --hub-accent-fg: rgb(20 12 9);
+}
+
+[data-theme="light"] {
+  --hub-canvas-bg: rgb(240 248 255);
+  --hub-topbar-bg: rgb(255 255 255 / 0.94);
+  --hub-panel-bg: rgb(255 255 255);
+  --hub-control-bg: rgb(245 238 233);
+  --hub-border: rgb(198 187 179);
+  --hub-text: rgb(20 12 9);
+  --hub-text-muted: rgb(90 81 75);
+  --hub-accent: rgb(56 189 248);
+  --hub-accent-hover: rgb(125 211 252);
+  --hub-accent-fg: rgb(12 74 110);
+}
+
+body.hub-page {
+  background: var(--hub-canvas-bg) !important;
+  color: var(--hub-text) !important;
+}
+
+body.hub-page #topbar {
+  background: var(--hub-topbar-bg) !important;
+  border-bottom-color: var(--hub-border) !important;
+}
+
+body.hub-page .logo {
+  color: var(--hub-text) !important;
+}
+
+body.hub-page .logo span {
+  color: var(--hub-text-muted) !important;
+}
+
+body.hub-page #search {
+  background: var(--hub-control-bg) !important;
+  border: 1px solid var(--hub-border) !important;
+  color: var(--hub-text) !important;
+}
+
+body.hub-page #search::placeholder {
+  color: var(--hub-text-muted) !important;
+}
+
+body.hub-page #search:focus {
+  border-color: rgb(var(--primary) / 0.45) !important;
+}
+
+body.hub-page .user-chip {
+  background: var(--hub-control-bg) !important;
+  border: 1px solid var(--hub-border) !important;
+  color: var(--hub-text) !important;
+}
+
+body.hub-page .user-avatar {
+  background: linear-gradient(135deg, var(--hub-accent), var(--hub-accent-hover)) !important;
+  color: var(--hub-accent-fg) !important;
+}
+
+body.hub-page .legend-label {
+  color: var(--hub-text-muted) !important;
+}
+
+body.hub-page #tooltip {
+  background: var(--hub-panel-bg) !important;
+  border: 1px solid var(--hub-border) !important;
+  color: var(--hub-text) !important;
+}
+
+body.hub-page #tooltip .tt-industry {
+  color: var(--hub-text-muted) !important;
+}
+
+body.hub-page #detail-panel {
+  background: var(--hub-panel-bg) !important;
+  border-left: 1px solid var(--hub-border);
+  box-shadow: -8px 0 40px rgb(0 0 0 / 0.35) !important;
+}
+
+body.hub-page .panel-header,
+body.hub-page .panel-footer {
+  border-color: var(--hub-border) !important;
+}
+
+body.hub-page .panel-close {
+  background: var(--hub-control-bg) !important;
+  border: 1px solid var(--hub-border) !important;
+  color: var(--hub-text-muted) !important;
+}
+
+body.hub-page .panel-close:hover {
+  color: var(--hub-text) !important;
+  border-color: rgb(var(--primary) / 0.4) !important;
+}
+
+body.hub-page .panel-career-name {
+  color: var(--hub-text) !important;
+}
+
+body.hub-page .panel-industry-badge,
+body.hub-page .skill-pill {
+  background: var(--hub-control-bg) !important;
+  border: 1px solid var(--hub-border) !important;
+  color: var(--hub-text) !important;
+}
+
+body.hub-page .panel-fit-label,
+body.hub-page .panel-section-label {
+  color: var(--hub-text-muted) !important;
+}
+
+body.hub-page .panel-fit-pct {
+  color: var(--hub-text) !important;
+}
+
+body.hub-page .panel-fit-bar-bg {
+  background: var(--hub-control-bg) !important;
+  border: 1px solid var(--hub-border);
+}
+
+body.hub-page .panel-description {
+  color: var(--hub-text-muted) !important;
+}
+
+body.hub-page .btn-daylife {
+  background: var(--hub-control-bg) !important;
+  border: 1px solid var(--hub-border) !important;
+  color: var(--hub-text-muted) !important;
+  opacity: 1 !important;
+}
+
+body.hub-page .hub-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+body.hub-page .hub-home-link {
+  font-size: 0.8rem;
+  color: var(--hub-text-muted);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  border: 1px solid var(--hub-border);
+  background: var(--hub-control-bg);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+body.hub-page .hub-home-link:hover {
+  color: var(--hub-text);
+  border-color: rgb(var(--primary) / 0.4);
+}
+
+/* Marco → AI advisor trigger */
+body.hub-page .marco-trigger-label {
+  color: var(--hub-text) !important;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: var(--hub-control-bg);
+  border: 1px solid var(--hub-border);
+}
+
+body.hub-page .marco-trigger-label:hover {
+  color: var(--hub-text) !important;
+  border-color: rgb(var(--primary) / 0.45);
+}
+
+body.hub-page #marco-trigger {
+  background: linear-gradient(135deg, var(--hub-accent), var(--hub-accent-hover)) !important;
+  color: var(--hub-accent-fg) !important;
+  box-shadow: 0 4px 20px rgb(var(--primary) / 0.35) !important;
+  border: 2px solid rgb(var(--primary) / 0.3);
+}
+
+body.hub-page #marco-trigger:hover {
+  box-shadow: 0 6px 28px rgb(var(--primary) / 0.5) !important;
+}
+
+@keyframes hub-marco-pulse {
+  0%   { box-shadow: 0 4px 20px rgb(var(--primary) / 0.35); }
+  50%  { box-shadow: 0 4px 32px rgb(var(--primary) / 0.55), 0 0 0 10px rgb(var(--primary) / 0.08); }
+  100% { box-shadow: 0 4px 20px rgb(var(--primary) / 0.35); }
+}
+
+body.hub-page #marco-trigger {
+  animation: hub-marco-pulse 2s ease-out 3;
+}

@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flyway — Career Hub</title>
+<title>FlightWay — Career Hub</title>
+<link rel="stylesheet" href="assets/flightway-theme.css">
+<link rel="stylesheet" href="assets/hub-dashboard.css">
+<script>(function(){try{var t=localStorage.getItem('flightway-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -515,7 +518,7 @@
   }
 </style>
 </head>
-<body>
+<body class="hub-page">
 
 <!-- TOP BAR -->
 <div id="topbar">
@@ -534,6 +537,12 @@
       <span class="legend-label">Poor fit</span>
       <div class="legend-bar"></div>
       <span class="legend-label">Best fit</span>
+    </div>
+    <div class="hub-topbar-actions">
+      <a href="Flightway.html" class="hub-home-link">App home</a>
+      <button type="button" class="fw-theme-toggle" aria-label="Switch theme" aria-pressed="true">
+        <span class="fw-theme-icon" aria-hidden="true"></span>
+      </button>
     </div>
     <div class="user-chip">
       <div class="user-avatar" id="user-avatar-initials">S</div>
@@ -640,6 +649,11 @@ const careers = [
   { id:19, name:"Journalist",         industry:"Media",       x:45, y:75, fitScore:73, skills:["writing","curiosity","communication"],         description:"Investigate and report on the world. Journalism at its best holds power accountable and helps people understand what's happening and why." },
   { id:20, name:"Entrepreneur",       industry:"Business",    x:60, y:40, fitScore:90, skills:["leadership","risk-taking","creativity"],       description:"Build something from nothing. Entrepreneurs identify problems, take calculated risks, and create organizations that didn't exist before." }
 ];
+
+function getHubCanvasBg() {
+  const v = getComputedStyle(document.documentElement).getPropertyValue('--hub-canvas-bg').trim();
+  return v || '#080706';
+}
 
 // ── STATE ──
 const state = {
@@ -852,7 +866,7 @@ function render() {
   ctx.clearRect(0, 0, W, H);
 
   // Background
-  ctx.fillStyle = '#0D0D1A';
+  ctx.fillStyle = getHubCanvasBg();
   ctx.fillRect(0, 0, W, H);
 
   // Dot grid (screen space)
@@ -1252,6 +1266,9 @@ document.querySelector('.marco-trigger-label').addEventListener('keydown', e => 
   document.getElementById('user-display-name').textContent = name;
   document.getElementById('user-avatar-initials').textContent = name[0].toUpperCase();
 })();
+
+window.addEventListener('flightway-theme-change', () => { render(); });
 </script>
+<script src="assets/theme.js" defer></script>
 </body>
 </html>
