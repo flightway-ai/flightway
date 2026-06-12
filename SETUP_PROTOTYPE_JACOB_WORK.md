@@ -58,8 +58,10 @@ npx wrangler pages deploy . --project-name=flightway-prototype --branch=Jacob_Wo
 ```bash
 npm run deploy:prototype
 # or
-npx wrangler pages deploy . --project-name=flightway --branch=Jacob_Work
+npx wrangler pages deploy . --project-name=flightway-prototype --branch=Jacob_Work
 ```
+
+**Live prototype (after deploy):** `https://flightway-prototype.pages.dev` (or the branch preview URL shown in the deploy output).
 
 ---
 
