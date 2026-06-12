@@ -10,6 +10,10 @@
   var FOLLOW = 0.35;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  function themeScale() {
+    return document.documentElement.getAttribute('data-theme') === 'light' ? 0.55 : 1;
+  }
+
   var w = 0, h = 0, points = [], raf = 0, running = true, t = 0;
   var mouse = { tx: 0, ty: 0, cx: 0, cy: 0 };
 
@@ -83,7 +87,7 @@
         var ldy = py[a] - py[b];
         var d2 = ldx * ldx + ldy * ldy;
         if (d2 < LINK_DIST * LINK_DIST) {
-          var alpha = (1 - Math.sqrt(d2) / LINK_DIST) * 0.1;
+          var alpha = (1 - Math.sqrt(d2) / LINK_DIST) * 0.1 * themeScale();
           ctx.strokeStyle = 'rgba(' + PEACH + ', ' + alpha + ')';
           ctx.lineWidth = 1;
           ctx.beginPath();
@@ -97,7 +101,7 @@
     for (var j = 0; j < points.length; j++) {
       var pt = points[j];
       var breath = 0.75 + 0.25 * Math.sin(t * 0.8 + pt.pulse);
-      var alpha = (pt.bright ? 0.85 : 0.22 + 0.3 * pt.depth) * breath;
+      var alpha = (pt.bright ? 0.85 : 0.22 + 0.3 * pt.depth) * breath * themeScale();
       ctx.fillStyle = 'rgba(' + PEACH + ', ' + alpha + ')';
       ctx.beginPath();
       ctx.arc(px[j], py[j], pt.bright ? pt.r + 0.8 : pt.r, 0, Math.PI * 2);
@@ -128,4 +132,9 @@
     document.addEventListener('visibilitychange', onVisibility);
   }
   window.addEventListener('resize', resize);
+  window.addEventListener('flightway-theme-change', function () {
+    canvas.style.opacity = getComputedStyle(document.documentElement).getPropertyValue('--canvas-opacity') || '1';
+    if (!reduced && running) frame();
+  });
+  canvas.style.opacity = getComputedStyle(document.documentElement).getPropertyValue('--canvas-opacity') || '1';
 })();

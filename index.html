@@ -9,6 +9,7 @@
   <meta property="og:description" content="The talent development platform for students and college career centers.">
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="assets/flightway-theme.css">
+<script>(function(){try{var t=localStorage.getItem('flightway-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 </head>
 <body>
   <canvas id="fw-data-field" aria-hidden="true"></canvas>
@@ -28,6 +29,9 @@
           <li><a href="#faq">FAQ</a></li>
         </ul>
         <div class="fw-nav-actions">
+          <button type="button" class="fw-theme-toggle" aria-label="Switch to light mode" aria-pressed="true">
+            <span class="fw-theme-icon" aria-hidden="true"></span>
+          </button>
           <a href="Flightway.html" class="fw-btn fw-btn-ghost fw-btn-sm">Sign in</a>
           <a href="Flightway.html#quiz" class="fw-btn fw-btn-primary fw-btn-sm">Start free</a>
         </div>
@@ -41,6 +45,12 @@
         <li><a href="#features">Features</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#faq">FAQ</a></li>
+        <li>
+          <button type="button" class="fw-theme-toggle fw-btn fw-btn-secondary fw-btn-md" style="width:100%;margin-top:8px" aria-label="Switch to light mode" aria-pressed="true">
+            <span class="fw-theme-icon" aria-hidden="true"></span>
+            Toggle theme
+          </button>
+        </li>
         <li class="fw-mobile-ctas">
           <a href="Flightway.html" class="fw-btn fw-btn-secondary fw-btn-md">Sign in</a>
           <a href="Flightway.html#quiz" class="fw-btn fw-btn-primary fw-btn-md">Start free</a>
@@ -283,6 +293,7 @@
     </div>
   </footer>
 
+  <script src="assets/theme.js" defer></script>
   <script src="assets/data-field.js" defer></script>
   <script src="assets/landing.js" defer></script>
 </body>

@@ -5,28 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FlightWay — Career Quiz &amp; AI Coach</title>
 <link rel="stylesheet" href="assets/flightway-theme.css">
+<script>(function(){try{var t=localStorage.getItem('flightway-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --bg: #fafafa; --bg-alt: #f3f3f3; --surface: #ffffff;
-    --text: #1a1a1a; --text-secondary: #6b6b6b; --text-tertiary: #999;
-    --accent: #2a2a2a; --accent-light: #e8e8e8;
-    --border: #e5e5e5; --border-light: #f0f0f0;
-    --radius: 16px; --radius-sm: 10px;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
-    --shadow-md: 0 4px 20px rgba(0,0,0,0.06);
-    --shadow-lg: 0 10px 40px rgba(0,0,0,0.08);
-    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --green: #16a34a; --green-bg: #ecfdf5;
-    /* quiz vars */
-    --q-blue:#1a56db; --q-lblue:#3b82f6; --q-accent:#f59e0b; --q-gold:#eab308;
-    --q-text:#1e293b; --q-muted:#64748b; --q-border:#e2e8f0; --q-s2:#f1f5f9;
-    --q-green:#059669; --q-red:#dc2626; --q-purple:#7c3aed;
+    --bg: var(--bg-solid);
+    --surface: var(--surface-solid);
+    --text: var(--text-solid);
   }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; transition: background 0.25s ease, color 0.25s ease; }
 
   /* ─────────────── AI COACH ─────────────── */
   #page-coach { padding: 110px 24px 60px; min-height: 100vh; background: var(--bg); }
@@ -76,7 +66,7 @@
   .coach-error { color: var(--q-red); font-size: 0.82rem; padding: 0 28px 14px; min-height: 1.2em; word-break: break-word; line-height: 1.45; }
 
   /* Coach modals (settings, signup) */
-  .coach-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 200; display: none; align-items: center; justify-content: center; padding: 24px; opacity: 0; transition: opacity 0.2s ease; }
+  .coach-overlay { position: fixed; inset: 0; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 200; display: none; align-items: center; justify-content: center; padding: 24px; opacity: 0; transition: opacity 0.2s ease; }
   .coach-overlay.vis { display: flex; opacity: 1; }
   .coach-settings-modal, .coach-signup-modal { width: 100%; max-width: 580px; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-lg); max-height: 88vh; display: flex; flex-direction: column; }
   .coach-signup-modal { max-width: 460px; }
@@ -105,8 +95,8 @@
   .coach-email-input { width: 100%; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; font-size: 0.96rem; outline: none; transition: border-color var(--transition); }
   .coach-email-input:focus { border-color: var(--q-blue); }
 
-  /* Account-card injected onto the results page */
-  .coach-results-card { background: linear-gradient(135deg, #1a56db 0%, #3b82f6 100%); color: #fff; border-radius: var(--radius); padding: 28px 32px; margin: 28px 0; box-shadow: 0 12px 28px rgba(26,86,219,0.25); display: flex; flex-direction: column; gap: 14px; }
+  /* Account-card injected onto the results page — colors from theme.css */
+  .coach-results-card { border-radius: var(--radius); padding: 28px 32px; margin: 28px 0; display: flex; flex-direction: column; gap: 14px; }
   .coach-results-eye { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; opacity: 0.85; }
   .coach-results-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; line-height: 1.25; }
   .coach-results-sub { font-size: 0.92rem; opacity: 0.9; line-height: 1.55; }
@@ -128,12 +118,12 @@
   }
 
   /* ── NAV ── */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,250,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-light); }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; border-bottom: 1px solid var(--border-light); }
   .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between; }
   .logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; letter-spacing: -0.02em; color: var(--text); cursor: pointer; text-decoration: none; }
   .logo span { font-weight: 400; color: var(--text-secondary); }
   .nav-links { display: flex; gap: 32px; align-items: center; }
-  .nav-links a { font-size: 0.875rem; color: var(--text-secondary); text-decoration: none; font-weight: 400; transition: color var(--transition); cursor: pointer; }
+  .nav-links a, .nav-links button.fw-theme-toggle { font-size: 0.875rem; color: var(--text-secondary); text-decoration: none; font-weight: 400; transition: color var(--transition); cursor: pointer; }
   .nav-links a:hover { color: var(--text); }
   .nav-cta { padding: 10px 24px !important; background: var(--accent) !important; color: #fff !important; border-radius: 100px; font-weight: 500 !important; font-size: 0.85rem !important; transition: all var(--transition) !important; }
   .nav-cta:hover { background: #444 !important; transform: translateY(-1px); }
@@ -1072,7 +1062,10 @@
       <a onclick="showPage('students')">For Students</a>
       <a onclick="showPage('educators')">For Career Centers</a>
       <a onclick="showPage('coaching')">Coaching</a>
-      <a id="nav-coach-link" onclick="coachOpenFromNav()">AI Coach</a>
+      <a onclick="coachOpenFromNav()">AI Coach</a>
+      <button type="button" class="fw-theme-toggle" aria-label="Switch to light mode" aria-pressed="true">
+        <span class="fw-theme-icon" aria-hidden="true"></span>
+      </button>
       <a class="nav-cta quiz-cta" onclick="showPage('quiz')">Take the Quiz</a>
     </div>
   </div>
@@ -4243,6 +4236,7 @@ if (document.readyState === 'loading') {
   coachInit();
 }
 </script>
+<script src="assets/theme.js" defer></script>
 <script src="assets/data-field.js" defer></script>
 </body>
 </html>

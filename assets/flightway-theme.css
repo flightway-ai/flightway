@@ -1,7 +1,9 @@
-/* FlightWay design system — dark canvas with peach accents */
+/* FlightWay design system — dark default, light toggle, peach accents */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-:root {
+/* ── Dark (default — matches marketing frontend) ── */
+:root,
+[data-theme="dark"] {
   color-scheme: dark;
 
   --neutral-50: 245 238 233;
@@ -27,33 +29,92 @@
   --text-muted: 148 137 129;
   --border: 39 34 30;
 
-  /* Legacy aliases used in Flightway.html */
-  --bg-alt: rgb(var(--surface-2));
-  --text-secondary: rgb(var(--text-muted));
-  --text-tertiary: rgb(var(--neutral-400));
-  --accent: rgb(var(--primary));
-  --accent-light: rgb(var(--surface-hover));
-  --border-light: rgb(var(--border));
+  --canvas-opacity: 1;
+  --nav-bg: rgb(8 7 6 / 0.82);
+  --overlay-bg: rgb(8 7 6 / 0.55);
+}
+
+/* ── Light (warm cream + peach) ── */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --neutral-50: 255 250 247;
+  --neutral-100: 245 238 233;
+  --neutral-200: 228 219 212;
+  --neutral-300: 198 187 179;
+  --neutral-400: 120 110 103;
+  --neutral-500: 90 81 75;
+  --neutral-600: 62 55 50;
+  --neutral-700: 40 35 31;
+  --neutral-800: 24 20 18;
+  --neutral-900: 13 11 10;
+
+  --primary: 224 112 64;
+  --primary-hover: 255 178 153;
+  --primary-fg: 255 255 255;
+
+  --bg: 255 250 247;
+  --surface: 255 255 255;
+  --surface-2: 245 238 233;
+  --surface-hover: 255 240 232;
+  --text: 20 12 9;
+  --text-muted: 90 81 75;
+  --border: 228 219 212;
+
+  --canvas-opacity: 0.45;
+  --nav-bg: rgb(255 250 247 / 0.88);
+  --overlay-bg: rgb(20 12 9 / 0.35);
+}
+
+/* Solid aliases for Flightway.html legacy var(--bg) usage */
+:root,
+[data-theme="dark"],
+[data-theme="light"] {
+  --bg-solid: rgb(var(--bg));
+  --bg-alt-solid: rgb(var(--surface-2));
+  --surface-solid: rgb(var(--surface));
+  --text-solid: rgb(var(--text));
+  --text-secondary-solid: rgb(var(--text-muted));
+  --text-tertiary-solid: rgb(var(--neutral-400));
+  --accent-solid: rgb(var(--primary));
+  --accent-light-solid: rgb(var(--surface-hover));
+  --border-solid: rgb(var(--border));
+  --border-light-solid: rgb(var(--border));
+  --primary-solid: rgb(var(--primary));
+  --primary-hover-solid: rgb(var(--primary-hover));
+
+  --bg-alt: var(--bg-alt-solid);
+  --text-secondary: var(--text-secondary-solid);
+  --text-tertiary: var(--text-tertiary-solid);
+  --accent: var(--accent-solid);
+  --accent-light: var(--accent-light-solid);
+  --border-light: var(--border-light-solid);
   --radius: 16px;
   --radius-sm: 10px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.25);
-  --shadow-md: 0 4px 20px rgba(0,0,0,0.35);
-  --shadow-lg: 0 10px 40px rgba(0,0,0,0.45);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --green: #4ade80;
   --green-bg: rgba(74, 222, 128, 0.12);
 
-  /* Quiz accent — peach-aligned */
-  --q-blue: rgb(var(--primary));
-  --q-lblue: rgb(var(--primary-hover));
-  --q-accent: rgb(var(--primary));
-  --q-text: rgb(var(--text));
-  --q-muted: rgb(var(--text-muted));
-  --q-border: rgb(var(--border));
-  --q-s2: rgb(var(--surface-2));
+  --q-blue: var(--primary-solid);
+  --q-lblue: var(--primary-hover-solid);
+  --q-accent: var(--primary-solid);
+  --q-gold: rgb(var(--primary-hover));
+  --q-text: var(--text-solid);
+  --q-muted: var(--text-secondary-solid);
+  --q-border: var(--border-solid);
+  --q-s2: var(--bg-alt-solid);
   --q-green: #4ade80;
   --q-red: #f87171;
-  --q-purple: rgb(var(--primary));
+  --q-purple: var(--primary-solid);
+}
+
+[data-theme="dark"] {
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.25);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.35);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,0.45);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -66,6 +127,34 @@ body {
   background: rgb(var(--bg));
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+/* Theme toggle */
+.fw-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgb(var(--border));
+  border-radius: 9999px;
+  background: rgb(var(--surface));
+  color: rgb(var(--text-muted));
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.fw-theme-toggle:hover {
+  color: rgb(var(--text));
+  border-color: rgb(var(--primary) / 0.35);
+  background: rgb(var(--surface-hover));
+}
+
+.fw-nav-actions .fw-theme-toggle,
+.nav-links .fw-theme-toggle {
+  flex-shrink: 0;
 }
 
 ::selection {
@@ -105,12 +194,13 @@ body {
   z-index: 50;
   height: 64px;
   border-bottom: 1px solid transparent;
+  background: var(--nav-bg);
   transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
 }
 
 .fw-nav.scrolled {
   border-bottom-color: rgb(var(--border));
-  background: rgb(var(--bg) / 0.8);
+  background: var(--nav-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -743,14 +833,42 @@ body {
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  opacity: var(--canvas-opacity, 1);
+  transition: opacity 0.25s ease;
 }
 
 /* Flightway.html overrides */
 nav {
-  background: rgb(var(--bg) / 0.8) !important;
+  background: var(--nav-bg) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom-color: rgb(var(--border)) !important;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.coach-overlay {
+  background: var(--overlay-bg) !important;
+}
+
+.coach-results-card {
+  background: linear-gradient(135deg, rgb(var(--primary)), rgb(var(--primary-hover))) !important;
+  color: rgb(var(--primary-fg)) !important;
+  box-shadow: 0 12px 28px rgb(var(--primary) / 0.25) !important;
+}
+
+.coach-results-actions .primary {
+  background: rgb(var(--surface)) !important;
+  color: rgb(var(--primary)) !important;
+}
+
+.coach-updating {
+  background: linear-gradient(90deg, rgb(var(--primary) / 0.08), rgb(var(--primary-hover) / 0.08)) !important;
+  color: rgb(var(--primary)) !important;
+}
+
+.coach-spinner {
+  border-color: rgb(var(--primary) / 0.2) !important;
+  border-top-color: rgb(var(--primary)) !important;
 }
 
 .logo, .nav-links a { color: rgb(var(--text-muted)) !important; }
