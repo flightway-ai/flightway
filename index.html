@@ -21,7 +21,7 @@
           <span class="fw-brand-icon" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(-45deg)"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
           </span>
-          FlightWay
+          <span class="fw-brand-text">FlightWay</span>
         </a>
         <ul class="fw-nav-links">
           <li><a href="#features">Features</a></li>
@@ -62,18 +62,23 @@
   <main>
     <section class="fw-hero">
       <div class="fw-container fw-hero-content">
-        <p class="fw-eyebrow">
+        <p class="fw-eyebrow fw-hero-fade" style="--fw-delay:0.1s">
           <span class="fw-eyebrow-line" aria-hidden="true"></span>
           Talent development for the next generation
         </p>
-        <h1>
-          <span>Your dream,</span><br>
-          <span class="peach">turbocharged.</span>
+        <h1 class="fw-hero-title" aria-label="Your dream, turbocharged.">
+          <span class="fw-mask-line">
+            <span class="fw-mask"><span class="fw-mask-inner" style="--fw-i:0">Your</span></span>
+            <span class="fw-mask"><span class="fw-mask-inner" style="--fw-i:1">dream,</span></span>
+          </span>
+          <span class="fw-mask-line">
+            <span class="fw-mask"><span class="fw-mask-inner peach" style="--fw-i:2">turbocharged.</span></span>
+          </span>
         </h1>
-        <p class="fw-hero-sub">
+        <p class="fw-hero-sub fw-hero-fade" style="--fw-delay:0.65s">
           FlightWay gives students a clear runway to their career and gives college career centers the tools to launch every one of them — coaching, opportunities, and outcomes in one place.
         </p>
-        <div class="fw-hero-ctas">
+        <div class="fw-hero-ctas fw-hero-fade" style="--fw-delay:0.8s">
           <a href="Flightway.html#signin" class="fw-btn fw-btn-primary fw-btn-lg">
             Sign in free
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -83,33 +88,33 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
-        <p class="fw-proof">Trusted by career centers at 120+ campuses</p>
+        <p class="fw-proof fw-hero-fade" style="--fw-delay:1.05s">Trusted by career centers at 120+ campuses</p>
       </div>
       <div class="fw-scroll-cue" aria-hidden="true"></div>
     </section>
 
-    <section class="fw-section" id="features">
+    <section class="fw-section fw-reveal" id="features">
       <div class="fw-container">
-        <div class="fw-heading">
+        <div class="fw-heading fw-reveal-item">
           <h2>Everything a career center needs, in one cockpit</h2>
           <p>Stop stitching together spreadsheets, job boards, and email. FlightWay brings advising, opportunities, and analytics together.</p>
         </div>
-        <div class="fw-features-grid">
-          <article class="fw-feature-card">
+        <div class="fw-features-grid fw-reveal-stagger">
+          <article class="fw-feature-card fw-reveal-item">
             <span class="fw-feature-icon" aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"/></svg>
             </span>
             <h3>Guided career paths</h3>
             <p>Personalized roadmaps turn a vague ambition into concrete next steps, skills to build, and roles to target.</p>
           </article>
-          <article class="fw-feature-card">
+          <article class="fw-feature-card fw-reveal-item">
             <span class="fw-feature-icon" aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
             </span>
             <h3>Opportunity engine</h3>
             <p>Matched internships, jobs, and events surface automatically — students apply faster and advisors track every step.</p>
           </article>
-          <article class="fw-feature-card">
+          <article class="fw-feature-card fw-reveal-item">
             <span class="fw-feature-icon" aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
             </span>
@@ -120,18 +125,18 @@
       </div>
     </section>
 
-    <section class="fw-section">
+    <section class="fw-section fw-reveal" id="social-proof">
       <div class="fw-container">
-        <div class="fw-heading">
+        <div class="fw-heading fw-reveal-item">
           <h2>Career teams launch more students with FlightWay</h2>
         </div>
-        <div class="fw-stats-grid">
-          <div class="fw-stat"><p class="fw-stat-value">120+</p><p class="fw-stat-label">campuses onboard</p></div>
-          <div class="fw-stat"><p class="fw-stat-value">3.2x</p><p class="fw-stat-label">more advising sessions booked</p></div>
-          <div class="fw-stat"><p class="fw-stat-value">87%</p><p class="fw-stat-label">placement within 6 months</p></div>
-          <div class="fw-stat"><p class="fw-stat-value">250k</p><p class="fw-stat-label">students supported</p></div>
+        <div class="fw-stats-grid fw-reveal-stagger">
+          <div class="fw-stat fw-reveal-item"><p class="fw-stat-value">120+</p><p class="fw-stat-label">campuses onboard</p></div>
+          <div class="fw-stat fw-reveal-item"><p class="fw-stat-value">3.2x</p><p class="fw-stat-label">more advising sessions booked</p></div>
+          <div class="fw-stat fw-reveal-item"><p class="fw-stat-value">87%</p><p class="fw-stat-label">placement within 6 months</p></div>
+          <div class="fw-stat fw-reveal-item"><p class="fw-stat-value">250k</p><p class="fw-stat-label">students supported</p></div>
         </div>
-        <figure class="fw-testimonial">
+        <figure class="fw-testimonial fw-reveal-item">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgb(var(--primary))" stroke-width="1.5" aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
           <blockquote>“FlightWay turned our career center from a booking calendar into an engine. Advisors finally see the whole student journey — and our placement numbers prove it.”</blockquote>
           <figcaption>
@@ -152,14 +157,14 @@
       </div>
     </section>
 
-    <section class="fw-section" id="pricing">
+    <section class="fw-section fw-reveal" id="pricing">
       <div class="fw-container">
-        <div class="fw-heading">
+        <div class="fw-heading fw-reveal-item">
           <h2>Pricing that scales with your campus</h2>
           <p>Start free as a student. Upgrade when your career center is ready to launch everyone.</p>
         </div>
-        <div class="fw-pricing-grid">
-          <article class="fw-pricing-card">
+        <div class="fw-pricing-grid fw-reveal-stagger">
+          <article class="fw-pricing-card fw-reveal-item">
             <h3>Student</h3>
             <p class="desc">For individual students mapping their own path.</p>
             <div class="fw-price"><span class="amount">$0</span><span class="cadence">forever</span></div>
@@ -171,7 +176,7 @@
             </ul>
             <a href="Flightway.html#signin" class="fw-btn fw-btn-secondary fw-btn-md" style="width:100%">Sign in free</a>
           </article>
-          <article class="fw-pricing-card highlighted">
+          <article class="fw-pricing-card highlighted fw-reveal-item">
             <span class="fw-pricing-badge">Most popular</span>
             <h3>Career Center</h3>
             <p class="desc">For college career centers supporting their whole student body.</p>
@@ -185,7 +190,7 @@
             </ul>
             <a href="#faq" class="fw-btn fw-btn-primary fw-btn-md" style="width:100%">Book a demo</a>
           </article>
-          <article class="fw-pricing-card">
+          <article class="fw-pricing-card fw-reveal-item">
             <h3>Enterprise</h3>
             <p class="desc">For university systems and multi-campus deployments.</p>
             <div class="fw-price"><span class="amount">Custom</span></div>
@@ -202,12 +207,12 @@
       </div>
     </section>
 
-    <section class="fw-section" id="faq">
+    <section class="fw-section fw-reveal" id="faq">
       <div class="fw-container">
-        <div class="fw-heading">
+        <div class="fw-heading fw-reveal-item">
           <h2>Frequently asked questions</h2>
         </div>
-        <div class="fw-faq">
+        <div class="fw-faq fw-reveal-item">
           <div class="fw-faq-item">
             <button type="button" class="fw-faq-btn" aria-expanded="true">
               Is FlightWay really free for students?
@@ -297,6 +302,7 @@
 
   <script src="assets/theme.js" defer></script>
   <script src="assets/data-field.js" defer></script>
+  <script src="assets/reveal.js" defer></script>
   <script src="assets/landing.js" defer></script>
 </body>
 </html>

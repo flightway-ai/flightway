@@ -465,7 +465,8 @@ nav,
   background: rgb(var(--primary));
 }
 
-.fw-hero h1 {
+.fw-hero h1,
+.fw-hero-title {
   margin-top: 32px;
   font-size: clamp(2.75rem, 6vw, 5rem);
   font-weight: 600;
@@ -473,7 +474,99 @@ nav,
   letter-spacing: -0.03em;
 }
 
-.fw-hero h1 .peach { color: rgb(var(--primary)); }
+.fw-hero h1 .peach,
+.fw-mask-inner.peach { color: rgb(var(--primary)); }
+
+.fw-mask-line {
+  display: block;
+  overflow: hidden;
+}
+
+.fw-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  margin-right: 0.28em;
+}
+
+.fw-mask:last-child { margin-right: 0; }
+
+.fw-mask-inner {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+}
+
+.fw-hero-ready .fw-mask-inner {
+  animation: fw-rise-word 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(0.12s + var(--fw-i, 0) * 0.09s);
+}
+
+@keyframes fw-rise-word {
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.fw-hero-fade {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.fw-hero-ready .fw-hero-fade {
+  animation: fw-hero-fade-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--fw-delay, 0s);
+}
+
+@keyframes fw-hero-fade-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fw-hero-instant .fw-mask-inner,
+.fw-hero-instant .fw-hero-fade {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.fw-nav-enter {
+  opacity: 0;
+  transform: translateY(-80px);
+  animation: fw-nav-slide 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes fw-nav-slide {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fw-reveal,
+.fw-reveal-stagger .fw-reveal-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fw-reveal.is-visible,
+.fw-reveal-stagger.is-visible .fw-reveal-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fw-reveal-stagger.is-visible .fw-reveal-item {
+  transition-delay: calc(var(--fw-stagger, 0) * 1s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-nav-enter,
+  .fw-mask-inner,
+  .fw-hero-fade,
+  .fw-reveal,
+  .fw-reveal-item {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
 
 .fw-hero-sub {
   margin-top: 32px;
@@ -564,13 +657,16 @@ nav,
   border: 1px solid rgb(var(--border));
   border-radius: 16px;
   background: rgb(var(--surface));
-  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  transform: translateY(0);
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s,
+              transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .fw-feature-card:hover {
   border-color: rgb(var(--primary) / 0.25);
   background: rgb(var(--surface-hover));
   box-shadow: 0 0 48px rgb(var(--primary) / 0.07);
+  transform: translateY(-4px);
 }
 
 .fw-feature-icon {
@@ -716,13 +812,16 @@ nav,
   border: 1px solid rgb(var(--border));
   border-radius: 16px;
   background: rgb(var(--surface));
-  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  transform: translateY(0);
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s,
+              transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .fw-pricing-card:hover {
   border-color: rgb(var(--primary) / 0.25);
   background: rgb(var(--surface-hover));
   box-shadow: 0 0 48px rgb(var(--primary) / 0.07);
+  transform: translateY(-4px);
 }
 
 .fw-pricing-card.highlighted {
@@ -824,7 +923,7 @@ nav,
 .fw-faq-btn svg {
   flex-shrink: 0;
   color: rgb(var(--text-muted));
-  transition: transform 0.25s;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .fw-faq-item.open .fw-faq-btn svg { transform: rotate(180deg); }
