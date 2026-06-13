@@ -8,7 +8,7 @@
 <script>(function(){try{var t=localStorage.getItem('flightway-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 <script>(function(){var h=(location.hash||'').replace(/^#/,'');if(['coach','portal','signin','quiz'].indexOf(h)!==-1)document.documentElement.setAttribute('data-boot-page',h);})();</script>
 <style id="fw-boot-css">html[data-boot-page] .page{display:none!important}html[data-boot-page="coach"] #page-coach{display:block!important}html[data-boot-page="portal"] #page-portal{display:block!important}html[data-boot-page="signin"] #page-signin{display:block!important}html[data-boot-page="quiz"] #page-quiz{display:block!important}</style>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -119,9 +119,9 @@
   .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between; }
   .logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; letter-spacing: -0.02em; color: var(--text-solid); cursor: pointer; text-decoration: none; }
   .logo span { font-weight: 400; color: var(--text-secondary); }
-  .nav-links { display: flex; gap: 32px; align-items: center; }
-  .nav-links a, .nav-links button.fw-theme-toggle { font-size: 0.875rem; color: var(--text-secondary); text-decoration: none; font-weight: 400; transition: color var(--transition); cursor: pointer; }
-  .nav-links a:hover { color: var(--text-solid); }
+  .nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+  .nav-links a:not(.app-nav-tab), .nav-links button.fw-theme-toggle { font-size: 0.875rem; color: var(--text-secondary); text-decoration: none; font-weight: 400; transition: color var(--transition); cursor: pointer; }
+  .nav-links a:not(.app-nav-tab):hover { color: var(--text-solid); }
   .nav-cta { padding: 10px 24px !important; background: var(--accent) !important; color: rgb(var(--primary-fg)) !important; border-radius: 100px; font-weight: 500 !important; font-size: 0.85rem !important; transition: all var(--transition) !important; }
   .nav-cta:hover { background: rgb(var(--primary-hover)) !important; color: rgb(var(--primary-fg)) !important; transform: translateY(-1px); }
 
@@ -273,7 +273,10 @@
     .metrics-row { grid-template-columns: repeat(2, 1fr); }
     .overview-grid, .profile-layout, .checkout-layout { grid-template-columns: 1fr; }
     .profile-photo-card { position: static; } .checkout-summary { position: static; }
-    .nav-links { display: none; }
+    .nav-inner { padding: 0 16px; height: auto; min-height: 64px; flex-wrap: wrap; gap: 12px; padding-top: 10px; padding-bottom: 10px; }
+    .nav-links.app-nav { flex: 1 1 100%; order: 3; justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 2px; }
+    .nav-links.app-nav::-webkit-scrollbar { display: none; }
+    .app-nav-tab { flex-shrink: 0; font-size: 0.8125rem; padding: 7px 12px; min-height: 34px; }
     section { padding: 80px 24px; } .hero { padding: 120px 24px 80px; } .role-cards { max-width: 400px; }
   }
   @media (max-width: 600px) {
@@ -302,8 +305,8 @@
   .hero > *:not(.hero-blob) { position: relative; z-index: 1; }
   #page-home .hero { background: radial-gradient(ellipse 80% 55% at 70% -5%, rgba(99,102,241,0.05) 0%, transparent 55%), var(--bg-solid); overflow: hidden; }
 
-  /* Gradient headline text — applied to block element for reliable background-clip */
-  .gradient-text { background: linear-gradient(135deg, #1a1a1a 15%, #4f46e5 60%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-block; }
+  /* Headline uses theme peach accent */
+  .gradient-text { color: rgb(var(--primary)); -webkit-text-fill-color: rgb(var(--primary)); background: none; display: inline-block; }
 
   /* Shimmer sweep on CTA buttons */
   .cta-btn { position: relative; overflow: hidden; }
@@ -312,20 +315,9 @@
   .nav-cta::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%); transform: translateX(-120%); transition: transform 0.55s ease; }
   .nav-cta:hover::after { transform: translateX(120%); }
 
-  /* Purple glowing quiz CTA buttons */
-  @keyframes quiz-glow-pulse { 0%, 100% { box-shadow: 0 0 18px rgba(139,92,246,0.65), 0 0 38px rgba(139,92,246,0.3), 0 8px 24px rgba(109,40,217,0.45); } 50% { box-shadow: 0 0 28px rgba(167,139,250,0.85), 0 0 56px rgba(139,92,246,0.5), 0 10px 32px rgba(109,40,217,0.6); } }
-  @keyframes quiz-shimmer { 0% { left: -70%; } 100% { left: 130%; } }
-  @keyframes quiz-sparkle { 0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); } 50% { opacity: 1; transform: scale(1) rotate(180deg); } }
-  .quiz-cta {
-    background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 40%, #a855f7 70%, #8b5cf6 100%) !important;
-    box-shadow: 0 0 18px rgba(139,92,246,0.65), 0 0 38px rgba(139,92,246,0.3), 0 8px 24px rgba(109,40,217,0.45) !important;
-    animation: quiz-glow-pulse 2.4s ease-in-out infinite !important;
-    border-color: transparent !important;
-    color: #fff !important;
-  }
-  .quiz-cta::before { content: ''; position: absolute; top: -50%; left: -70%; width: 45%; height: 200%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent); transform: skewX(-18deg); animation: quiz-shimmer 2.2s ease-in-out infinite; pointer-events: none; }
-  .quiz-cta:hover { background: linear-gradient(135deg, #5b21b6 0%, #6d28d9 40%, #9333ea 70%, #7c3aed 100%) !important; transform: translateY(-3px) !important; }
-  .quiz-cta::after { background: none !important; }
+  /* Quiz CTA — peach theme from flightway-theme.css */
+  .quiz-cta::before,
+  .quiz-cta::after { display: none !important; }
 
   /* Gentle float on quiz preview */
   @keyframes gentle-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
@@ -333,11 +325,9 @@
   .quiz-preview:hover { animation-play-state: paused; }
 
   /* Colorful glow on card hover */
-  .role-card:hover { box-shadow: 0 20px 60px rgba(79,70,229,0.12), var(--shadow-lg); }
-  .feature-card:hover { background: linear-gradient(#fff,#fff) padding-box, linear-gradient(135deg,rgba(99,102,241,0.2),rgba(6,182,212,0.2)) border-box; border-color: transparent; }
-  .career-chip:hover { box-shadow: 0 8px 28px rgba(79,70,229,0.11), var(--shadow-md); }
-  .mp-coach-card:hover { box-shadow: 0 24px 56px rgba(79,70,229,0.12), var(--shadow-lg); }
-  .coach-card:hover { box-shadow: 0 12px 36px rgba(79,70,229,0.09), var(--shadow-md); }
+  .role-card:hover { box-shadow: 0 20px 60px rgb(var(--primary) / 0.12), var(--shadow-lg); }
+  .feature-card:hover { border-color: rgb(var(--primary) / 0.25); box-shadow: 0 0 48px rgb(var(--primary) / 0.07); }
+  .career-chip:hover { box-shadow: 0 8px 28px rgb(var(--primary) / 0.11), var(--shadow-md); }
 
   /* Section tag gradient underline */
   .section-tag { position: relative; display: inline-block; padding-bottom: 5px; }
@@ -633,7 +623,7 @@
   #page-quiz .ind-head { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
   #page-quiz .ind-rank { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0; background: var(--q-s2); color: var(--text-tertiary); }
   #page-quiz .ind-card.top .ind-rank { background: var(--q-blue); color: #fff; }
-  #page-quiz .ind-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--text-solid); flex: 1; }
+  #page-quiz .ind-name { font-family: 'Inter', system-ui, sans-serif; font-size: 1.125rem; font-weight: 600; color: var(--text-solid); flex: 1; line-height: 1.3; }
   #page-quiz .ind-pct { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--accent-solid); }
   #page-quiz .ind-bar { height: 5px; background: var(--q-s2); border-radius: 3px; overflow: hidden; margin-bottom: 14px; }
   #page-quiz .ind-bar-fill { height: 100%; background: linear-gradient(90deg,var(--q-blue),var(--q-lblue)); border-radius: 3px; }

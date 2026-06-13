@@ -268,6 +268,21 @@ html.theme-ready #tooltip {
   outline-offset: 2px;
 }
 
+/* Flightway.html inline nav rules must not flatten app tabs */
+nav .nav-links .app-nav-tab {
+  color: rgb(var(--text)) !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+}
+
+nav .nav-links .app-nav-tab:hover {
+  color: rgb(var(--text)) !important;
+}
+
+nav .nav-links .app-nav-tab.is-active {
+  color: rgb(var(--primary)) !important;
+}
+
 .nav-links .fw-theme-toggle {
   flex-shrink: 0;
 }
@@ -1504,6 +1519,12 @@ p, li, span, label, h1, h2, h3, h4, h5, h6,
 #page-quiz .res-title,
 #page-quiz .res-sub {
   color: rgb(var(--text)) !important;
+}
+
+#page-quiz .ind-name {
+  font-family: 'Inter', system-ui, sans-serif !important;
+  font-size: 1.125rem !important;
+  line-height: 1.35 !important;
 }
 
 #page-quiz .ind-pct {

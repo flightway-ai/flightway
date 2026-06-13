@@ -45,10 +45,43 @@ body.hub-page #topbar {
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  max-width: min(520px, 42vw);
+}
+
+.hub-app-nav::-webkit-scrollbar {
+  display: none;
 }
 
 @media (max-width: 900px) {
-  .hub-app-nav { display: none; }
+  .hub-app-nav {
+    max-width: none;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  #topbar {
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 56px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    row-gap: 8px;
+  }
+
+  #search-wrap {
+    order: 4;
+    flex: 1 1 100%;
+    max-width: none;
+    margin: 0;
+  }
+
+  .topbar-right .legend {
+    display: none;
+  }
 }
 
 body.hub-page .hub-topbar-actions {
@@ -154,6 +187,11 @@ body.hub-page .user-avatar {
   color: var(--hub-accent-fg) !important;
 }
 
+body.hub-page #search-wrap svg {
+  color: var(--hub-text-muted);
+  opacity: 1;
+}
+
 body.hub-page .legend-label {
   color: var(--hub-text-muted) !important;
 }
@@ -226,28 +264,4 @@ body.hub-page .btn-daylife {
   opacity: 1 !important;
 }
 
-/* Career advisor trigger */
-body.hub-page .advisor-trigger-label {
-  color: var(--hub-text) !important;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 9999px;
-  background: var(--hub-control-bg);
-  border: 1px solid var(--hub-border);
-}
-
-body.hub-page .advisor-trigger-label:hover {
-  color: var(--hub-text) !important;
-  border-color: rgb(var(--primary) / 0.45);
-}
-
-body.hub-page #advisor-trigger {
-  background: linear-gradient(135deg, var(--hub-accent), var(--hub-accent-hover)) !important;
-  color: var(--hub-accent-fg) !important;
-  box-shadow: 0 4px 20px rgb(var(--primary) / 0.35) !important;
-  border: 2px solid rgb(var(--primary) / 0.3);
-}
-
-body.hub-page #advisor-trigger:hover {
-  box-shadow: 0 6px 28px rgb(var(--primary) / 0.5) !important;
-}
+/* Career advisor trigger — removed; use top nav AI Career Advisor tab */

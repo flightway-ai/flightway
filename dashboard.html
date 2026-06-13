@@ -58,25 +58,28 @@
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    opacity: 0.4;
+    color: var(--hub-text-muted, rgba(255,255,255,0.45));
     pointer-events: none;
+  }
+  #search-wrap svg circle,
+  #search-wrap svg path {
+    stroke: currentColor;
   }
   #search {
     width: 100%;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--hub-control-bg, rgba(255,255,255,0.07));
+    border: 1px solid var(--hub-border, rgba(255,255,255,0.1));
     border-radius: 10px;
     padding: 8px 12px 8px 36px;
-    color: #fff;
+    color: var(--hub-text, #fff);
     font-family: 'Inter', sans-serif;
     font-size: 0.85rem;
     outline: none;
     transition: border-color 0.2s, background 0.2s;
   }
-  #search::placeholder { color: rgba(255,255,255,0.3); }
+  #search::placeholder { color: var(--hub-text-muted, rgba(255,255,255,0.45)); opacity: 0.75; }
   #search:focus {
-    border-color: rgba(255,255,255,0.25);
-    background: rgba(255,255,255,0.1);
+    border-color: rgb(var(--primary) / 0.45);
   }
 
   .topbar-right {
@@ -94,7 +97,7 @@
   }
   .legend-label {
     font-size: 0.7rem;
-    color: rgba(255,255,255,0.35);
+    color: var(--hub-text-muted, rgba(255,255,255,0.45));
     white-space: nowrap;
   }
   .legend-bar {
@@ -109,12 +112,12 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--hub-control-bg, rgba(255,255,255,0.07));
+    border: 1px solid var(--hub-border, rgba(255,255,255,0.1));
     border-radius: 20px;
     padding: 4px 12px 4px 6px;
     font-size: 0.8rem;
-    color: rgba(255,255,255,0.8);
+    color: var(--hub-text, rgba(255,255,255,0.9));
   }
   .user-avatar {
     width: 24px;
@@ -328,43 +331,6 @@
     pointer-events: none;
   }
   .btn-daylife:hover .coming-soon-tip { display: block; }
-
-  /* ── Career advisor trigger ── */
-  #advisor-wrap {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    z-index: 200;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
-  }
-
-  .advisor-trigger-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-  .advisor-trigger-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-    user-select: none;
-  }
-  #advisor-trigger {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  #advisor-trigger:hover { transform: scale(1.08); }
 </style>
 </head>
 <body class="hub-page">
@@ -380,14 +346,14 @@
 
   <nav class="app-nav hub-app-nav" aria-label="App">
     <a href="dashboard.html" class="app-nav-tab is-active" data-app-nav="hub" aria-current="page"><span class="app-nav-label">Career Hub</span></a>
-    <a href="Flightway.html#coach" class="app-nav-tab" data-app-nav="advisor"><span class="app-nav-label">AI Career Advisor</span></a>
+    <a href="Flightway.html#coach" class="app-nav-tab" data-app-nav="advisor" id="hub-advisor-link"><span class="app-nav-label">AI Career Advisor</span></a>
     <a href="Flightway.html#quiz" class="app-nav-tab" data-app-nav="quiz"><span class="app-nav-label">Career Quiz</span></a>
   </nav>
 
   <div id="search-wrap">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <circle cx="6" cy="6" r="4.5" stroke="white" stroke-width="1.5"/>
-      <path d="M9.5 9.5L12.5 12.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M9.5 9.5L12.5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
     </svg>
     <input id="search" type="text" placeholder="Search careers...">
   </div>
@@ -452,21 +418,6 @@
     <button class="btn-daylife">
       Try a Day in the Life →
       <span class="coming-soon-tip">Coming soon</span>
-    </button>
-  </div>
-</div>
-
-<!-- Career advisor -->
-<div id="advisor-wrap">
-  <div class="advisor-trigger-wrap">
-    <span class="advisor-trigger-label" role="button" tabindex="0" title="Open AI career advisor">Talk to career advisor</span>
-    <button id="advisor-trigger" type="button" title="Talk to career advisor" aria-label="Talk to career advisor">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-        <path d="M11 2C6.03 2 2 5.58 2 10c0 2.1.9 4 2.36 5.45L3 20l4.73-1.27A9.35 9.35 0 0011 19c4.97 0 9-3.58 9-8s-4.03-9-9-9z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-        <circle cx="8" cy="10" r="1" fill="currentColor"/>
-        <circle cx="11" cy="10" r="1" fill="currentColor"/>
-        <circle cx="14" cy="10" r="1" fill="currentColor"/>
-      </svg>
     </button>
   </div>
 </div>
@@ -1166,10 +1117,9 @@ function openCareerAdvisor() {
   window.location.replace('Flightway.html#coach');
 }
 
-document.getElementById('advisor-trigger').addEventListener('click', openCareerAdvisor);
-document.querySelector('.advisor-trigger-label').addEventListener('click', openCareerAdvisor);
-document.querySelector('.advisor-trigger-label').addEventListener('keydown', e => {
-  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCareerAdvisor(); }
+document.getElementById('hub-advisor-link').addEventListener('click', function (e) {
+  e.preventDefault();
+  openCareerAdvisor();
 });
 
 // ── SIGNED-IN USER (resolved during personalization above) ──
