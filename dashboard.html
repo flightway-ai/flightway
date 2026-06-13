@@ -372,8 +372,13 @@
 <body class="hub-page">
 
 <!-- TOP BAR -->
-<div id="topbar">
-  <div class="logo">FlightWay</div>
+  <div id="topbar">
+  <a href="index.html" class="fw-brand hub-brand" aria-label="FlightWay home">
+    <span class="fw-brand-icon" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(-45deg)"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+    </span>
+    <span class="fw-brand-text">FlightWay</span>
+  </a>
 
   <div id="search-wrap">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -403,6 +408,12 @@
 </div>
 
 <!-- CANVAS -->
+<div id="hub-loading" class="hub-loading" aria-live="polite" aria-busy="true">
+  <div class="hub-loading-inner">
+    <span class="hub-loading-spinner" aria-hidden="true"></span>
+    <span>Loading career map…</span>
+  </div>
+</div>
 <canvas id="map-canvas"></canvas>
 
 <!-- TOOLTIP -->
@@ -627,25 +638,93 @@ const subNodes = [];
 // ── CANVAS SETUP ──
 const canvas = document.getElementById('map-canvas');
 const ctx = canvas.getContext('2d');
+let viewW = window.innerWidth;
+let viewH = window.innerHeight;
+let hubMapReady = false;
 
 function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  viewW = window.innerWidth;
+  viewH = window.innerHeight;
+  canvas.width = Math.round(viewW * dpr);
+  canvas.height = Math.round(viewH * dpr);
+  canvas.style.width = viewW + 'px';
+  canvas.style.height = viewH + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.imageSmoothingEnabled = true;
+  if (ctx.imageSmoothingQuality) ctx.imageSmoothingQuality = 'high';
 }
 resize();
 window.addEventListener('resize', resize);
 
+function roundRectPath(c, x, y, w, h, r) {
+  const rr = Math.min(r, w / 2, h / 2);
+  c.beginPath();
+  c.moveTo(x + rr, y);
+  c.arcTo(x + w, y, x + w, y + h, rr);
+  c.arcTo(x + w, y + h, x, y + h, rr);
+  c.arcTo(x, y + h, x, y, rr);
+  c.arcTo(x, y, x + w, y, rr);
+  c.closePath();
+}
+
+function specularPoint(sx, sy, r) {
+  if (!state.mouseOn) {
+    return { hx: sx - r * 0.38, hy: sy - r * 0.42 };
+  }
+  const mdx = (state.mouseX - state.panX) / state.zoom - sx;
+  const mdy = (state.mouseY - state.panY) / state.zoom - sy;
+  const len = Math.hypot(mdx, mdy) || 1;
+  return {
+    hx: sx + (mdx / len) * r * 0.46,
+    hy: sy + (mdy / len) * r * 0.46
+  };
+}
+
+function drawOrbLabel(text, x, y, r, emphasized) {
+  const fontSize = emphasized ? 12 : 11;
+  ctx.font = `600 ${fontSize}px Inter, sans-serif`;
+  const padX = 10;
+  const padY = 5;
+  const tw = ctx.measureText(text).width;
+  const w = tw + padX * 2;
+  const h = fontSize + padY * 2;
+  const lx = x - w / 2;
+  const ly = y + r + 8;
+  roundRectPath(ctx, lx, ly, w, h, 6);
+  ctx.fillStyle = emphasized ? 'rgba(10, 12, 22, 0.92)' : 'rgba(8, 10, 20, 0.82)';
+  ctx.fill();
+  ctx.strokeStyle = emphasized ? 'rgba(255,255,255,0.22)' : 'rgba(255,255,255,0.12)';
+  ctx.lineWidth = 1;
+  roundRectPath(ctx, lx, ly, w, h, 6);
+  ctx.stroke();
+  ctx.fillStyle = emphasized ? '#ffffff' : '#eef1f8';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, x, ly + h / 2);
+}
+
+function hideHubLoading() {
+  if (hubMapReady) return;
+  hubMapReady = true;
+  const el = document.getElementById('hub-loading');
+  if (el) {
+    el.classList.add('is-hidden');
+    el.setAttribute('aria-busy', 'false');
+  }
+}
+
 // ── COORDINATE HELPERS ──
 function worldToScreen(wx, wy) {
   return {
-    x: wx / 100 * canvas.width * state.zoom + state.panX,
-    y: wy / 100 * canvas.height * state.zoom + state.panY
+    x: wx / 100 * viewW * state.zoom + state.panX,
+    y: wy / 100 * viewH * state.zoom + state.panY
   };
 }
 function screenToWorld(sx, sy) {
   return {
-    x: (sx - state.panX) / state.zoom / canvas.width * 100,
-    y: (sy - state.panY) / state.zoom / canvas.height * 100
+    x: (sx - state.panX) / state.zoom / viewW * 100,
+    y: (sy - state.panY) / state.zoom / viewH * 100
   };
 }
 
@@ -693,7 +772,7 @@ function careerAtScreen(mx, my) {
 function lerp(a, b, t) { return a + (b - a) * t; }
 
 function render() {
-  const W = canvas.width, H = canvas.height;
+  const W = viewW, H = viewH;
   const SPOT_R = Math.max(W, H) * 0.12; // spotlight radius (~10% of map)
   ctx.clearRect(0, 0, W, H);
 
@@ -730,7 +809,7 @@ function render() {
   ctx.translate(state.panX, state.panY);
   ctx.scale(state.zoom, state.zoom);
 
-  const WW = canvas.width, WH = canvas.height;
+  const WW = viewW, WH = viewH;
 
   // Industry cluster labels
   const centroids = getIndustryCentroids();
@@ -806,9 +885,10 @@ function render() {
       ctx.stroke();
     }
 
-    // ── Metallic body (3D gem with off-center light) ──
+    // ── Metallic body (3D gem with cursor-relative light) ──
+    const sp = specularPoint(sx, sy, r);
     const body = ctx.createRadialGradient(
-      sx - r * 0.35, sy - r * 0.38, r * 0.1,
+      sp.hx - r * 0.12, sp.hy - r * 0.12, r * 0.08,
       sx, sy, r
     );
     body.addColorStop(0, rar.light);
@@ -828,22 +908,17 @@ function render() {
       ctx.stroke();
     }
 
-    // ── Specular highlight (the shine) ──
-    const hx = sx - r * 0.4, hy = sy - r * 0.45;
-    const hi = ctx.createRadialGradient(hx, hy, 0, hx, hy, r * 0.6);
-    hi.addColorStop(0, `rgba(255,255,255,${isGold ? 0.85 : 0.5})`);
+    // ── Specular highlight (tracks cursor) ──
+    const hi = ctx.createRadialGradient(sp.hx, sp.hy, 0, sp.hx, sp.hy, r * 0.62);
+    hi.addColorStop(0, `rgba(255,255,255,${isGold ? 0.9 : isHovered ? 0.72 : 0.55})`);
+    hi.addColorStop(0.45, `rgba(255,255,255,${isGold ? 0.35 : 0.18})`);
     hi.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.fillStyle = hi;
     ctx.beginPath();
     ctx.arc(sx, sy, r, 0, Math.PI * 2);
     ctx.fill();
 
-    // Label
-    ctx.fillStyle = 'rgba(255,255,255,0.85)';
-    ctx.font = `500 11px Inter, sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    ctx.fillText(c.name, sx, sy + r + 5);
+    drawOrbLabel(c.name, sx, sy, r, isHovered || isSelected);
 
     ctx.globalAlpha = 1;
   });
@@ -899,20 +974,20 @@ function render() {
     ctx.arc(sx, sy, subR, 0, Math.PI * 2);
     ctx.fill();
     if (a > 0.1) {
-      ctx.fillStyle = `rgba(255,255,255,${0.55 * a})`;
+      const subSp = specularPoint(sx, sy, subR);
+      const subHi = ctx.createRadialGradient(subSp.hx, subSp.hy, 0, subSp.hx, subSp.hy, subR * 0.55);
+      subHi.addColorStop(0, `rgba(255,255,255,${0.65 * a})`);
+      subHi.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = subHi;
       ctx.beginPath();
-      ctx.arc(sx - subR * 0.3, sy - subR * 0.35, subR * 0.42, 0, Math.PI * 2);
+      ctx.arc(sx, sy, subR, 0, Math.PI * 2);
       ctx.fill();
     }
 
     // label only when sufficiently bloomed
     if (a > 0.4) {
       ctx.globalAlpha = ((a - 0.4) / 0.6) * searchA;
-      ctx.fillStyle = 'rgba(255,255,255,0.92)';
-      ctx.font = `500 9px Inter, sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      ctx.fillText(sn.name, sx, sy + subR + 3);
+      drawOrbLabel(sn.name, sx, sy, subR, a > 0.75);
     }
     ctx.globalAlpha = 1;
   });
@@ -930,6 +1005,8 @@ function render() {
     ctx.fillStyle = v;
     ctx.fillRect(0, 0, W, H);
   }
+
+  hideHubLoading();
 }
 
 // ── ANIMATION LOOP ──
