@@ -15,26 +15,46 @@
 }
 
 [data-theme="light"] {
-  --hub-canvas-bg: rgb(240 248 255);
-  --hub-topbar-bg: rgb(255 255 255 / 0.94);
+  --hub-canvas-bg: rgb(255 250 247);
+  --hub-topbar-bg: rgb(255 250 247 / 0.94);
   --hub-panel-bg: rgb(255 255 255);
   --hub-control-bg: rgb(245 238 233);
-  --hub-border: rgb(198 187 179);
+  --hub-border: rgb(228 219 212);
   --hub-text: rgb(20 12 9);
   --hub-text-muted: rgb(90 81 75);
-  --hub-accent: rgb(56 189 248);
-  --hub-accent-hover: rgb(125 211 252);
-  --hub-accent-fg: rgb(12 74 110);
+  --hub-accent: rgb(224 112 64);
+  --hub-accent-hover: rgb(255 178 153);
+  --hub-accent-fg: rgb(255 255 255);
 }
 
 body.hub-page {
   background: var(--hub-canvas-bg) !important;
   color: var(--hub-text) !important;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 body.hub-page #topbar {
   background: var(--hub-topbar-bg) !important;
-  border-bottom-color: var(--hub-border) !important;
+  border-bottom: 1px solid var(--hub-border) !important;
+  color: var(--hub-text) !important;
+  transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease;
+}
+
+.hub-app-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .hub-app-nav { display: none; }
+}
+
+body.hub-page .hub-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 body.hub-page .hub-brand,
@@ -112,11 +132,6 @@ body.hub-page #search {
 
 body.hub-page #search::placeholder {
   color: var(--hub-text-muted) !important;
-}
-
-body.hub-page .hub-home-link:focus-visible {
-  outline: 2px solid rgb(var(--primary));
-  outline-offset: 2px;
 }
 
 body.hub-page #search:focus-visible {
@@ -209,28 +224,6 @@ body.hub-page .btn-daylife {
   border: 1px solid var(--hub-border) !important;
   color: var(--hub-text-muted) !important;
   opacity: 1 !important;
-}
-
-body.hub-page .hub-topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-body.hub-page .hub-home-link {
-  font-size: 0.8rem;
-  color: var(--hub-text-muted);
-  text-decoration: none;
-  padding: 6px 12px;
-  border-radius: 9999px;
-  border: 1px solid var(--hub-border);
-  background: var(--hub-control-bg);
-  transition: color 0.2s, border-color 0.2s;
-}
-
-body.hub-page .hub-home-link:hover {
-  color: var(--hub-text);
-  border-color: rgb(var(--primary) / 0.4);
 }
 
 /* Career advisor trigger */

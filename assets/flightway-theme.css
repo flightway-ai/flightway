@@ -199,6 +199,75 @@ nav,
 }
 
 .fw-nav-actions .fw-theme-toggle,
+html.theme-ready body,
+html.theme-ready nav,
+html.theme-ready #topbar,
+html.theme-ready .fw-nav,
+html.theme-ready .page,
+html.theme-ready .fw-footer,
+html.theme-ready footer,
+html.theme-ready .coach-shell,
+html.theme-ready #detail-panel,
+html.theme-ready #tooltip {
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* App nav tabs — shared across Flightway.html and Career Hub */
+.app-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.app-nav-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  min-width: 0;
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--border));
+  background: var(--content-elevated);
+  color: rgb(var(--text));
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.app-nav-tab .app-nav-label {
+  display: block;
+  width: 100%;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.app-nav-tab:hover {
+  background: rgb(var(--surface-hover));
+  border-color: rgb(var(--primary) / 0.4);
+  color: rgb(var(--text));
+}
+
+.app-nav-tab.is-active {
+  background: rgb(var(--primary) / 0.12);
+  border-color: rgb(var(--primary) / 0.45);
+  color: rgb(var(--primary));
+  box-shadow: 0 0 0 1px rgb(var(--primary) / 0.08);
+}
+
+.app-nav-tab:focus-visible {
+  outline: 2px solid rgb(var(--primary));
+  outline-offset: 2px;
+}
+
 .nav-links .fw-theme-toggle {
   flex-shrink: 0;
 }
@@ -1071,21 +1140,6 @@ nav {
 
 .logo:hover {
   color: rgb(var(--text)) !important;
-}
-
-.nav-links a:not(.nav-cta):not(.quiz-cta) {
-  color: rgb(var(--text)) !important;
-  padding: 8px 14px !important;
-  border-radius: 9999px !important;
-  border: 1px solid rgb(var(--border)) !important;
-  background: var(--content-elevated) !important;
-  font-weight: 500 !important;
-}
-
-.nav-links a:not(.nav-cta):not(.quiz-cta):hover {
-  color: rgb(var(--text)) !important;
-  background: rgb(var(--surface-hover)) !important;
-  border-color: rgb(var(--primary) / 0.4) !important;
 }
 
 .nav-cta, .cta-btn, .quiz-cta {

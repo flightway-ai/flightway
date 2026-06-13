@@ -178,7 +178,6 @@
   .career-chip .chip-arrow { display: block; margin-top: 10px; font-size: 0.72rem; font-weight: 500; color: var(--text-tertiary); transition: all var(--transition); }
   .career-chip:hover .chip-arrow { color: var(--text-solid); }
 
-  .coaching-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .coach-card { background: var(--surface-solid); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 36px 28px; text-align: center; transition: all var(--transition); }
   .coach-card:hover { border-color: var(--border); box-shadow: var(--shadow-sm); }
   .coach-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--bg-alt); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--text-secondary); }
@@ -264,121 +263,9 @@
   .ai-task-risk { font-weight: 600; font-size: 0.78rem; padding: 4px 12px; border-radius: 100px; }
   .risk-low { background: #ecfdf5; color: #16a34a; } .risk-med { background: #fefce8; color: #ca8a04; } .risk-high { background: #fef2f2; color: #dc2626; }
 
-  /* Coaching marketplace */
-  .coaching-hero { padding: 140px 40px 60px; text-align: center; }
-  .coaching-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 3.5rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 16px; }
-  .coaching-hero .tagline { font-size: 1.1rem; color: var(--text-secondary); font-weight: 300; max-width: 540px; margin: 0 auto 40px; line-height: 1.7; }
-  .filters-bar { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
-  .filter-btn { padding: 10px 22px; background: var(--surface-solid); border: 1px solid var(--border); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all var(--transition); font-family: inherit; }
-  .filter-btn:hover { border-color: var(--accent); color: var(--text-solid); }
-  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .coaches-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto; }
-  .mp-coach-card { background: var(--surface-solid); border: 1px solid var(--border-light); border-radius: var(--radius); overflow: hidden; transition: all var(--transition); cursor: pointer; }
-  .mp-coach-card:hover { border-color: var(--accent); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
-  .mp-coach-photo { width: 100%; aspect-ratio: 1; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-  .mp-coach-photo img { width: 100%; height: 100%; object-fit: cover; }
-  .mp-coach-photo .photo-placeholder { font-size: 4rem; color: var(--text-tertiary); font-weight: 300; font-family: 'Playfair Display', serif; }
-  .mp-coach-badge { position: absolute; top: 16px; right: 16px; padding: 6px 14px; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border-radius: 100px; font-size: 0.72rem; font-weight: 600; color: var(--text-solid); }
-  .mp-coach-info { padding: 28px; }
-  .mp-coach-info h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
-  .mp-coach-info .mp-role { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 12px; }
-  .mp-coach-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-  .mp-tag { padding: 5px 12px; background: var(--bg-alt); border-radius: 100px; font-size: 0.7rem; font-weight: 500; color: var(--text-secondary); }
-  .mp-coach-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--border-light); }
-  .mp-rate { font-size: 1.1rem; font-weight: 700; }
-  .mp-rate span { font-size: 0.78rem; font-weight: 400; color: var(--text-tertiary); }
-  .mp-book-btn { padding: 10px 24px; background: var(--accent); color: #fff; border: none; border-radius: 100px; font-size: 0.82rem; font-weight: 500; cursor: pointer; font-family: inherit; transition: all var(--transition); }
-  .mp-book-btn:hover { background: #444; }
-  .mp-rating { display: flex; align-items: center; gap: 4px; font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 16px; }
-  .mp-stars { color: #f59e0b; letter-spacing: 1px; }
-
-  /* Coach profile */
-  .profile-layout { display: grid; grid-template-columns: 340px 1fr; gap: 48px; max-width: 1100px; margin: 0 auto; align-items: start; }
-  .profile-photo-card { background: var(--surface-solid); border: 1px solid var(--border-light); border-radius: var(--radius); overflow: hidden; position: sticky; top: 100px; }
-  .profile-photo { width: 100%; aspect-ratio: 0.85; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  .profile-photo img { width: 100%; height: 100%; object-fit: cover; }
-  .profile-photo .photo-placeholder { font-size: 5rem; color: var(--text-tertiary); font-weight: 300; font-family: 'Playfair Display', serif; }
-  .profile-photo-meta { padding: 28px; }
-  .profile-photo-meta h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 4px; }
-  .profile-photo-meta .pp-role { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px; }
-  .profile-photo-meta .pp-rate { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
-  .profile-photo-meta .pp-rate span { font-size: 0.85rem; font-weight: 400; color: var(--text-tertiary); }
-  .profile-photo-meta .pp-rating { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px; }
-  .profile-photo-meta .pp-stars { color: #f59e0b; }
-  .pp-book-main { width: 100%; padding: 16px; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 0.95rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--transition); margin-bottom: 10px; }
-  .pp-book-main:hover { background: #444; }
-  .pp-calendly { width: 100%; padding: 14px; background: transparent; color: var(--text-solid); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 500; cursor: pointer; font-family: inherit; transition: all var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-  .pp-calendly:hover { border-color: var(--accent); background: var(--bg-alt); }
-  .profile-body { padding-top: 8px; }
-  .profile-body h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; margin-bottom: 16px; letter-spacing: -0.01em; }
-  .profile-body > p, .profile-section > p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px; }
-  .profile-section { margin-bottom: 48px; }
-  .profile-section h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 16px; }
-  .credentials-list { list-style: none; }
-  .credentials-list li { padding: 16px 0; border-bottom: 1px solid var(--border-light); display: flex; gap: 16px; align-items: flex-start; }
-  .credentials-list li:last-child { border-bottom: none; }
-  .cred-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-  .cred-text h5 { font-size: 0.88rem; font-weight: 600; margin-bottom: 2px; }
-  .cred-text p { font-size: 0.78rem; color: var(--text-tertiary); }
-  .session-types { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .session-type-card { background: var(--bg-solid); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 24px; transition: all var(--transition); cursor: pointer; }
-  .session-type-card:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
-  .session-type-card.selected { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
-  .session-type-card h5 { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
-  .session-type-card .st-price { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
-  .session-type-card p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
-  .review-card { background: var(--bg-solid); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 24px; margin-bottom: 12px; }
-  .review-card .review-stars { color: #f59e0b; font-size: 0.82rem; margin-bottom: 8px; }
-  .review-card blockquote { font-size: 0.88rem; color: var(--text-solid); line-height: 1.7; font-style: italic; margin-bottom: 12px; font-weight: 300; }
-  .review-author { font-size: 0.78rem; color: var(--text-tertiary); font-weight: 500; }
-
-  /* Checkout */
-  .checkout-layout { display: grid; grid-template-columns: 1fr 400px; gap: 48px; max-width: 1000px; margin: 0 auto; align-items: start; }
-  .checkout-form { background: var(--surface-solid); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 40px; }
-  .checkout-form h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 28px; }
-  .form-group { margin-bottom: 20px; }
-  .form-group label { display: block; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 8px; }
-  .form-input { width: 100%; padding: 14px 16px; background: var(--bg-solid); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.9rem; font-family: inherit; color: var(--text-solid); outline: none; transition: all var(--transition); }
-  .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(42,42,42,0.08); }
-  .form-input::placeholder { color: var(--text-tertiary); }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .form-divider { height: 1px; background: var(--border-light); margin: 28px 0; }
-  .card-icons { display: flex; gap: 8px; margin-bottom: 16px; }
-  .card-icon { width: 42px; height: 28px; border: 1px solid var(--border-light); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; color: var(--text-tertiary); }
-  .card-icon.active { border-color: var(--accent); color: var(--text-solid); }
-  .pay-btn { width: 100%; padding: 18px; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--transition); margin-top: 8px; }
-  .pay-btn:hover { background: #444; }
-  .secure-note { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.75rem; color: var(--text-tertiary); margin-top: 16px; }
-  .checkout-summary { background: var(--surface-solid); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 32px; position: sticky; top: 100px; }
-  .checkout-summary h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 24px; }
-  .summary-coach { display: flex; gap: 16px; align-items: center; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border-light); }
-  .summary-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 600; color: var(--text-secondary); font-family: 'Playfair Display', serif; overflow: hidden; flex-shrink: 0; }
-  .summary-avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .summary-coach-name { font-size: 0.9rem; font-weight: 600; margin-bottom: 2px; }
-  .summary-coach-role { font-size: 0.78rem; color: var(--text-tertiary); }
-  .summary-line { display: flex; justify-content: space-between; padding: 10px 0; font-size: 0.85rem; }
-  .summary-line .sl-label { color: var(--text-secondary); }
-  .summary-line .sl-value { font-weight: 500; }
-  .summary-total { display: flex; justify-content: space-between; padding: 16px 0 0; border-top: 1px solid var(--border-light); margin-top: 8px; font-size: 1rem; font-weight: 700; }
-  .summary-guarantee { margin-top: 24px; padding: 16px; background: var(--green-bg); border-radius: var(--radius-sm); font-size: 0.78rem; color: var(--green); line-height: 1.5; text-align: center; }
-
-  /* Confirmation */
-  .confirmation-card { max-width: 600px; margin: 0 auto; background: var(--surface-solid); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 56px 48px; text-align: center; }
-  .confirm-check { width: 72px; height: 72px; border-radius: 50%; background: var(--green-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; }
-  .confirm-check svg { width: 32px; height: 32px; stroke: var(--green); fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-  .confirmation-card h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 600; margin-bottom: 12px; }
-  .confirmation-card .conf-sub { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 36px; line-height: 1.6; }
-  .conf-details { text-align: left; background: var(--bg-solid); border-radius: var(--radius-sm); padding: 24px; margin-bottom: 32px; }
-  .conf-details .cd-row { display: flex; justify-content: space-between; padding: 10px 0; font-size: 0.85rem; border-bottom: 1px solid var(--border-light); }
-  .conf-details .cd-row:last-child { border-bottom: none; }
-  .conf-details .cd-label { color: var(--text-secondary); }
-  .conf-details .cd-value { font-weight: 600; }
-  .conf-actions { display: flex; gap: 12px; justify-content: center; }
-  .conf-actions a, .conf-actions button { padding: 14px 28px; border-radius: 100px; font-size: 0.9rem; font-weight: 500; cursor: pointer; font-family: inherit; text-decoration: none; transition: all var(--transition); }
-
   @media (max-width: 900px) {
     .role-cards, .session-types { grid-template-columns: 1fr; }
-    .features-grid, .coaching-cards, .coaches-grid { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
     .quiz-layout { grid-template-columns: 1fr; gap: 48px; }
     .careers-scroll { grid-template-columns: repeat(2, 1fr); }
     .stats-bar { grid-template-columns: repeat(2, 1fr); }
@@ -1056,16 +943,13 @@
       </span>
       <span class="fw-brand-text">FlightWay</span>
     </a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a onclick="showPage('students')">For Students</a>
-      <a onclick="showPage('educators')">For Career Centers</a>
-      <a onclick="showPage('coaching')">Coaching</a>
-      <a onclick="coachOpenFromNav()">Career advisor</a>
+    <div class="nav-links app-nav" aria-label="App">
+      <a href="dashboard.html" class="app-nav-tab" data-app-nav="hub"><span class="app-nav-label">Career Hub</span></a>
+      <button type="button" class="app-nav-tab" data-app-nav="advisor" onclick="coachOpenFromNav()"><span class="app-nav-label">AI Career Advisor</span></button>
+      <button type="button" class="app-nav-tab" data-app-nav="quiz" onclick="showPage('quiz')"><span class="app-nav-label">Career Quiz</span></button>
       <button type="button" class="fw-theme-toggle" aria-label="Switch to light mode" aria-pressed="true">
         <span class="fw-theme-icon" aria-hidden="true"></span>
       </button>
-      <a class="nav-cta quiz-cta" onclick="showPage('quiz')">Take the Quiz</a>
     </div>
   </div>
 </nav>
@@ -1086,10 +970,9 @@
 <div id="page-portal" class="page">
   <section class="hero" style="padding-top:120px;min-height:85vh">
     <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,2.75rem);margin-bottom:12px">Your FlightWay home</h1>
-    <p id="portal-greeting" style="color:var(--text-secondary);max-width:480px;margin:0 auto 40px;font-size:1.05rem">Welcome back. Pick up where you left off.</p>
+    <p id="portal-greeting" style="color:var(--text-secondary);max-width:480px;margin:0 auto 40px;font-size:1.05rem">Welcome back. Use the navigation above to open your Career Hub or chat with your AI career advisor.</p>
     <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;max-width:720px;margin:0 auto">
-      <a href="dashboard.html" class="cta-btn" style="min-width:220px;text-align:center">Career Hub →</a>
-      <button type="button" class="cta-btn cta-btn-outline" onclick="coachOpenFromNav()" style="min-width:220px">Talk to career advisor →</button>
+      <button type="button" class="cta-btn cta-btn-outline" onclick="coachOpenFromNav()" style="min-width:220px">Talk to AI Career Advisor →</button>
       <button type="button" class="cta-btn cta-btn-outline" onclick="showPage('quiz')" style="min-width:220px">Take the quiz (optional)</button>
     </div>
   </section>
@@ -1173,7 +1056,7 @@
         <div class="stat-item"><div class="stat-number">50+</div><div class="stat-label">Career guides</div></div>
         <div class="stat-item"><div class="stat-number">12k</div><div class="stat-label">Students guided</div></div>
         <div class="stat-item"><div class="stat-number">94%</div><div class="stat-label">Satisfaction rate</div></div>
-        <div class="stat-item"><div class="stat-number">200+</div><div class="stat-label">Expert coaches</div></div>
+        <div class="stat-item"><div class="stat-number">12</div><div class="stat-label">Industries matched</div></div>
       </div>
     </div>
   </section>
@@ -1182,17 +1065,17 @@
     <div class="section-inner">
       <div class="section-tag fade-in" style="text-align:center">After the Quiz</div>
       <h2 class="section-title fade-in" style="margin:0 auto 20px;text-align:center">Your matches unlock everything</h2>
-      <p class="section-desc fade-in" style="margin:0 auto 60px;text-align:center">Career deep dives, expert coaches, and a path forward &mdash; all personalized to your results.</p>
+      <p class="section-desc fade-in" style="margin:0 auto 60px;text-align:center">Career deep dives, your AI advisor, and a path forward &mdash; all personalized to your results.</p>
       <div class="features-grid fade-in">
         <div class="feature-card" style="cursor:pointer" onclick="showPage('students')">
           <div class="feature-icon"><i data-lucide="book-open"></i></div>
           <h4>Deep career guides</h4>
           <p>Day-in-the-life timelines, salary ranges, skills required, and AI automation risk for 50+ careers.</p>
         </div>
-        <div class="feature-card" style="cursor:pointer" onclick="showPage('coaching')">
-          <div class="feature-icon"><i data-lucide="users"></i></div>
-          <h4>1-on-1 expert coaching</h4>
-          <p>Book sessions with PMs at Stripe, engineers at Google, VPs at McKinsey, designers at Apple.</p>
+        <div class="feature-card" style="cursor:pointer" onclick="coachOpenFromNav()">
+          <div class="feature-icon"><i data-lucide="bot"></i></div>
+          <h4>AI career advisor</h4>
+          <p>Chat with an advisor that knows your quiz results and helps you plan next steps.</p>
         </div>
         <div class="feature-card" style="cursor:pointer" onclick="showPage('quiz')">
           <div class="feature-icon"><i data-lucide="graduation-cap"></i></div>
@@ -1211,7 +1094,7 @@
         <div class="role-card" onclick="showPage('students')">
           <div class="icon"><i data-lucide="graduation-cap"></i></div>
           <h3>I'm a Student</h3>
-          <p>Browse career guides, meet coaches, and explore the full student experience.</p>
+          <p>Browse career guides and explore the full student experience.</p>
           <span class="arrow">Explore &rarr;</span>
         </div>
         <div class="role-card" onclick="showPage('educators')">
@@ -1237,7 +1120,7 @@
   <section class="hero" style="min-height: auto; padding-top: 140px; padding-bottom: 80px;">
     <button class="back-btn" onclick="showPage('home')">&larr; Back</button>
     <h1 style="font-size: clamp(2.4rem, 5vw, 3.5rem);">Find the career you were made for.</h1>
-    <p>Stop guessing. Our AI-powered quiz, in-depth career guides, and 1-on-1 coaching with industry experts help you move forward with clarity and confidence.</p>
+    <p>Stop guessing. Our AI-powered quiz and in-depth career guides help you move forward with clarity and confidence.</p>
     <a class="cta-btn quiz-cta" onclick="showPage('quiz')">Take the Career Quiz</a>
   </section>
   <section class="quiz-section">
@@ -1282,18 +1165,6 @@
       <div class="careers-scroll fade-in" id="student-careers"></div>
     </div>
   </section>
-  <section style="background: var(--surface-solid);">
-    <div class="section-inner">
-      <div class="section-tag fade-in">1-on-1 Coaching</div>
-      <h2 class="section-title fade-in">Learn from people who've been there</h2>
-      <p class="section-desc fade-in">Book sessions with professionals at top companies.</p>
-      <div class="coaching-cards fade-in">
-        <div class="coach-card" onclick="showPage('coaching')" style="cursor:pointer"><div class="coach-avatar">S</div><h4>Sarah K.</h4><div class="role">Product Lead at Stripe</div><p>8 years in product. Helps students break into PM roles.</p></div>
-        <div class="coach-card" onclick="showPage('coaching')" style="cursor:pointer"><div class="coach-avatar">M</div><h4>Marcus T.</h4><div class="role">Senior Engineer at Google</div><p>Guides aspiring engineers through portfolio building.</p></div>
-        <div class="coach-card" onclick="showPage('coaching')" style="cursor:pointer"><div class="coach-avatar">A</div><h4>Aisha R.</h4><div class="role">VP Strategy at McKinsey</div><p>Mentors students on consulting paths and case prep.</p></div>
-      </div>
-    </div>
-  </section>
   <section class="testimonial-section">
     <div class="section-inner">
       <div class="section-tag fade-in">Student Stories</div>
@@ -1328,7 +1199,6 @@
         <div class="feature-card"><div class="feature-icon"><i data-lucide="bot"></i></div><h4>AI Career Quiz</h4><p>Maps students to best-fit high-paying knowledge work roles.</p></div>
         <div class="feature-card"><div class="feature-icon"><i data-lucide="book-open"></i></div><h4>Career Guide Library</h4><p>50+ in-depth guides for roles in tech, finance, consulting, and more.</p></div>
         <div class="feature-card"><div class="feature-icon"><i data-lucide="trending-up"></i></div><h4>Student Analytics</h4><p>Understand which careers your students are exploring.</p></div>
-        <div class="feature-card"><div class="feature-icon"><i data-lucide="users"></i></div><h4>Expert Coaching</h4><p>200+ industry professionals for 1-on-1 sessions.</p></div>
         <div class="feature-card"><div class="feature-icon"><i data-lucide="link-2"></i></div><h4>LMS Integration</h4><p>Plugs into Canvas, Blackboard, and other systems.</p></div>
         <div class="feature-card"><div class="feature-icon"><i data-lucide="shield-check"></i></div><h4>FERPA Compliant</h4><p>Student data encrypted, anonymized, and never shared.</p></div>
       </div>
@@ -1360,25 +1230,6 @@
 </div>
 
 <div id="page-career" class="page"><div id="career-content"></div></div>
-
-<div id="page-coaching" class="page">
-  <section class="coaching-hero">
-    <button class="back-btn" onclick="showPage('home')">&larr; Back to Home</button>
-    <div class="section-tag fade-in">Expert Coaching</div>
-    <h1 class="fade-in">Book a session with an industry expert.</h1>
-    <p class="tagline fade-in">Get 1-on-1 guidance from professionals at top companies. Pick your coach, choose a session type, and book directly through their calendar.</p>
-    <div class="filters-bar fade-in" id="coach-filters"></div>
-  </section>
-  <section style="padding-top: 0;">
-    <div class="section-inner">
-      <div class="coaches-grid fade-in" id="coaches-grid"></div>
-    </div>
-  </section>
-</div>
-
-<div id="page-coach-profile" class="page"><div id="coach-profile-content"></div></div>
-<div id="page-checkout" class="page"><div id="checkout-content"></div></div>
-<div id="page-confirmation" class="page"><div id="confirmation-content"></div></div>
 
 <!-- ───────────── AI COACH PAGE ───────────── -->
 <div id="page-coach" class="page">
@@ -1731,39 +1582,6 @@ const careers = {
   }
 };
 
-const coaches = [
-  { id: "sarah-kim", name: "Sarah Kim", initials: "SK", photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face", title: "Senior Product Lead", company: "Stripe", rate: 150, rating: 4.9, reviews: 127, sessions: 340, specialty: "Product Management", tags: ["Product Strategy","Career Transition","Interview Prep"], calendly: "https://calendly.com", bio: "I've spent 8 years building products at companies like Stripe, Airbnb, and a YC-backed startup. I specialize in helping aspiring PMs break into the field and experienced PMs level up their strategic thinking. Whether you're preparing for interviews or navigating your first 90 days, I've been there and I can help.",
-    credentials: [{icon:"&#128188;",title:"Senior Product Lead at Stripe",sub:"2021 – Present"},{icon:"&#127968;",title:"Product Manager at Airbnb",sub:"2018 – 2021"},{icon:"&#127891;",title:"MBA, Stanford Graduate School of Business",sub:"2016 – 2018"},{icon:"&#9889;",title:"PM at YC Startup (Series A)",sub:"2014 – 2016"}],
-    sessionTypes: [{name:"Career Strategy",duration:"30 min",price:75,desc:"High-level career planning, role evaluation, and goal setting."},{name:"Deep Dive Session",duration:"60 min",price:150,desc:"In-depth coaching on product thinking, case studies, or interview prep."},{name:"Resume & Portfolio Review",duration:"45 min",price:100,desc:"Detailed feedback on your PM resume, portfolio, and application materials."},{name:"Mock Interview",duration:"60 min",price:175,desc:"Realistic PM interview simulation with detailed feedback."}],
-    reviewsList: [{stars:5,text:"Sarah completely changed how I approach product interviews. Landed an offer at Google within 3 weeks of our sessions.",author:"Alex T., now PM at Google"},{stars:5,text:"Incredibly actionable advice. She doesn't just give generic tips — every session was tailored to my situation.",author:"Maya K., PM at Notion"}]
-  },
-  { id: "marcus-thompson", name: "Marcus Thompson", initials: "MT", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face", title: "Staff Software Engineer", company: "Google", rate: 175, rating: 4.8, reviews: 98, sessions: 210, specialty: "Software Engineering", tags: ["System Design","Technical Interviews","Career Growth"], calendly: "https://calendly.com", bio: "I'm a Staff Engineer at Google working on core infrastructure. Before that I was at Meta and two startups. I help engineers at all levels — from those trying to land their first role to senior ICs preparing for Staff+ promotions. I focus on system design thinking and building the kind of technical judgment that separates good engineers from great ones.",
-    credentials: [{icon:"&#128187;",title:"Staff Software Engineer at Google",sub:"2020 – Present"},{icon:"&#128296;",title:"Senior Engineer at Meta",sub:"2017 – 2020"},{icon:"&#127891;",title:"MS Computer Science, Carnegie Mellon",sub:"2013 – 2015"},{icon:"&#9889;",title:"Early Engineer at 2 startups (1 acquired)",sub:"2015 – 2017"}],
-    sessionTypes: [{name:"Career Strategy",duration:"30 min",price:85,desc:"Career trajectory planning for software engineers at any level."},{name:"System Design Deep Dive",duration:"60 min",price:175,desc:"Work through system design problems with real-world context."},{name:"Technical Interview Prep",duration:"60 min",price:175,desc:"Mock coding or system design interview with detailed feedback."},{name:"Code & Architecture Review",duration:"45 min",price:125,desc:"Review your project code, architecture decisions, or portfolio."}],
-    reviewsList: [{stars:5,text:"Marcus's system design coaching was worth 10x the price. He teaches you HOW to think, not just what to say.",author:"Jordan P., now at Amazon"},{stars:5,text:"Went from failing system design rounds to getting offers from 3 FAANG companies. Marcus is the real deal.",author:"Lin W., now SDE at Meta"}]
-  },
-  { id: "aisha-reynolds", name: "Aisha Reynolds", initials: "AR", photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face", title: "VP of Strategy", company: "McKinsey & Company", rate: 200, rating: 5.0, reviews: 74, sessions: 180, specialty: "Management Consulting", tags: ["Case Interview","Consulting Careers","Strategy"], calendly: "https://calendly.com", bio: "I lead strategy engagements at McKinsey and have 12 years of consulting experience across healthcare, tech, and financial services. I'm passionate about helping diverse candidates break into consulting and navigate the path to partner. My coaching focuses on case interview mastery, networking strategy, and building the executive presence that top firms look for.",
-    credentials: [{icon:"&#128188;",title:"VP of Strategy at McKinsey & Company",sub:"2019 – Present"},{icon:"&#127968;",title:"Engagement Manager at McKinsey",sub:"2015 – 2019"},{icon:"&#127891;",title:"MBA, Harvard Business School",sub:"2013 – 2015"},{icon:"&#128200;",title:"Business Analyst at Bain & Company",sub:"2011 – 2013"}],
-    sessionTypes: [{name:"Career Strategy",duration:"30 min",price:100,desc:"Consulting career planning, firm selection, and application strategy."},{name:"Case Interview Prep",duration:"60 min",price:200,desc:"Full case interview simulation with frameworks and feedback."},{name:"Networking & Recruiting",duration:"45 min",price:150,desc:"Build your consulting networking strategy and refine your story."},{name:"Executive Presence",duration:"60 min",price:200,desc:"Work on presentation skills, client communication, and gravitas."}],
-    reviewsList: [{stars:5,text:"Aisha's case prep is on another level. She helped me see patterns I was completely missing. Got into McKinsey.",author:"David L., Associate at McKinsey"},{stars:5,text:"Beyond case prep — she helped me build confidence and find my authentic voice in interviews.",author:"Priya S., now at BCG"}]
-  },
-  { id: "james-chen", name: "James Chen", initials: "JC", photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face", title: "VP, Investment Banking", company: "Goldman Sachs", rate: 225, rating: 4.9, reviews: 56, sessions: 130, specialty: "Investment Banking", tags: ["IB Recruiting","Financial Modeling","Deal Experience"], calendly: "https://calendly.com", bio: "I'm a VP in Goldman's TMT (Technology, Media & Telecom) group. I've worked on 20+ M&A and IPO transactions. I know exactly what it takes to break in, survive the analyst years, and decide whether to stay or pivot. I coach on technical skills, recruiting strategy, and the unwritten rules of banking culture.",
-    credentials: [{icon:"&#128176;",title:"VP, Investment Banking at Goldman Sachs",sub:"2020 – Present"},{icon:"&#128200;",title:"Associate at Goldman Sachs",sub:"2017 – 2020"},{icon:"&#127891;",title:"BS Finance, Wharton School",sub:"2013 – 2017"},{icon:"&#127942;",title:"20+ completed M&A and IPO transactions",sub:"Career total"}],
-    sessionTypes: [{name:"Career Strategy",duration:"30 min",price:110,desc:"IB recruiting timeline, target banks, and application strategy."},{name:"Technical Prep",duration:"60 min",price:225,desc:"Financial modeling, valuation, and technical interview prep."},{name:"Behavioral + Fit Interview",duration:"45 min",price:150,desc:"Practice your story, motivations, and fit questions for banking."},{name:"IB to PE/VC Exit Strategy",duration:"60 min",price:225,desc:"Plan your exit — PE, VC, hedge funds, or corporate development."}],
-    reviewsList: [{stars:5,text:"James demystified the IB recruiting process for me. His insider knowledge is invaluable.",author:"Rachel M., Analyst at Morgan Stanley"},{stars:5,text:"The technical prep sessions were exactly what I needed. He makes modeling intuitive.",author:"Chris K., Analyst at Goldman Sachs"}]
-  },
-  { id: "elena-martinez", name: "Elena Martinez", initials: "EM", photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face", title: "Lead Data Scientist", company: "Netflix", rate: 160, rating: 4.9, reviews: 89, sessions: 195, specialty: "Data Science", tags: ["ML Engineering","Data Careers","Python & SQL"], calendly: "https://calendly.com", bio: "I lead the personalization data science team at Netflix. Before that I was at Spotify and completed my PhD in Applied Statistics at Columbia. I help students and early-career professionals navigate the data science landscape — from choosing the right tools to learn, to building a portfolio that stands out, to crushing technical interviews.",
-    credentials: [{icon:"&#128202;",title:"Lead Data Scientist at Netflix",sub:"2021 – Present"},{icon:"&#127925;",title:"Senior Data Scientist at Spotify",sub:"2018 – 2021"},{icon:"&#127891;",title:"PhD Applied Statistics, Columbia University",sub:"2014 – 2018"},{icon:"&#128214;",title:"Published 12 papers in ML and statistics",sub:"Career total"}],
-    sessionTypes: [{name:"Career Strategy",duration:"30 min",price:80,desc:"Navigate the DS landscape and plan your career path."},{name:"Technical Interview Prep",duration:"60 min",price:160,desc:"ML concepts, coding challenges, and case studies."},{name:"Portfolio Review",duration:"45 min",price:120,desc:"Review your projects, notebooks, and GitHub presence."},{name:"ML Deep Dive",duration:"60 min",price:160,desc:"Work through a real ML problem from framing to deployment."}],
-    reviewsList: [{stars:5,text:"Elena helped me reframe my entire portfolio. Went from no callbacks to 4 interviews in 2 weeks.",author:"Sam R., now DS at Spotify"},{stars:5,text:"Her technical depth is incredible, but what I valued most was her career advice. She really cares.",author:"Nina T., now DS at Airbnb"}]
-  },
-  { id: "daniel-park", name: "Daniel Park", initials: "DP", photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face", title: "Principal UX Designer", company: "Apple", rate: 165, rating: 4.8, reviews: 63, sessions: 145, specialty: "UX Design", tags: ["Design Portfolio","UX Research","Big Tech Design"], calendly: "https://calendly.com", bio: "I'm a Principal Designer at Apple working on core iOS experiences. I've spent 10 years in design at companies including Apple, Figma, and IDEO. I help aspiring and early-career designers build portfolios that tell compelling stories, prepare for design challenges, and understand what design leadership actually looks for when hiring.",
-    credentials: [{icon:"&#127912;",title:"Principal UX Designer at Apple",sub:"2021 – Present"},{icon:"&#9999;",title:"Senior Designer at Figma",sub:"2018 – 2021"},{icon:"&#128161;",title:"Interaction Designer at IDEO",sub:"2015 – 2018"},{icon:"&#127891;",title:"MFA Interaction Design, SVA",sub:"2013 – 2015"}],
-    sessionTypes: [{name:"Career Strategy",duration:"30 min",price:80,desc:"Design career planning, from junior to design leadership."},{name:"Portfolio Review",duration:"60 min",price:165,desc:"In-depth critique of your case studies and presentation."},{name:"Design Challenge Prep",duration:"60 min",price:165,desc:"Practice app critiques and whiteboard design exercises."},{name:"UX Research Methods",duration:"45 min",price:120,desc:"Learn research planning, synthesis, and storytelling."}],
-    reviewsList: [{stars:5,text:"Daniel's portfolio review transformed my case studies. He taught me to tell a story, not just show screens.",author:"Amy L., now Designer at Google"},{stars:4,text:"Great insight into what big tech design teams actually look for. Very different from what I expected.",author:"Tom R., now at Spotify Design"}]
-  }
-];
-
 const studentCareers = ["product-management","software-engineering","data-science","ux-design","management-consulting","investment-banking","marketing-strategy","business-analytics"];
 const educatorCareers = [...studentCareers,"corporate-strategy","financial-analysis","healthcare-admin","legal-operations"];
 
@@ -1791,168 +1609,9 @@ function showCareer(key, backTo) {
     <section><div class="section-inner"><div class="section-tag fade-in">A Day in the Life</div><h2 class="section-title fade-in">What a typical day looks like</h2><div class="timeline fade-in">${c.dayInLife.map(i=>`<div class="timeline-item"><div class="timeline-time">${i.time}</div><div class="timeline-content"><h5>${i.title}</h5><p>${i.desc}</p></div></div>`).join('')}</div></div></section>
     <section style="background:var(--surface-solid)"><div class="section-inner"><div class="section-tag fade-in">Skills Required</div><h2 class="section-title fade-in">What you need to learn</h2><div class="skills-pills fade-in">${c.coreSkills.map(s=>`<span class="skill-pill core">${s}</span>`).join('')}${c.otherSkills.map(s=>`<span class="skill-pill">${s}</span>`).join('')}</div></div></section>
     <section><div class="section-inner"><div class="section-tag fade-in">AI &amp; Automation Outlook</div><h2 class="section-title fade-in">How AI will shape this role</h2><div class="ai-outlook-card fade-in"><h4>Overall automation risk: ${c.aiAutomation}%</h4><p>${c.aiOutlook}</p><div class="ai-bar-big"><div class="ai-bar-big-fill ${aiBarClass}" style="width:0%" data-target="${c.aiAutomation}"></div></div><div class="ai-bar-labels"><span>Low risk</span><span>High risk</span></div><div class="ai-tasks">${c.aiTasks.map(t=>`<div class="ai-task-row"><span class="ai-task-label">${t.task}</span><span class="ai-task-risk risk-${t.risk}">${t.risk==='low'?'Low risk':t.risk==='med'?'Moderate':'High risk'}</span></div>`).join('')}</div></div></div></section>
-    <section class="cta-section"><div class="section-inner"><h2 class="section-title fade-in" style="text-align:center">Interested in ${c.title}?</h2><div class="fade-in"><a class="cta-btn" onclick="showPage('quiz')">Take the Career Quiz</a><a class="cta-btn cta-btn-outline" onclick="showPage('coaching')">Book a Coach</a></div></div></section>`;
+    <section class="cta-section"><div class="section-inner"><h2 class="section-title fade-in" style="text-align:center">Interested in ${c.title}?</h2><div class="fade-in"><a class="cta-btn" onclick="showPage('quiz')">Take the Career Quiz</a><a class="cta-btn cta-btn-outline" onclick="coachOpenFromNav()">Talk to AI Career Advisor</a></div></div></section>`;
   showPage('career');
   setTimeout(()=>{document.querySelectorAll('.scale-bar-fill[data-target],.ai-bar-big-fill[data-target]').forEach(b=>{b.style.width=b.dataset.target+'%'});},400);
-}
-
-const specialties = [...new Set(coaches.map(c=>c.specialty))];
-let activeFilter = 'All';
-
-function renderCoachFilters() {
-  document.getElementById('coach-filters').innerHTML = `<button class="filter-btn active" onclick="filterCoaches('All')">All Coaches</button>` + specialties.map(s=>`<button class="filter-btn" onclick="filterCoaches('${s}')">${s}</button>`).join('');
-}
-
-function filterCoaches(specialty) {
-  activeFilter = specialty;
-  document.querySelectorAll('.filter-btn').forEach(b => { b.classList.toggle('active', b.textContent === (specialty==='All'?'All Coaches':specialty)); });
-  renderCoachesGrid();
-}
-
-function renderCoachesGrid() {
-  const filtered = activeFilter === 'All' ? coaches : coaches.filter(c => c.specialty === activeFilter);
-  document.getElementById('coaches-grid').innerHTML = filtered.map(c => `
-    <div class="mp-coach-card" onclick="showCoachProfile('${c.id}')">
-      <div class="mp-coach-photo">
-        <img src="${c.photo}" alt="${c.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="photo-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center">${c.initials}</div>
-        <div class="mp-coach-badge">${c.specialty}</div>
-      </div>
-      <div class="mp-coach-info">
-        <h3>${c.name}</h3>
-        <div class="mp-role">${c.title} at ${c.company}</div>
-        <div class="mp-rating"><span class="mp-stars">${'&#9733;'.repeat(Math.floor(c.rating))}</span> ${c.rating} (${c.reviews} reviews)</div>
-        <div class="mp-coach-tags">${c.tags.map(t=>`<span class="mp-tag">${t}</span>`).join('')}</div>
-        <div class="mp-coach-footer">
-          <div class="mp-rate">$${c.rate}<span> / session</span></div>
-          <button class="mp-book-btn" onclick="event.stopPropagation();showCoachProfile('${c.id}')">View Profile</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-let selectedSession = null;
-let currentCoach = null;
-
-function showCoachProfile(id) {
-  const c = coaches.find(x => x.id === id); if (!c) return;
-  currentCoach = c; selectedSession = null;
-  document.getElementById('coach-profile-content').innerHTML = `
-    <section style="padding: 120px 40px 80px;">
-      <div class="section-inner">
-        <button class="back-btn" onclick="showPage('coaching')">&larr; Back to all coaches</button>
-        <div class="profile-layout">
-          <div class="profile-photo-card fade-in">
-            <div class="profile-photo">
-              <img src="${c.photo}" alt="${c.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="photo-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center">${c.initials}</div>
-            </div>
-            <div class="profile-photo-meta">
-              <h2>${c.name}</h2>
-              <div class="pp-role">${c.title} at ${c.company}</div>
-              <div class="pp-rating"><span class="pp-stars">${'&#9733;'.repeat(Math.floor(c.rating))}</span> ${c.rating} &middot; ${c.reviews} reviews &middot; ${c.sessions} sessions</div>
-              <div class="pp-rate">$${c.rate}<span> / session</span></div>
-              <button class="pp-book-main" id="profile-book-btn" onclick="goToCheckout()" disabled style="opacity:0.5;cursor:not-allowed">Select a session type below</button>
-              <a class="pp-calendly" href="${c.calendly}" target="_blank" rel="noopener">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                View Calendly
-              </a>
-            </div>
-          </div>
-          <div class="profile-body">
-            <div class="profile-section fade-in"><h3>About ${c.name.split(' ')[0]}</h3><p>${c.bio}</p></div>
-            <div class="profile-section fade-in"><h4>Career Credentials</h4><ul class="credentials-list">${c.credentials.map(cr => `<li><div class="cred-icon">${cr.icon}</div><div class="cred-text"><h5>${cr.title}</h5><p>${cr.sub}</p></div></li>`).join('')}</ul></div>
-            <div class="profile-section fade-in"><h4>Session Types</h4><div class="session-types" id="session-types">${c.sessionTypes.map((s,i) => `<div class="session-type-card" onclick="selectSession(${i})"><h5>${s.name}</h5><div class="st-price">$${s.price} <span style="font-size:0.78rem;font-weight:400;color:var(--text-tertiary)">&middot; ${s.duration}</span></div><p>${s.desc}</p></div>`).join('')}</div></div>
-            <div class="profile-section fade-in"><h4>Student Reviews</h4>${c.reviewsList.map(r => `<div class="review-card"><div class="review-stars">${'&#9733;'.repeat(r.stars)}</div><blockquote>"${r.text}"</blockquote><div class="review-author">${r.author}</div></div>`).join('')}</div>
-          </div>
-        </div>
-      </div>
-    </section>`;
-  showPage('coach-profile');
-}
-
-function selectSession(index) {
-  selectedSession = currentCoach.sessionTypes[index];
-  document.querySelectorAll('.session-type-card').forEach((c,i) => { c.classList.toggle('selected', i===index); });
-  const btn = document.getElementById('profile-book-btn');
-  btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer';
-  btn.textContent = `Book ${selectedSession.name} — $${selectedSession.price}`;
-}
-
-function goToCheckout() {
-  if (!currentCoach || !selectedSession) return;
-  const c = currentCoach, s = selectedSession;
-  const tax = Math.round(s.price * 0.08 * 100) / 100;
-  const fee = 2.50;
-  const total = (s.price + tax + fee).toFixed(2);
-  document.getElementById('checkout-content').innerHTML = `
-    <section style="padding: 120px 40px 80px;">
-      <div class="section-inner">
-        <button class="back-btn" onclick="showCoachProfile('${c.id}')">&larr; Back to ${c.name.split(' ')[0]}'s profile</button>
-        <div style="text-align:center;margin-bottom:48px;">
-          <div class="section-tag fade-in">Checkout</div>
-          <h2 class="section-title fade-in" style="margin:0 auto 8px;text-align:center">Complete your booking</h2>
-          <p style="font-size:0.95rem;color:var(--text-secondary);" class="fade-in">Secure payment powered by Stripe</p>
-        </div>
-        <div class="checkout-layout">
-          <div class="checkout-form fade-in">
-            <h3>Payment Details</h3>
-            <div class="form-group"><label>Email Address</label><input class="form-input" type="email" placeholder="you@email.com"></div>
-            <div class="form-group"><label>Full Name</label><input class="form-input" type="text" placeholder="Your full name"></div>
-            <div class="form-divider"></div>
-            <div class="card-icons"><div class="card-icon active">VISA</div><div class="card-icon">MC</div><div class="card-icon">AMEX</div><div class="card-icon">&#9679;&#9679;&#9679;</div></div>
-            <div class="form-group"><label>Card Number</label><input class="form-input" type="text" placeholder="1234 5678 9012 3456" maxlength="19"></div>
-            <div class="form-row"><div class="form-group"><label>Expiry</label><input class="form-input" type="text" placeholder="MM / YY" maxlength="7"></div><div class="form-group"><label>CVC</label><input class="form-input" type="text" placeholder="123" maxlength="4"></div></div>
-            <div class="form-divider"></div>
-            <div class="form-group"><label>Promo Code (optional)</label><input class="form-input" type="text" placeholder="Enter code"></div>
-            <button class="pay-btn" onclick="completePayment()">Pay $${total}</button>
-            <div class="secure-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Secured with 256-bit SSL encryption</div>
-          </div>
-          <div class="checkout-summary fade-in">
-            <h4>Booking Summary</h4>
-            <div class="summary-coach"><div class="summary-avatar"><img src="${c.photo}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.style.display='none';this.parentElement.textContent='${c.initials}'"></div><div><div class="summary-coach-name">${c.name}</div><div class="summary-coach-role">${c.title}, ${c.company}</div></div></div>
-            <div class="summary-line"><span class="sl-label">Session</span><span class="sl-value">${s.name}</span></div>
-            <div class="summary-line"><span class="sl-label">Duration</span><span class="sl-value">${s.duration}</span></div>
-            <div class="summary-line"><span class="sl-label">Session fee</span><span class="sl-value">$${s.price.toFixed(2)}</span></div>
-            <div class="summary-line"><span class="sl-label">Tax</span><span class="sl-value">$${tax.toFixed(2)}</span></div>
-            <div class="summary-line"><span class="sl-label">Platform fee</span><span class="sl-value">$${fee.toFixed(2)}</span></div>
-            <div class="summary-total"><span>Total</span><span>$${total}</span></div>
-            <div class="summary-guarantee">&#9989; 100% satisfaction guarantee. Full refund if your session doesn't meet expectations.</div>
-          </div>
-        </div>
-      </div>
-    </section>`;
-  showPage('checkout');
-}
-
-function completePayment() {
-  if (!currentCoach || !selectedSession) return;
-  const c = currentCoach, s = selectedSession;
-  const tax = Math.round(s.price * 0.08 * 100) / 100;
-  const total = (s.price + tax + 2.50).toFixed(2);
-  const confNum = 'DF-' + Math.random().toString(36).substring(2,8).toUpperCase();
-  document.getElementById('confirmation-content').innerHTML = `
-    <section style="padding: 140px 40px 80px;">
-      <div class="section-inner">
-        <div class="confirmation-card fade-in">
-          <div class="confirm-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <h2>Booking Confirmed!</h2>
-          <p class="conf-sub">Your session with ${c.name} has been booked. You'll receive a confirmation email with your Calendly link to schedule a time.</p>
-          <div class="conf-details">
-            <div class="cd-row"><span class="cd-label">Confirmation</span><span class="cd-value">${confNum}</span></div>
-            <div class="cd-row"><span class="cd-label">Coach</span><span class="cd-value">${c.name}</span></div>
-            <div class="cd-row"><span class="cd-label">Session</span><span class="cd-value">${s.name} (${s.duration})</span></div>
-            <div class="cd-row"><span class="cd-label">Amount paid</span><span class="cd-value">$${total}</span></div>
-          </div>
-          <div class="conf-actions">
-            <a class="cta-btn" href="${c.calendly}" target="_blank" rel="noopener">Schedule on Calendly</a>
-            <button class="cta-btn cta-btn-outline" onclick="showPage('coaching')" style="margin-left:0">Browse More Coaches</button>
-          </div>
-        </div>
-      </div>
-    </section>`;
-  showPage('confirmation');
 }
 
 let qzOrigin = 'home';
@@ -1961,8 +1620,14 @@ function showPage(page) {
   if (page === 'quiz') qzOrigin = _dfPrevPage;
   _dfPrevPage = page;
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
+  const el = document.getElementById('page-' + page);
+  if (!el) return;
+  el.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (window.FWAppNav) {
+    var navKey = page === 'coach' ? 'advisor' : page === 'quiz' ? 'quiz' : null;
+    FWAppNav.sync(navKey);
+  }
   setTimeout(() => {
     observeElements();
     if (typeof lucide !== 'undefined') lucide.createIcons();
@@ -1985,8 +1650,6 @@ document.querySelectorAll('.quiz-item').forEach(item => {
 
 renderCareerChips('student-careers', studentCareers);
 renderCareerChips('educator-careers', educatorCareers);
-renderCoachFilters();
-renderCoachesGrid();
 observeElements();
 
 // Initialize Lucide icons
@@ -1995,7 +1658,6 @@ if (typeof lucide !== 'undefined') lucide.createIcons();
 // Re-init Lucide after any dynamic content renders
 const _origShowPage = showPage;
 const _origShowCareer = showCareer;
-const _origShowCoachProfile = showCoachProfile;
 
 function _reInitLucide() { if (typeof lucide !== 'undefined') lucide.createIcons(); }
 
@@ -3062,7 +2724,7 @@ function qzSalaryArenaHtml(industryKey){
     </div>
     <div class="sal-cta-box">
       <div class="sal-cta-stat"><strong>78% of people</strong> never reach elite-tier pay.<br>The other 22% had a plan.</div>
-      <button class="salary-unlock-btn" onclick="showPage('coaching')">⚔️ &nbsp;Get Your Personalized Plan →</button>
+      <button class="salary-unlock-btn" onclick="coachOpenFromNav()">⚔️ &nbsp;Talk to AI Career Advisor →</button>
     </div>
   </div>`;
 }
@@ -3113,7 +2775,7 @@ function qzShowResults(){
       ${careerLinksHtml}
     </div>`;
   });
-  fb+=`<div style="text-align:center;margin-top:30px;padding-top:24px;border-top:1px solid var(--border-light);display:flex;flex-wrap:wrap;gap:12px;justify-content:center"><a class="cta-btn" onclick="qzOpenCareerHub()">Open Career Hub →</a><a class="cta-btn cta-btn-outline" onclick="coachOpenFromNav()">Talk to AI Coach →</a><a class="cta-btn cta-btn-outline" onclick="showPage('coaching')">Book a Human Coach →</a></div>`;
+  fb+=`<div style="text-align:center;margin-top:30px;padding-top:24px;border-top:1px solid var(--border-light);display:flex;flex-wrap:wrap;gap:12px;justify-content:center"><a class="cta-btn" onclick="qzOpenCareerHub()">Open Career Hub →</a><a class="cta-btn cta-btn-outline" onclick="coachOpenFromNav()">Talk to AI Career Advisor →</a></div>`;
   fb+=`<button class="qz-restart" onclick="qzRestart()">↺ Retake Assessment</button>`;
 
   h+=`<div class="full-breakdown" id="full-breakdown">${fb}</div>`;
@@ -3733,10 +3395,11 @@ function portalUpdateGreeting(){
 
 function fwRouteBoot(){
   const h = (location.hash || '').replace(/^#/, '');
-  if (h === 'signin') { showPage('signin'); return true; }
+  if (h === 'signin') { showPage('signin'); if (window.FWAppNav) FWAppNav.sync(null); return true; }
   if (h === 'portal') {
     if (coachUserId) { showPage('portal'); portalUpdateGreeting(); }
     else showPage('signin');
+    if (window.FWAppNav) FWAppNav.sync(null);
     return true;
   }
   if (h === 'coach') {
@@ -3749,6 +3412,7 @@ function fwRouteBoot(){
     showPage('quiz');
     return true;
   }
+  if (window.FWAppNav) FWAppNav.sync();
   return false;
 }
 
@@ -4122,6 +3786,7 @@ function coachOpenFromNav(){
     try { history.replaceState(null, '', '#coach'); } catch(_) {}
   }
   showPage('coach');
+  if (window.FWAppNav) FWAppNav.sync('advisor');
   document.getElementById('coach-user-email').textContent = coachUserId;
   document.getElementById('coach-empty').style.display = '';
   // Reset visible chat — server controls real state.
@@ -4369,6 +4034,7 @@ if (document.readyState === 'loading') {
   coachInit();
 }
 </script>
+<script src="assets/app-nav.js" defer></script>
 <script src="assets/theme.js" defer></script>
 <script src="assets/data-field.js" defer></script>
 </body>

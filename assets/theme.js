@@ -11,9 +11,7 @@
     }
   }
 
-  function apply(theme) {
-    root.setAttribute('data-theme', theme);
-    root.style.colorScheme = theme;
+  function updateToggles(theme) {
     document.querySelectorAll('.fw-theme-toggle').forEach(function (btn) {
       var isDark = theme === 'dark';
       btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
@@ -25,12 +23,35 @@
           : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
       }
     });
-    window.dispatchEvent(new CustomEvent('flightway-theme-change', { detail: { theme: theme } }));
+  }
+
+  function apply(theme, opts) {
+    opts = opts || {};
+    var prev = root.getAttribute('data-theme');
+    if (prev === theme) {
+      updateToggles(theme);
+      return;
+    }
+    root.setAttribute('data-theme', theme);
+    root.style.colorScheme = theme;
+    updateToggles(theme);
+    if (!opts.silent) {
+      window.dispatchEvent(new CustomEvent('flightway-theme-change', { detail: { theme: theme } }));
+    }
+  }
+
+  function enableTransitions() {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        root.classList.add('theme-ready');
+      });
+    });
   }
 
   function init() {
     var theme = getStored() || 'dark';
-    apply(theme);
+    apply(theme, { silent: true });
+    enableTransitions();
 
     document.querySelectorAll('.fw-theme-toggle').forEach(function (btn) {
       btn.addEventListener('click', function () {
