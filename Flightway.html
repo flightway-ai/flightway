@@ -293,9 +293,9 @@
 
   /* Animated blobs behind hero */
   .hero-blob { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; animation: blob-drift 14s ease-in-out infinite; z-index: 0; }
-  .hero-blob-1 { width: 580px; height: 580px; background: rgba(99,102,241,0.09); top: -140px; right: -80px; animation-delay: 0s; }
-  .hero-blob-2 { width: 440px; height: 440px; background: rgba(6,182,212,0.07); bottom: 20px; left: -60px; animation-delay: -5s; }
-  .hero-blob-3 { width: 320px; height: 320px; background: rgba(168,85,247,0.07); top: 40%; left: 32%; animation-delay: -9s; }
+  .hero-blob-1 { width: 580px; height: 580px; background: rgb(var(--primary) / 0.09); top: -140px; right: -80px; animation-delay: 0s; }
+  .hero-blob-2 { width: 440px; height: 440px; background: rgb(var(--primary-hover) / 0.07); bottom: 20px; left: -60px; animation-delay: -5s; }
+  .hero-blob-3 { width: 320px; height: 320px; background: rgb(var(--primary) / 0.06); top: 40%; left: 32%; animation-delay: -9s; }
   @keyframes blob-drift {
     0%, 100% { transform: translate(0,0) scale(1); }
     33% { transform: translate(22px,-26px) scale(1.05); }
@@ -331,7 +331,7 @@
 
   /* Section tag gradient underline */
   .section-tag { position: relative; display: inline-block; padding-bottom: 5px; }
-  .section-tag::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, #4f46e5, #06b6d4); border-radius: 2px; opacity: 0.5; }
+  .section-tag::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-hover))); border-radius: 2px; opacity: 0.55; }
 
   /* Lucide icon sizing in containers */
   .feature-icon svg { width: 22px; height: 22px; stroke-width: 1.8; stroke: var(--text-secondary); }

@@ -1577,6 +1577,11 @@ p, li, span, label, h1, h2, h3, h4, h5, h6,
   color: rgb(var(--primary-fg)) !important;
 }
 
+#page-quiz .archetype-card {
+  background: linear-gradient(135deg, rgb(var(--primary)), rgb(var(--primary-hover))) !important;
+  color: rgb(var(--primary-fg)) !important;
+}
+
 #page-quiz .gpa-banner.elite { color: rgb(120 53 15) !important; }
 #page-quiz .gpa-banner.great { color: rgb(20 83 45) !important; }
 #page-quiz .gpa-banner.good { color: rgb(30 58 138) !important; }
