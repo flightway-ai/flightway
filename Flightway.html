@@ -480,15 +480,15 @@
 
   #page-quiz .map2d-wrap { position: relative; margin: 8px 0; }
   #page-quiz .map2d { position: relative; width: 100%; aspect-ratio: 1; background: linear-gradient(135deg,#f1f5f9,#fff); border: 2px solid var(--border); border-radius: 16px; cursor: crosshair; overflow: hidden; }
-  #page-quiz .map-axis-h, #page-quiz .map-axis-v { position: absolute; background: var(--border); }
-  #page-quiz .map-axis-h { left: 0; right: 0; top: 50%; height: 1px; }
-  #page-quiz .map-axis-v { top: 0; bottom: 0; left: 50%; width: 1px; }
+  #page-quiz .map-axis-h, #page-quiz .map-axis-v { position: absolute; background: rgb(var(--border-strong)); }
+  #page-quiz .map-axis-h { left: 0; right: 0; top: 50%; height: 2px; transform: translateY(-50%); }
+  #page-quiz .map-axis-v { top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%); }
   #page-quiz .map-lbl { position: absolute; font-size: 11px; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; }
   #page-quiz .map-lbl.top { top: 10px; left: 50%; transform: translateX(-50%); }
   #page-quiz .map-lbl.bot { bottom: 10px; left: 50%; transform: translateX(-50%); }
   #page-quiz .map-lbl.left { left: 10px; top: 50%; transform: translateY(-50%) rotate(-90deg); transform-origin: center; }
   #page-quiz .map-lbl.right { right: 10px; top: 50%; transform: translateY(-50%) rotate(90deg); transform-origin: center; }
-  #page-quiz .map-dot { position: absolute; width: 24px; height: 24px; border-radius: 50%; background: var(--q-blue); box-shadow: 0 4px 14px rgba(26,86,219,.5); transform: translate(-50%,-50%); transition: left .15s, top .15s; border: 3px solid #fff; pointer-events: none; }
+  #page-quiz .map-dot { position: absolute; width: 24px; height: 24px; border-radius: 50%; background: rgb(var(--primary)); box-shadow: 0 4px 14px rgb(var(--primary) / 0.45); transform: translate(-50%,-50%); transition: left .15s, top .15s; border: 3px solid rgb(var(--panel)); pointer-events: none; z-index: 3; }
   #page-quiz .map-hint { text-align: center; font-size: 13px; color: var(--text-tertiary); margin-top: 10px; }
 
   #page-quiz .gpa-wrap { text-align: center; padding: 14px 0; }
@@ -565,8 +565,8 @@
   #page-quiz .rank-item { display: flex; align-items: center; gap: 14px; padding: 13px 17px; border: 2px solid var(--border); border-radius: 12px; cursor: pointer; transition: all .18s; background: #fff; user-select: none; }
   #page-quiz .rank-item:hover:not(.rked) { border-color: var(--q-lblue); background: #f8faff; }
   #page-quiz .rank-item.rked { border-color: var(--q-blue); background: #eff6ff; }
-  #page-quiz .rank-badge { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; background: var(--q-s2); color: var(--text-tertiary); flex-shrink: 0; transition: all .18s; }
-  #page-quiz .rank-item.rked .rank-badge { background: var(--q-blue); color: #fff; }
+  #page-quiz .rank-badge { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; background: rgb(var(--surface-2)); color: rgb(var(--text)); border: 2px solid rgb(var(--border-strong)); flex-shrink: 0; transition: all .18s; box-sizing: border-box; }
+  #page-quiz .rank-item.rked .rank-badge { background: rgb(var(--primary)); color: rgb(var(--primary-fg)); border-color: rgb(var(--primary)); }
   #page-quiz .rank-text { font-size: 15px; color: var(--text-solid); }
   #page-quiz .rank-hint { font-size: 13px; color: var(--text-tertiary); margin-bottom: 14px; }
 
@@ -2166,7 +2166,7 @@ function qzRenderInput(q,idx){
   }
   if(q.type==='rank'){
     const ranked=qzAnswers.rank[q.id]||[];
-    let h=`<div class="rank-hint">${q.sub||'Tap items in order from 1 to '+q.items.length+'.'}</div><div class="rank-list">`;
+    let h=`<div class="rank-list">`;
     q.items.forEach((item,i)=>{const ri=ranked.indexOf(i);const rked=ri!==-1?'rked':'';h+=`<div class="rank-item ${rked}" onclick="qzHandleRank(${q.id},${i})"><div class="rank-badge">${ri!==-1?ri+1:''}</div><div class="rank-text">${item.t}</div></div>`});
     return h+`</div>`;
   }

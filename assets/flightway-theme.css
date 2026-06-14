@@ -1517,6 +1517,25 @@ nav {
 #page-quiz .rank-item.rked .rank-badge {
   background: rgb(var(--primary)) !important;
   color: rgb(var(--primary-fg)) !important;
+  border-color: rgb(var(--primary)) !important;
+}
+
+#page-quiz .rank-badge {
+  background: rgb(var(--surface)) !important;
+  border: 2px solid rgb(var(--border-strong)) !important;
+  color: rgb(var(--text)) !important;
+  box-sizing: border-box;
+}
+
+#page-quiz .rank-item:not(.rked) .rank-badge {
+  background: rgb(var(--surface-2)) !important;
+  border-color: rgb(var(--primary) / 0.45) !important;
+  color: transparent !important;
+}
+
+[data-theme="light"] #page-quiz .rank-item:not(.rked) .rank-badge {
+  border-color: rgb(176 84 48) !important;
+  background: rgb(252 246 240) !important;
 }
 
 .qz-combo-modal,
@@ -1630,17 +1649,49 @@ nav {
 }
 
 #page-quiz .map2d {
-  background: linear-gradient(135deg, rgb(var(--neutral-100)), rgb(var(--neutral-50))) !important;
+  background: linear-gradient(135deg, rgb(var(--surface-2)), rgb(var(--surface))) !important;
   border: 2px solid rgb(var(--border-strong)) !important;
+}
+
+#page-quiz .map-axis-h,
+#page-quiz .map-axis-v {
+  background: rgb(var(--border-strong)) !important;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#page-quiz .map-axis-h {
+  height: 2px !important;
+}
+
+#page-quiz .map-axis-v {
+  width: 2px !important;
+}
+
+[data-theme="light"] #page-quiz .map-axis-h,
+[data-theme="light"] #page-quiz .map-axis-v {
+  background: rgb(90 55 38) !important;
+}
+
+[data-theme="dark"] #page-quiz .map-axis-h,
+[data-theme="dark"] #page-quiz .map-axis-v {
+  background: rgb(120 110 103) !important;
 }
 
 #page-quiz .map-dot {
   background: rgb(var(--primary)) !important;
-  border-color: rgb(var(--panel)) !important;
+  border: 3px solid rgb(var(--panel)) !important;
+  box-shadow: 0 4px 16px rgb(var(--primary) / 0.45) !important;
+  z-index: 3;
 }
 
 #page-quiz .map-lbl {
-  color: rgb(var(--neutral-600)) !important;
+  color: rgb(var(--text-muted)) !important;
+  z-index: 2;
+}
+
+#page-quiz .map-hint {
+  color: rgb(var(--text-muted)) !important;
 }
 
 #page-quiz .vpick.sel,
