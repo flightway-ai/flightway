@@ -6,7 +6,7 @@
 <title>FlightWay — Career Hub</title>
 <link rel="stylesheet" href="assets/flightway-theme.css">
 <link rel="stylesheet" href="assets/hub-dashboard.css">
-<script>(function(){try{var t=localStorage.getItem('flightway-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<script>(function(){try{var t=localStorage.getItem('flightway-theme');var th=t==='light'?'light':'dark';document.documentElement.setAttribute('data-theme',th);document.documentElement.style.colorScheme=th;}catch(e){document.documentElement.setAttribute('data-theme','dark');document.documentElement.style.colorScheme='dark';}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,8 +14,8 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: #0D0D1A;
-    color: #fff;
+    background: var(--hub-canvas-bg, #080706);
+    color: var(--hub-text, #fff);
     font-family: 'Inter', sans-serif;
     overflow: hidden;
     height: 100vh;
@@ -27,14 +27,10 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     height: 56px;
-    background: rgba(13, 13, 26, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
     display: flex;
     align-items: center;
     padding: 0 24px;
-    gap: 20px;
+    gap: 16px;
     z-index: 100;
   }
 
@@ -60,25 +56,28 @@
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    opacity: 0.4;
+    color: var(--hub-text-muted, rgba(255,255,255,0.45));
     pointer-events: none;
+  }
+  #search-wrap svg circle,
+  #search-wrap svg path {
+    stroke: currentColor;
   }
   #search {
     width: 100%;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--hub-control-bg, rgba(255,255,255,0.07));
+    border: 1px solid var(--hub-border, rgba(255,255,255,0.1));
     border-radius: 10px;
     padding: 8px 12px 8px 36px;
-    color: #fff;
+    color: var(--hub-text, #fff);
     font-family: 'Inter', sans-serif;
     font-size: 0.85rem;
     outline: none;
     transition: border-color 0.2s, background 0.2s;
   }
-  #search::placeholder { color: rgba(255,255,255,0.3); }
+  #search::placeholder { color: var(--hub-text-muted, rgba(255,255,255,0.45)); opacity: 0.75; }
   #search:focus {
-    border-color: rgba(255,255,255,0.25);
-    background: rgba(255,255,255,0.1);
+    border-color: rgb(var(--primary) / 0.45);
   }
 
   .topbar-right {
@@ -96,7 +95,7 @@
   }
   .legend-label {
     font-size: 0.7rem;
-    color: rgba(255,255,255,0.35);
+    color: var(--hub-text-muted, rgba(255,255,255,0.45));
     white-space: nowrap;
   }
   .legend-bar {
@@ -111,18 +110,18 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--hub-control-bg, rgba(255,255,255,0.07));
+    border: 1px solid var(--hub-border, rgba(255,255,255,0.1));
     border-radius: 20px;
     padding: 4px 12px 4px 6px;
     font-size: 0.8rem;
-    color: rgba(255,255,255,0.8);
+    color: var(--hub-text, rgba(255,255,255,0.9));
   }
   .user-avatar {
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #4f46e5, #06b6d4);
+    background: linear-gradient(135deg, var(--hub-accent, rgb(var(--primary))), var(--hub-accent-hover, rgb(var(--primary-hover))));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -330,55 +329,29 @@
     pointer-events: none;
   }
   .btn-daylife:hover .coming-soon-tip { display: block; }
-
-  /* ── Career advisor trigger ── */
-  #advisor-wrap {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    z-index: 200;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
-  }
-
-  .advisor-trigger-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-  .advisor-trigger-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-    user-select: none;
-  }
-  #advisor-trigger {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  #advisor-trigger:hover { transform: scale(1.08); }
 </style>
 </head>
 <body class="hub-page">
 
 <!-- TOP BAR -->
-<div id="topbar">
-  <div class="logo">FlightWay</div>
+  <div id="topbar">
+  <a href="dashboard.html" class="fw-brand hub-brand" aria-label="FlightWay Career Hub">
+    <span class="fw-brand-icon" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(-45deg)"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+    </span>
+    <span class="fw-brand-text">FlightWay</span>
+  </a>
+
+  <nav class="app-nav hub-app-nav" aria-label="App">
+    <a href="dashboard.html" class="app-nav-tab is-active" data-app-nav="hub" aria-current="page"><span class="app-nav-label">Career Hub</span></a>
+    <a href="Flightway.html#coach" class="app-nav-tab" data-app-nav="advisor" id="hub-advisor-link"><span class="app-nav-label">AI Career Advisor</span></a>
+    <a href="Flightway.html#quiz" class="app-nav-tab" data-app-nav="quiz"><span class="app-nav-label">Career Quiz</span></a>
+  </nav>
 
   <div id="search-wrap">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <circle cx="6" cy="6" r="4.5" stroke="white" stroke-width="1.5"/>
-      <path d="M9.5 9.5L12.5 12.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M9.5 9.5L12.5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
     </svg>
     <input id="search" type="text" placeholder="Search careers...">
   </div>
@@ -390,7 +363,6 @@
       <span class="legend-label">Best fit</span>
     </div>
     <div class="hub-topbar-actions">
-      <a href="Flightway.html" class="hub-home-link">App home</a>
       <button type="button" class="fw-theme-toggle" aria-label="Switch theme" aria-pressed="true">
         <span class="fw-theme-icon" aria-hidden="true"></span>
       </button>
@@ -403,6 +375,12 @@
 </div>
 
 <!-- CANVAS -->
+<div id="hub-loading" class="hub-loading" aria-live="polite" aria-busy="true">
+  <div class="hub-loading-inner">
+    <span class="hub-loading-spinner" aria-hidden="true"></span>
+    <span>Loading career map…</span>
+  </div>
+</div>
 <canvas id="map-canvas"></canvas>
 
 <!-- TOOLTIP -->
@@ -442,21 +420,6 @@
   </div>
 </div>
 
-<!-- Career advisor -->
-<div id="advisor-wrap">
-  <div class="advisor-trigger-wrap">
-    <span class="advisor-trigger-label" role="button" tabindex="0" title="Open AI career advisor">Talk to career advisor</span>
-    <button id="advisor-trigger" type="button" title="Talk to career advisor" aria-label="Talk to career advisor">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-        <path d="M11 2C6.03 2 2 5.58 2 10c0 2.1.9 4 2.36 5.45L3 20l4.73-1.27A9.35 9.35 0 0011 19c4.97 0 9-3.58 9-8s-4.03-9-9-9z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-        <circle cx="8" cy="10" r="1" fill="currentColor"/>
-        <circle cx="11" cy="10" r="1" fill="currentColor"/>
-        <circle cx="14" cy="10" r="1" fill="currentColor"/>
-      </svg>
-    </button>
-  </div>
-</div>
-
 <script>
 // ── DATA ──
 const careers = [
@@ -485,6 +448,14 @@ const careers = [
 function getHubCanvasBg() {
   const v = getComputedStyle(document.documentElement).getPropertyValue('--hub-canvas-bg').trim();
   return v || '#080706';
+}
+
+function isHubLightTheme() {
+  return document.documentElement.getAttribute('data-theme') === 'light';
+}
+
+function titleCaseSkill(skill) {
+  return skill.replace(/\b\w/g, function (c) { return c.toUpperCase(); });
 }
 
 // ── STATE ──
@@ -627,25 +598,93 @@ const subNodes = [];
 // ── CANVAS SETUP ──
 const canvas = document.getElementById('map-canvas');
 const ctx = canvas.getContext('2d');
+let viewW = window.innerWidth;
+let viewH = window.innerHeight;
+let hubMapReady = false;
 
 function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  viewW = window.innerWidth;
+  viewH = window.innerHeight;
+  canvas.width = Math.round(viewW * dpr);
+  canvas.height = Math.round(viewH * dpr);
+  canvas.style.width = viewW + 'px';
+  canvas.style.height = viewH + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.imageSmoothingEnabled = true;
+  if (ctx.imageSmoothingQuality) ctx.imageSmoothingQuality = 'high';
 }
 resize();
 window.addEventListener('resize', resize);
 
+function roundRectPath(c, x, y, w, h, r) {
+  const rr = Math.min(r, w / 2, h / 2);
+  c.beginPath();
+  c.moveTo(x + rr, y);
+  c.arcTo(x + w, y, x + w, y + h, rr);
+  c.arcTo(x + w, y + h, x, y + h, rr);
+  c.arcTo(x, y + h, x, y, rr);
+  c.arcTo(x, y, x + w, y, rr);
+  c.closePath();
+}
+
+function specularPoint(sx, sy, r) {
+  if (!state.mouseOn) {
+    return { hx: sx - r * 0.38, hy: sy - r * 0.42 };
+  }
+  const mdx = (state.mouseX - state.panX) / state.zoom - sx;
+  const mdy = (state.mouseY - state.panY) / state.zoom - sy;
+  const len = Math.hypot(mdx, mdy) || 1;
+  return {
+    hx: sx + (mdx / len) * r * 0.46,
+    hy: sy + (mdy / len) * r * 0.46
+  };
+}
+
+function drawOrbLabel(text, x, y, r, emphasized) {
+  const fontSize = emphasized ? 12 : 11;
+  ctx.font = `600 ${fontSize}px Inter, sans-serif`;
+  const padX = 10;
+  const padY = 5;
+  const tw = ctx.measureText(text).width;
+  const w = tw + padX * 2;
+  const h = fontSize + padY * 2;
+  const lx = x - w / 2;
+  const ly = y + r + 8;
+  roundRectPath(ctx, lx, ly, w, h, 6);
+  ctx.fillStyle = emphasized ? 'rgba(10, 12, 22, 0.92)' : 'rgba(8, 10, 20, 0.82)';
+  ctx.fill();
+  ctx.strokeStyle = emphasized ? 'rgba(255,255,255,0.22)' : 'rgba(255,255,255,0.12)';
+  ctx.lineWidth = 1;
+  roundRectPath(ctx, lx, ly, w, h, 6);
+  ctx.stroke();
+  ctx.fillStyle = emphasized ? '#ffffff' : '#eef1f8';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, x, ly + h / 2);
+}
+
+function hideHubLoading() {
+  if (hubMapReady) return;
+  hubMapReady = true;
+  const el = document.getElementById('hub-loading');
+  if (el) {
+    el.classList.add('is-hidden');
+    el.setAttribute('aria-busy', 'false');
+  }
+}
+
 // ── COORDINATE HELPERS ──
 function worldToScreen(wx, wy) {
   return {
-    x: wx / 100 * canvas.width * state.zoom + state.panX,
-    y: wy / 100 * canvas.height * state.zoom + state.panY
+    x: wx / 100 * viewW * state.zoom + state.panX,
+    y: wy / 100 * viewH * state.zoom + state.panY
   };
 }
 function screenToWorld(sx, sy) {
   return {
-    x: (sx - state.panX) / state.zoom / canvas.width * 100,
-    y: (sy - state.panY) / state.zoom / canvas.height * 100
+    x: (sx - state.panX) / state.zoom / viewW * 100,
+    y: (sy - state.panY) / state.zoom / viewH * 100
   };
 }
 
@@ -693,7 +732,7 @@ function careerAtScreen(mx, my) {
 function lerp(a, b, t) { return a + (b - a) * t; }
 
 function render() {
-  const W = canvas.width, H = canvas.height;
+  const W = viewW, H = viewH;
   const SPOT_R = Math.max(W, H) * 0.12; // spotlight radius (~10% of map)
   ctx.clearRect(0, 0, W, H);
 
@@ -702,7 +741,7 @@ function render() {
   ctx.fillRect(0, 0, W, H);
 
   // Dot grid (screen space)
-  ctx.fillStyle = 'rgba(255,255,255,0.04)';
+  ctx.fillStyle = isHubLightTheme() ? 'rgba(62, 40, 28, 0.1)' : 'rgba(255,255,255,0.04)';
   const spacing = 40;
   const offX = ((state.panX % spacing) + spacing) % spacing;
   const offY = ((state.panY % spacing) + spacing) % spacing;
@@ -730,13 +769,13 @@ function render() {
   ctx.translate(state.panX, state.panY);
   ctx.scale(state.zoom, state.zoom);
 
-  const WW = canvas.width, WH = canvas.height;
+  const WW = viewW, WH = viewH;
 
   // Industry cluster labels
   const centroids = getIndustryCentroids();
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  ctx.fillStyle = isHubLightTheme() ? 'rgba(62, 40, 28, 0.07)' : 'rgba(255,255,255,0.06)';
   ctx.font = `700 28px Inter, sans-serif`;
   for (const ind in centroids) {
     const cx = centroids[ind].x / 100 * WW;
@@ -745,7 +784,7 @@ function render() {
   }
 
   // Connection lines between same-industry careers
-  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.strokeStyle = isHubLightTheme() ? 'rgba(62, 40, 28, 0.32)' : 'rgba(255,255,255,0.08)';
   ctx.lineWidth = 1;
   for (let i = 0; i < careers.length; i++) {
     for (let j = i + 1; j < careers.length; j++) {
@@ -806,9 +845,10 @@ function render() {
       ctx.stroke();
     }
 
-    // ── Metallic body (3D gem with off-center light) ──
+    // ── Metallic body (3D gem with cursor-relative light) ──
+    const sp = specularPoint(sx, sy, r);
     const body = ctx.createRadialGradient(
-      sx - r * 0.35, sy - r * 0.38, r * 0.1,
+      sp.hx - r * 0.12, sp.hy - r * 0.12, r * 0.08,
       sx, sy, r
     );
     body.addColorStop(0, rar.light);
@@ -828,22 +868,17 @@ function render() {
       ctx.stroke();
     }
 
-    // ── Specular highlight (the shine) ──
-    const hx = sx - r * 0.4, hy = sy - r * 0.45;
-    const hi = ctx.createRadialGradient(hx, hy, 0, hx, hy, r * 0.6);
-    hi.addColorStop(0, `rgba(255,255,255,${isGold ? 0.85 : 0.5})`);
+    // ── Specular highlight (tracks cursor) ──
+    const hi = ctx.createRadialGradient(sp.hx, sp.hy, 0, sp.hx, sp.hy, r * 0.62);
+    hi.addColorStop(0, `rgba(255,255,255,${isGold ? 0.9 : isHovered ? 0.72 : 0.55})`);
+    hi.addColorStop(0.45, `rgba(255,255,255,${isGold ? 0.35 : 0.18})`);
     hi.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.fillStyle = hi;
     ctx.beginPath();
     ctx.arc(sx, sy, r, 0, Math.PI * 2);
     ctx.fill();
 
-    // Label
-    ctx.fillStyle = 'rgba(255,255,255,0.85)';
-    ctx.font = `500 11px Inter, sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    ctx.fillText(c.name, sx, sy + r + 5);
+    drawOrbLabel(c.name, sx, sy, r, isHovered || isSelected);
 
     ctx.globalAlpha = 1;
   });
@@ -899,20 +934,20 @@ function render() {
     ctx.arc(sx, sy, subR, 0, Math.PI * 2);
     ctx.fill();
     if (a > 0.1) {
-      ctx.fillStyle = `rgba(255,255,255,${0.55 * a})`;
+      const subSp = specularPoint(sx, sy, subR);
+      const subHi = ctx.createRadialGradient(subSp.hx, subSp.hy, 0, subSp.hx, subSp.hy, subR * 0.55);
+      subHi.addColorStop(0, `rgba(255,255,255,${0.65 * a})`);
+      subHi.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = subHi;
       ctx.beginPath();
-      ctx.arc(sx - subR * 0.3, sy - subR * 0.35, subR * 0.42, 0, Math.PI * 2);
+      ctx.arc(sx, sy, subR, 0, Math.PI * 2);
       ctx.fill();
     }
 
     // label only when sufficiently bloomed
     if (a > 0.4) {
       ctx.globalAlpha = ((a - 0.4) / 0.6) * searchA;
-      ctx.fillStyle = 'rgba(255,255,255,0.92)';
-      ctx.font = `500 9px Inter, sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      ctx.fillText(sn.name, sx, sy + subR + 3);
+      drawOrbLabel(sn.name, sx, sy, subR, a > 0.75);
     }
     ctx.globalAlpha = 1;
   });
@@ -930,6 +965,8 @@ function render() {
     ctx.fillStyle = v;
     ctx.fillRect(0, 0, W, H);
   }
+
+  hideHubLoading();
 }
 
 // ── ANIMATION LOOP ──
@@ -985,7 +1022,7 @@ function openPanel(career) {
   bar.style.background = `linear-gradient(90deg, ${rar.dark}, ${rar.base}, ${rar.light})`;
   bar.style.boxShadow = `0 0 12px rgba(${rar.glow},0.6)`;
   const skillsWrap = document.getElementById('panel-skills');
-  skillsWrap.innerHTML = career.skills.map(s => `<span class="skill-pill">${s}</span>`).join('');
+  skillsWrap.innerHTML = career.skills.map(s => `<span class="skill-pill">${titleCaseSkill(s)}</span>`).join('');
   document.getElementById('panel-description').textContent = career.description;
   panel.classList.add('open');
 }
@@ -1086,10 +1123,9 @@ function openCareerAdvisor() {
   window.location.replace('Flightway.html#coach');
 }
 
-document.getElementById('advisor-trigger').addEventListener('click', openCareerAdvisor);
-document.querySelector('.advisor-trigger-label').addEventListener('click', openCareerAdvisor);
-document.querySelector('.advisor-trigger-label').addEventListener('keydown', e => {
-  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCareerAdvisor(); }
+document.getElementById('hub-advisor-link').addEventListener('click', function (e) {
+  e.preventDefault();
+  openCareerAdvisor();
 });
 
 // ── SIGNED-IN USER (resolved during personalization above) ──
@@ -1102,5 +1138,6 @@ document.querySelector('.advisor-trigger-label').addEventListener('keydown', e =
 window.addEventListener('flightway-theme-change', () => { render(); });
 </script>
 <script src="assets/theme.js" defer></script>
+<script src="assets/app-nav.js" defer></script>
 </body>
 </html>

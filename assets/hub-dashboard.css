@@ -15,16 +15,16 @@
 }
 
 [data-theme="light"] {
-  --hub-canvas-bg: rgb(240 248 255);
-  --hub-topbar-bg: rgb(255 255 255 / 0.94);
-  --hub-panel-bg: rgb(255 255 255);
-  --hub-control-bg: rgb(245 238 233);
-  --hub-border: rgb(198 187 179);
+  --hub-canvas-bg: rgb(238 225 215);
+  --hub-topbar-bg: rgb(238 225 215 / 0.94);
+  --hub-panel-bg: rgb(252 246 240);
+  --hub-control-bg: rgb(245 232 222);
+  --hub-border: rgb(198 178 165);
   --hub-text: rgb(20 12 9);
-  --hub-text-muted: rgb(90 81 75);
-  --hub-accent: rgb(56 189 248);
-  --hub-accent-hover: rgb(125 211 252);
-  --hub-accent-fg: rgb(12 74 110);
+  --hub-text-muted: rgb(75 58 48);
+  --hub-accent: rgb(224 112 64);
+  --hub-accent-hover: rgb(255 178 153);
+  --hub-accent-fg: rgb(255 255 255);
 }
 
 body.hub-page {
@@ -34,7 +34,117 @@ body.hub-page {
 
 body.hub-page #topbar {
   background: var(--hub-topbar-bg) !important;
-  border-bottom-color: var(--hub-border) !important;
+  border-bottom: 1px solid var(--hub-border) !important;
+  color: var(--hub-text) !important;
+}
+
+.hub-app-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  max-width: min(520px, 42vw);
+}
+
+.hub-app-nav::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .hub-app-nav {
+    max-width: none;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  #topbar {
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 56px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    row-gap: 8px;
+  }
+
+  #search-wrap {
+    order: 4;
+    flex: 1 1 100%;
+    max-width: none;
+    margin: 0;
+  }
+
+  .topbar-right .legend {
+    display: none;
+  }
+}
+
+body.hub-page .hub-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+body.hub-page .hub-brand,
+body.hub-page .hub-brand .fw-brand-text {
+  color: var(--hub-text) !important;
+  text-decoration: none;
+}
+
+body.hub-page .hub-brand:hover .fw-brand-text {
+  color: var(--hub-accent) !important;
+}
+
+body.hub-page .hub-brand .fw-brand-icon {
+  background: var(--hub-accent) !important;
+  color: var(--hub-accent-fg) !important;
+}
+
+.hub-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hub-canvas-bg);
+  color: var(--hub-text);
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.45s;
+}
+
+.hub-loading.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.hub-loading-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.hub-loading-spinner {
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgb(var(--primary) / 0.2);
+  border-top-color: rgb(var(--primary));
+  border-radius: 50%;
+  animation: hub-spin 0.75s linear infinite;
+}
+
+@keyframes hub-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-loading-spinner { animation: none; border-top-color: rgb(var(--primary) / 0.5); }
 }
 
 body.hub-page .logo {
@@ -55,6 +165,11 @@ body.hub-page #search::placeholder {
   color: var(--hub-text-muted) !important;
 }
 
+body.hub-page #search:focus-visible {
+  outline: 2px solid rgb(var(--primary) / 0.5);
+  outline-offset: 2px;
+}
+
 body.hub-page #search:focus {
   border-color: rgb(var(--primary) / 0.45) !important;
 }
@@ -68,6 +183,11 @@ body.hub-page .user-chip {
 body.hub-page .user-avatar {
   background: linear-gradient(135deg, var(--hub-accent), var(--hub-accent-hover)) !important;
   color: var(--hub-accent-fg) !important;
+}
+
+body.hub-page #search-wrap svg {
+  color: var(--hub-text-muted);
+  opacity: 1;
 }
 
 body.hub-page .legend-label {
@@ -87,6 +207,10 @@ body.hub-page #tooltip .tt-industry {
 body.hub-page #detail-panel {
   background: var(--hub-panel-bg) !important;
   border-left: 1px solid var(--hub-border);
+  box-shadow: -8px 0 40px rgb(0 0 0 / 0.12) !important;
+}
+
+[data-theme="dark"] body.hub-page #detail-panel {
   box-shadow: -8px 0 40px rgb(0 0 0 / 0.35) !important;
 }
 
@@ -142,50 +266,4 @@ body.hub-page .btn-daylife {
   opacity: 1 !important;
 }
 
-body.hub-page .hub-topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-body.hub-page .hub-home-link {
-  font-size: 0.8rem;
-  color: var(--hub-text-muted);
-  text-decoration: none;
-  padding: 6px 12px;
-  border-radius: 9999px;
-  border: 1px solid var(--hub-border);
-  background: var(--hub-control-bg);
-  transition: color 0.2s, border-color 0.2s;
-}
-
-body.hub-page .hub-home-link:hover {
-  color: var(--hub-text);
-  border-color: rgb(var(--primary) / 0.4);
-}
-
-/* Career advisor trigger */
-body.hub-page .advisor-trigger-label {
-  color: var(--hub-text) !important;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 9999px;
-  background: var(--hub-control-bg);
-  border: 1px solid var(--hub-border);
-}
-
-body.hub-page .advisor-trigger-label:hover {
-  color: var(--hub-text) !important;
-  border-color: rgb(var(--primary) / 0.45);
-}
-
-body.hub-page #advisor-trigger {
-  background: linear-gradient(135deg, var(--hub-accent), var(--hub-accent-hover)) !important;
-  color: var(--hub-accent-fg) !important;
-  box-shadow: 0 4px 20px rgb(var(--primary) / 0.35) !important;
-  border: 2px solid rgb(var(--primary) / 0.3);
-}
-
-body.hub-page #advisor-trigger:hover {
-  box-shadow: 0 6px 28px rgb(var(--primary) / 0.5) !important;
-}
+/* Career advisor trigger — removed; use top nav AI Career Advisor tab */

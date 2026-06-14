@@ -11,9 +11,7 @@
     }
   }
 
-  function apply(theme) {
-    root.setAttribute('data-theme', theme);
-    root.style.colorScheme = theme;
+  function updateToggles(theme) {
     document.querySelectorAll('.fw-theme-toggle').forEach(function (btn) {
       var isDark = theme === 'dark';
       btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
@@ -25,12 +23,120 @@
           : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
       }
     });
-    window.dispatchEvent(new CustomEvent('flightway-theme-change', { detail: { theme: theme } }));
+  }
+
+  function readToken(name) {
+    return getComputedStyle(root).getPropertyValue(name).trim();
+  }
+
+  function asRgb(tokenName) {
+    var v = readToken(tokenName);
+    if (!v) return '';
+    return v.indexOf('rgb') === 0 ? v : 'rgb(' + v + ')';
+  }
+
+  /** Safari/WebKit: fixed layers + animated transforms cache old token colors until repainted. */
+  function paintThemeSurfaces() {
+    var body = document.body;
+    if (!body) return;
+
+    var bg = asRgb('--bg');
+    var text = asRgb('--text');
+    var textMuted = asRgb('--text-muted');
+    var primary = asRgb('--primary');
+    var navBg = readToken('--nav-bg');
+    if (!navBg || navBg.indexOf('rgb') !== 0) navBg = bg;
+
+    body.style.setProperty('background-color', bg);
+    body.style.setProperty('color', text);
+
+    document.querySelectorAll('.fw-nav, nav, #topbar, .fw-mobile-menu').forEach(function (el) {
+      el.style.setProperty('background-color', navBg);
+      el.style.setProperty('color', text);
+    });
+
+    document.querySelectorAll('.fw-mask-inner').forEach(function (el) {
+      el.style.setProperty('color', el.classList.contains('peach') ? primary : text);
+      el.style.setProperty('transform', 'none');
+      el.style.setProperty('opacity', '1');
+    });
+
+    document.querySelectorAll('.fw-hero-fade').forEach(function (el) {
+      el.style.setProperty('opacity', '1');
+      el.style.setProperty('transform', 'none');
+    });
+
+    document.querySelectorAll('.fw-hero-sub, .fw-eyebrow, .fw-proof').forEach(function (el) {
+      el.style.setProperty('color', textMuted);
+    });
+
+    document.querySelectorAll('.fw-text-link, .fw-btn-ghost').forEach(function (el) {
+      el.style.setProperty('color', textMuted);
+    });
+
+    document.querySelectorAll(
+      '.fw-brand, .fw-brand-text, .fw-menu-btn, .fw-theme-toggle, ' +
+      '.fw-nav-links a:not(.fw-btn-primary), .nav-links a:not(.app-nav-tab):not(.nav-cta)'
+    ).forEach(function (el) {
+      el.style.setProperty('color', text);
+    });
+
+    var canvas = document.getElementById('fw-data-field');
+    if (canvas) {
+      canvas.style.setProperty('opacity', readToken('--canvas-opacity') || '1');
+    }
+  }
+
+  function beginThemeSwitch() {
+    root.classList.add('theme-switching');
+    void root.offsetHeight;
+  }
+
+  function finishThemeSwitch() {
+    requestAnimationFrame(function () {
+      root.classList.remove('theme-switching');
+      void root.offsetHeight;
+    });
+  }
+
+  function apply(theme, opts) {
+    opts = opts || {};
+    var prev = root.getAttribute('data-theme');
+    if (prev === theme) {
+      updateToggles(theme);
+      return;
+    }
+
+    beginThemeSwitch();
+
+    root.setAttribute('data-theme', theme);
+    if (document.body) document.body.setAttribute('data-theme', theme);
+    root.style.colorScheme = theme;
+
+    void root.offsetHeight;
+    paintThemeSurfaces();
+    void root.offsetHeight;
+
+    updateToggles(theme);
+    finishThemeSwitch();
+
+    if (!opts.silent) {
+      window.dispatchEvent(new CustomEvent('flightway-theme-change', { detail: { theme: theme } }));
+    }
+  }
+
+  function enableTransitions() {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        root.classList.add('theme-ready');
+      });
+    });
   }
 
   function init() {
     var theme = getStored() || 'dark';
-    apply(theme);
+    apply(theme, { silent: true });
+    enableTransitions();
 
     document.querySelectorAll('.fw-theme-toggle').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -38,6 +144,13 @@
         try { localStorage.setItem(STORAGE_KEY, next); } catch (e) { /* ignore */ }
         apply(next);
       });
+    });
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState !== 'visible') return;
+      beginThemeSwitch();
+      paintThemeSurfaces();
+      finishThemeSwitch();
     });
   }
 
