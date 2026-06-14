@@ -63,20 +63,20 @@ html:not([data-theme]) {
   --primary-hover: 255 178 153;
   --primary-fg: 255 255 255;
 
-  --bg: 255 250 247;
-  --surface: 255 255 255;
-  --surface-2: 245 238 233;
-  --surface-hover: 255 240 232;
+  --bg: 238 225 215;
+  --surface: 252 244 238;
+  --surface-2: 245 232 222;
+  --surface-hover: 255 236 224;
   --text: 20 12 9;
-  --text-muted: 90 81 75;
-  --border: 228 219 212;
+  --text-muted: 75 58 48;
+  --border: 218 200 188;
 
-  --panel: 255 255 255;
-  --control: 245 238 233;
-  --border-strong: 198 187 179;
+  --panel: 252 246 240;
+  --control: 245 232 222;
+  --border-strong: 198 178 165;
 
-  --canvas-opacity: 0.45;
-  --nav-bg: rgb(255 250 247);
+  --canvas-opacity: 0.92;
+  --nav-bg: rgb(238 225 215);
   --nav-border: rgb(var(--border));
   --overlay-bg: rgb(20 12 9 / 0.35);
   --content-elevated: rgb(var(--surface));
@@ -550,7 +550,7 @@ nav .nav-links .app-nav-tab.is-active {
   margin-top: 32px;
   font-size: clamp(2.75rem, 6vw, 5rem);
   font-weight: 600;
-  line-height: 1.02;
+  line-height: 1.14;
   letter-spacing: -0.03em;
   color: rgb(var(--text));
 }
@@ -560,7 +560,8 @@ nav .nav-links .app-nav-tab.is-active {
 
 .fw-mask-line {
   display: block;
-  overflow: hidden;
+  overflow: visible;
+  padding-bottom: 0.14em;
 }
 
 .fw-mask {
@@ -568,6 +569,8 @@ nav .nav-links .app-nav-tab.is-active {
   overflow: hidden;
   vertical-align: top;
   margin-right: 0.28em;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.06em;
 }
 
 .fw-mask:last-child { margin-right: 0; }
@@ -1374,6 +1377,168 @@ nav {
   border: 2px solid rgb(var(--border-strong)) !important;
   box-shadow: none !important;
   opacity: 1 !important;
+}
+
+/* Emoji rows, yes/no rows, swipe cards, rank items — theme-aware surfaces */
+#page-quiz .emoji-row,
+#page-quiz .yesno-row,
+#page-quiz .rank-item {
+  background-color: rgb(var(--control)) !important;
+  border: 2px solid rgb(var(--border-strong)) !important;
+  color: rgb(var(--text)) !important;
+}
+
+#page-quiz .emoji-statement,
+#page-quiz .yesno-stmt,
+#page-quiz .qz-q-title,
+#page-quiz .qz-q,
+#page-quiz .qz-q-text,
+#page-quiz .qz-res-title,
+#page-quiz .rank-text {
+  color: rgb(var(--text)) !important;
+}
+
+#page-quiz .qz-q-sub,
+#page-quiz .swipe-prog,
+#page-quiz .qz-res-sub,
+#page-quiz #qz-q-label {
+  color: rgb(var(--text-muted)) !important;
+}
+
+#page-quiz .emo-btn,
+#page-quiz .sw-btn,
+#page-quiz .yn-custom-input {
+  background-color: rgb(var(--surface)) !important;
+  border: 2px solid rgb(var(--border-strong)) !important;
+  color: rgb(var(--text)) !important;
+}
+
+#page-quiz .emo-btn.sel {
+  border-color: rgb(var(--primary)) !important;
+  background-color: rgb(var(--primary) / 0.16) !important;
+}
+
+#page-quiz .emo-btn:hover,
+#page-quiz .sw-btn:hover {
+  border-color: rgb(var(--primary) / 0.5) !important;
+  background-color: rgb(var(--surface-hover)) !important;
+}
+
+#page-quiz .swipe-card {
+  background: linear-gradient(135deg, rgb(var(--surface)), rgb(var(--surface-2))) !important;
+  border: 2px solid rgb(var(--border-strong)) !important;
+  color: rgb(var(--text)) !important;
+}
+
+#page-quiz .sw-btn.sw-yes.sel,
+#page-quiz .sw-btn.sw-no.sel {
+  border-color: rgb(var(--primary)) !important;
+  background-color: rgb(var(--primary) / 0.14) !important;
+  color: rgb(var(--text)) !important;
+}
+
+#page-quiz .yn-btn.yn-yes {
+  background: rgb(34 197 94 / 0.14) !important;
+  color: rgb(22 101 52) !important;
+  border-color: rgb(34 197 94 / 0.35) !important;
+}
+
+#page-quiz .yn-btn.yn-no {
+  background: rgb(239 68 68 / 0.12) !important;
+  color: rgb(185 28 28) !important;
+  border-color: rgb(239 68 68 / 0.3) !important;
+}
+
+[data-theme="dark"] #page-quiz .yn-btn.yn-yes {
+  color: rgb(187 247 208) !important;
+  background: rgb(34 197 94 / 0.2) !important;
+}
+
+[data-theme="dark"] #page-quiz .yn-btn.yn-no {
+  color: rgb(254 202 202) !important;
+  background: rgb(239 68 68 / 0.18) !important;
+}
+
+#page-quiz .yn-btn.yn-yes.sel {
+  background: rgb(22 163 74) !important;
+  color: rgb(255 255 255) !important;
+  border-color: rgb(22 163 74) !important;
+}
+
+#page-quiz .yn-btn.yn-no.sel {
+  background: rgb(220 38 38) !important;
+  color: rgb(255 255 255) !important;
+  border-color: rgb(220 38 38) !important;
+}
+
+#page-quiz .yesno-row.answered {
+  background-color: rgb(var(--primary) / 0.08) !important;
+  border-color: rgb(var(--primary) / 0.25) !important;
+}
+
+#page-quiz .placement-card {
+  background: linear-gradient(160deg, rgb(var(--panel)), rgb(var(--surface-2))) !important;
+  border: 2px solid rgb(var(--primary) / 0.45) !important;
+  color: rgb(var(--text)) !important;
+}
+
+#page-quiz .placement-title,
+#page-quiz .placement-desc,
+#page-quiz .reveal-headline,
+#page-quiz .placement-person {
+  color: rgb(var(--text)) !important;
+}
+
+#page-quiz .placement-salary,
+#page-quiz .reveal-tagline,
+#page-quiz .qz-im-lbl {
+  color: rgb(var(--text-muted)) !important;
+}
+
+#page-quiz .placement-pct {
+  color: rgb(var(--primary)) !important;
+  background: rgb(var(--primary) / 0.12) !important;
+}
+
+#page-quiz .qz-intro-title,
+#page-quiz .qz-im-val {
+  color: rgb(var(--text)) !important;
+}
+
+#page-quiz .qz-intro-desc {
+  color: rgb(var(--text-muted)) !important;
+}
+
+#page-quiz .rank-item.rked {
+  border-color: rgb(var(--primary)) !important;
+  background-color: rgb(var(--primary) / 0.1) !important;
+}
+
+#page-quiz .rank-item.rked .rank-badge {
+  background: rgb(var(--primary)) !important;
+  color: rgb(var(--primary-fg)) !important;
+}
+
+.qz-combo-modal,
+.qz-email-modal {
+  background-color: rgb(var(--panel)) !important;
+  color: rgb(var(--text)) !important;
+  border: 1px solid rgb(var(--border-strong)) !important;
+}
+
+#page-quiz .sal-cta-stat {
+  color: rgb(var(--text-muted)) !important;
+}
+
+#page-quiz .sal-cta-stat strong {
+  color: rgb(var(--text)) !important;
+}
+
+[data-theme="light"] #page-quiz .qz-card,
+[data-theme="light"] #page-quiz .qz-intro-card,
+[data-theme="light"] #page-quiz .qz-gate,
+[data-theme="light"] #page-quiz .qz-resume-card {
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.1) !important;
 }
 
 #page-quiz .vcard:hover,

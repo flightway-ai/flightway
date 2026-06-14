@@ -450,6 +450,14 @@ function getHubCanvasBg() {
   return v || '#080706';
 }
 
+function isHubLightTheme() {
+  return document.documentElement.getAttribute('data-theme') === 'light';
+}
+
+function titleCaseSkill(skill) {
+  return skill.replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+}
+
 // ── STATE ──
 const state = {
   zoom: 1, panX: 0, panY: 0,
@@ -733,7 +741,7 @@ function render() {
   ctx.fillRect(0, 0, W, H);
 
   // Dot grid (screen space)
-  ctx.fillStyle = 'rgba(255,255,255,0.04)';
+  ctx.fillStyle = isHubLightTheme() ? 'rgba(62, 40, 28, 0.1)' : 'rgba(255,255,255,0.04)';
   const spacing = 40;
   const offX = ((state.panX % spacing) + spacing) % spacing;
   const offY = ((state.panY % spacing) + spacing) % spacing;
@@ -767,7 +775,7 @@ function render() {
   const centroids = getIndustryCentroids();
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  ctx.fillStyle = isHubLightTheme() ? 'rgba(62, 40, 28, 0.07)' : 'rgba(255,255,255,0.06)';
   ctx.font = `700 28px Inter, sans-serif`;
   for (const ind in centroids) {
     const cx = centroids[ind].x / 100 * WW;
@@ -776,7 +784,7 @@ function render() {
   }
 
   // Connection lines between same-industry careers
-  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.strokeStyle = isHubLightTheme() ? 'rgba(62, 40, 28, 0.32)' : 'rgba(255,255,255,0.08)';
   ctx.lineWidth = 1;
   for (let i = 0; i < careers.length; i++) {
     for (let j = i + 1; j < careers.length; j++) {
@@ -1014,7 +1022,7 @@ function openPanel(career) {
   bar.style.background = `linear-gradient(90deg, ${rar.dark}, ${rar.base}, ${rar.light})`;
   bar.style.boxShadow = `0 0 12px rgba(${rar.glow},0.6)`;
   const skillsWrap = document.getElementById('panel-skills');
-  skillsWrap.innerHTML = career.skills.map(s => `<span class="skill-pill">${s}</span>`).join('');
+  skillsWrap.innerHTML = career.skills.map(s => `<span class="skill-pill">${titleCaseSkill(s)}</span>`).join('');
   document.getElementById('panel-description').textContent = career.description;
   panel.classList.add('open');
 }

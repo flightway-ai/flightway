@@ -4,14 +4,20 @@
   var ctx = canvas.getContext('2d');
   if (!ctx) return;
 
-  var PEACH = '255, 178, 153';
   var LINK_DIST = 90;
   var CURSOR_RADIUS = 240;
   var FOLLOW = 0.35;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function themeScale() {
-    return document.documentElement.getAttribute('data-theme') === 'light' ? 0.55 : 1;
+  function isLight() {
+    return document.documentElement.getAttribute('data-theme') === 'light';
+  }
+
+  function palette() {
+    if (isLight()) {
+      return { rgb: '62, 40, 28', scale: 1.15 };
+    }
+    return { rgb: '255, 178, 153', scale: 1 };
   }
 
   var w = 0, h = 0, points = [], raf = 0, running = true, t = 0;
@@ -48,6 +54,7 @@
   }
 
   function frame() {
+    var colors = palette();
     t += 0.016;
     ctx.clearRect(0, 0, w, h);
     mouse.cx += (mouse.tx - mouse.cx) * 0.06;
@@ -87,8 +94,8 @@
         var ldy = py[a] - py[b];
         var d2 = ldx * ldx + ldy * ldy;
         if (d2 < LINK_DIST * LINK_DIST) {
-          var alpha = (1 - Math.sqrt(d2) / LINK_DIST) * 0.1 * themeScale();
-          ctx.strokeStyle = 'rgba(' + PEACH + ', ' + alpha + ')';
+          var alpha = (1 - Math.sqrt(d2) / LINK_DIST) * (isLight() ? 0.22 : 0.1) * colors.scale;
+          ctx.strokeStyle = 'rgba(' + colors.rgb + ', ' + alpha + ')';
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(px[a], py[a]);
@@ -101,8 +108,9 @@
     for (var j = 0; j < points.length; j++) {
       var pt = points[j];
       var breath = 0.75 + 0.25 * Math.sin(t * 0.8 + pt.pulse);
-      var alpha = (pt.bright ? 0.85 : 0.22 + 0.3 * pt.depth) * breath * themeScale();
-      ctx.fillStyle = 'rgba(' + PEACH + ', ' + alpha + ')';
+      var alpha = (pt.bright ? 0.85 : 0.22 + 0.3 * pt.depth) * breath * colors.scale;
+      if (isLight()) alpha *= 0.75;
+      ctx.fillStyle = 'rgba(' + colors.rgb + ', ' + alpha + ')';
       ctx.beginPath();
       ctx.arc(px[j], py[j], pt.bright ? pt.r + 0.8 : pt.r, 0, Math.PI * 2);
       ctx.fill();

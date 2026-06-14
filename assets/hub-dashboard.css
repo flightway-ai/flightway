@@ -15,13 +15,13 @@
 }
 
 [data-theme="light"] {
-  --hub-canvas-bg: rgb(255 250 247);
-  --hub-topbar-bg: rgb(255 250 247 / 0.94);
-  --hub-panel-bg: rgb(255 255 255);
-  --hub-control-bg: rgb(245 238 233);
-  --hub-border: rgb(228 219 212);
+  --hub-canvas-bg: rgb(238 225 215);
+  --hub-topbar-bg: rgb(238 225 215 / 0.94);
+  --hub-panel-bg: rgb(252 246 240);
+  --hub-control-bg: rgb(245 232 222);
+  --hub-border: rgb(198 178 165);
   --hub-text: rgb(20 12 9);
-  --hub-text-muted: rgb(90 81 75);
+  --hub-text-muted: rgb(75 58 48);
   --hub-accent: rgb(224 112 64);
   --hub-accent-hover: rgb(255 178 153);
   --hub-accent-fg: rgb(255 255 255);
