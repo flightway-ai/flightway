@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FlightWay — Career Quiz &amp; AI Coach</title>
 <link rel="stylesheet" href="assets/flightway-theme.css">
-<script>(function(){try{var t=localStorage.getItem('flightway-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<script>(function(){try{var t=localStorage.getItem('flightway-theme');var th=t==='light'?'light':'dark';document.documentElement.setAttribute('data-theme',th);document.documentElement.style.colorScheme=th;}catch(e){document.documentElement.setAttribute('data-theme','dark');document.documentElement.style.colorScheme='dark';}})();</script>
 <script>(function(){var h=(location.hash||'').replace(/^#/,'');if(['coach','portal','signin','quiz'].indexOf(h)!==-1)document.documentElement.setAttribute('data-boot-page',h);})();</script>
 <style id="fw-boot-css">html[data-boot-page] .page{display:none!important}html[data-boot-page="coach"] #page-coach{display:block!important}html[data-boot-page="portal"] #page-portal{display:block!important}html[data-boot-page="signin"] #page-signin{display:block!important}html[data-boot-page="quiz"] #page-quiz{display:block!important}</style>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">

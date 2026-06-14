@@ -25,6 +25,28 @@
     });
   }
 
+  function forceThemeRepaint() {
+    requestAnimationFrame(function () {
+      root.classList.add('theme-switching');
+
+      var blurred = document.querySelectorAll('.fw-nav, .fw-mobile-menu, nav, #topbar');
+      blurred.forEach(function (el) {
+        el.style.setProperty('-webkit-backdrop-filter', 'none');
+        el.style.setProperty('backdrop-filter', 'none');
+      });
+
+      void root.offsetHeight;
+
+      requestAnimationFrame(function () {
+        blurred.forEach(function (el) {
+          el.style.removeProperty('-webkit-backdrop-filter');
+          el.style.removeProperty('backdrop-filter');
+        });
+        root.classList.remove('theme-switching');
+      });
+    });
+  }
+
   function apply(theme, opts) {
     opts = opts || {};
     var prev = root.getAttribute('data-theme');
@@ -35,6 +57,7 @@
     root.setAttribute('data-theme', theme);
     root.style.colorScheme = theme;
     updateToggles(theme);
+    forceThemeRepaint();
     if (!opts.silent) {
       window.dispatchEvent(new CustomEvent('flightway-theme-change', { detail: { theme: theme } }));
     }
@@ -59,6 +82,10 @@
         try { localStorage.setItem(STORAGE_KEY, next); } catch (e) { /* ignore */ }
         apply(next);
       });
+    });
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible') forceThemeRepaint();
     });
   }
 

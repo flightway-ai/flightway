@@ -34,7 +34,7 @@
   --border-strong: 72 64 58;
 
   --canvas-opacity: 1;
-  --nav-bg: rgb(13 11 10 / 0.96);
+  --nav-bg: rgb(13 11 10);
   --nav-border: rgb(var(--border));
   --overlay-bg: rgb(8 7 6 / 0.72);
   --content-elevated: rgb(var(--surface));
@@ -72,7 +72,7 @@
   --border-strong: 198 187 179;
 
   --canvas-opacity: 0.45;
-  --nav-bg: rgb(255 250 247 / 0.94);
+  --nav-bg: rgb(255 250 247);
   --nav-border: rgb(var(--border));
   --overlay-bg: rgb(20 12 9 / 0.35);
   --content-elevated: rgb(var(--surface));
@@ -324,17 +324,13 @@ nav .nav-links .app-nav-tab.is-active {
   z-index: 100;
   height: 64px;
   border-bottom: 1px solid var(--nav-border);
-  background: var(--nav-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s, box-shadow 0.3s;
+  background-color: var(--nav-bg);
+  transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .fw-nav.scrolled {
   border-bottom-color: var(--nav-border);
-  background: var(--nav-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background-color: var(--nav-bg);
 }
 
 .fw-nav-inner {
@@ -441,11 +437,9 @@ nav .nav-links .app-nav-tab.is-active {
   display: none;
   overflow: hidden;
   border-bottom: 1px solid rgb(var(--border));
-  background: var(--nav-bg);
+  background-color: var(--nav-bg);
   position: relative;
   z-index: 99;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
 }
 
 .fw-mobile-menu.open { display: block; }
@@ -556,6 +550,7 @@ nav .nav-links .app-nav-tab.is-active {
   font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.03em;
+  color: rgb(var(--text));
 }
 
 .fw-hero h1 .peach,
@@ -579,6 +574,7 @@ nav .nav-links .app-nav-tab.is-active {
   display: inline-block;
   transform: translateY(110%);
   opacity: 0;
+  color: rgb(var(--text));
 }
 
 .fw-hero-ready .fw-mask-inner {
@@ -609,6 +605,38 @@ nav .nav-links .app-nav-tab.is-active {
   animation: none !important;
   opacity: 1 !important;
   transform: none !important;
+}
+
+/* Safari/WebKit: reset compositor layers during theme toggle so token colors repaint */
+html.theme-switching .fw-mask-inner,
+html.theme-switching .fw-hero-fade,
+html.theme-switching .fw-hero-sub,
+html.theme-switching .fw-eyebrow,
+html.theme-switching .fw-proof,
+html.theme-switching .fw-text-link,
+html.theme-switching .fw-btn-ghost {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  color: rgb(var(--text)) !important;
+}
+
+html.theme-switching .fw-mask-inner.peach {
+  color: rgb(var(--primary)) !important;
+}
+
+html.theme-switching .fw-hero-sub,
+html.theme-switching .fw-eyebrow,
+html.theme-switching .fw-proof,
+html.theme-switching .fw-text-link,
+html.theme-switching .fw-btn-ghost {
+  color: rgb(var(--text-muted)) !important;
+}
+
+html.theme-switching .fw-nav,
+html.theme-switching nav,
+html.theme-switching #topbar {
+  background-color: var(--nav-bg) !important;
 }
 
 .fw-nav-enter {
@@ -1088,11 +1116,9 @@ nav .nav-links .app-nav-tab.is-active {
 
 /* Flightway.html overrides */
 nav {
-  background: var(--nav-bg) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background-color: var(--nav-bg) !important;
   border-bottom-color: var(--nav-border) !important;
-  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .page {
