@@ -1,8 +1,12 @@
 /* FlightWay design system — dark default, light toggle, peach accents */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* ── Dark (default — matches marketing frontend) ── */
-:root,
+/* Fallback before boot script — dark default */
+html:not([data-theme]) {
+  color-scheme: dark;
+}
+
+/* ── Dark ── */
 [data-theme="dark"] {
   color-scheme: dark;
 
@@ -79,7 +83,6 @@
 }
 
 /* Solid aliases for Flightway.html legacy var(--bg) usage */
-:root,
 [data-theme="dark"],
 [data-theme="light"] {
   --bg-solid: rgb(var(--bg));
@@ -139,7 +142,6 @@ body {
   background: rgb(var(--bg));
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  transition: background 0.25s ease, color 0.25s ease;
   position: relative;
 }
 
@@ -150,7 +152,6 @@ body {
   z-index: -1;
   pointer-events: none;
   opacity: var(--canvas-opacity, 1);
-  transition: opacity 0.25s ease;
 }
 
 main,
@@ -198,18 +199,20 @@ nav,
   background: rgb(var(--surface-hover));
 }
 
-.fw-nav-actions .fw-theme-toggle,
-html.theme-ready body,
-html.theme-ready nav,
-html.theme-ready #topbar,
-html.theme-ready .fw-nav,
-html.theme-ready .page,
+.fw-nav-actions .fw-theme-toggle {
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+/* Theme snap is instant — transitions on token-driven surfaces break Safari fixed layers */
+html.theme-switching,
+html.theme-switching * {
+  transition: none !important;
+}
+
 html.theme-ready .fw-footer,
 html.theme-ready footer,
-html.theme-ready .coach-shell,
-html.theme-ready #detail-panel,
-html.theme-ready #tooltip {
-  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+html.theme-ready .coach-shell {
+  transition: box-shadow 0.35s ease;
 }
 
 /* App nav tabs — shared across Flightway.html and Career Hub */
@@ -325,7 +328,6 @@ nav .nav-links .app-nav-tab.is-active {
   height: 64px;
   border-bottom: 1px solid var(--nav-border);
   background-color: var(--nav-bg);
-  transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .fw-nav.scrolled {
@@ -582,6 +584,12 @@ nav .nav-links .app-nav-tab.is-active {
   animation-delay: calc(0.12s + var(--fw-i, 0) * 0.09s);
 }
 
+.fw-hero-ready.fw-hero-settled .fw-mask-inner {
+  animation: none;
+  transform: none;
+  opacity: 1;
+}
+
 @keyframes fw-rise-word {
   to { transform: translateY(0); opacity: 1; }
 }
@@ -607,7 +615,7 @@ nav .nav-links .app-nav-tab.is-active {
   transform: none !important;
 }
 
-/* Safari/WebKit: reset compositor layers during theme toggle so token colors repaint */
+/* Safari/WebKit: reset animated layers during theme toggle */
 html.theme-switching .fw-mask-inner,
 html.theme-switching .fw-hero-fade,
 html.theme-switching .fw-hero-sub,
@@ -635,8 +643,15 @@ html.theme-switching .fw-btn-ghost {
 
 html.theme-switching .fw-nav,
 html.theme-switching nav,
-html.theme-switching #topbar {
+html.theme-switching #topbar,
+html.theme-switching .fw-mobile-menu {
   background-color: var(--nav-bg) !important;
+  color: rgb(var(--text)) !important;
+}
+
+html.theme-switching body {
+  background-color: rgb(var(--bg)) !important;
+  color: rgb(var(--text)) !important;
 }
 
 .fw-nav-enter {
@@ -1118,7 +1133,6 @@ html.theme-switching #topbar {
 nav {
   background-color: var(--nav-bg) !important;
   border-bottom-color: var(--nav-border) !important;
-  transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .page {

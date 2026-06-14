@@ -1,11 +1,16 @@
 (function () {
-  var ease = 'cubic-bezier(0.22, 1, 0.36, 1)';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function initNavEntrance() {
     var nav = document.getElementById('fw-nav');
     if (!nav || reduced) return;
     nav.classList.add('fw-nav-enter');
+    nav.addEventListener('animationend', function (e) {
+      if (e.animationName !== 'fw-nav-slide') return;
+      nav.classList.remove('fw-nav-enter');
+      nav.style.removeProperty('transform');
+      nav.style.removeProperty('opacity');
+    }, { once: true });
   }
 
   function initScrollReveal() {
@@ -38,7 +43,29 @@
     var hero = document.querySelector('.fw-hero');
     if (!hero) return;
     hero.classList.add('fw-hero-ready');
-    if (reduced) hero.classList.add('fw-hero-instant');
+    if (reduced) {
+      hero.classList.add('fw-hero-instant', 'fw-hero-settled');
+      return;
+    }
+
+    var masks = hero.querySelectorAll('.fw-mask-inner');
+    var pending = masks.length;
+    if (!pending) {
+      hero.classList.add('fw-hero-settled');
+      return;
+    }
+
+    masks.forEach(function (el) {
+      el.addEventListener('animationend', function (e) {
+        if (e.animationName !== 'fw-rise-word') return;
+        pending -= 1;
+        if (pending <= 0) hero.classList.add('fw-hero-settled');
+      }, { once: true });
+    });
+
+    window.setTimeout(function () {
+      hero.classList.add('fw-hero-settled');
+    }, 1400);
   }
 
   if (document.readyState === 'loading') {
