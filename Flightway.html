@@ -480,10 +480,10 @@
 
   #page-quiz .map2d-wrap { position: relative; margin: 8px 0; }
   #page-quiz .map2d { position: relative; width: 100%; aspect-ratio: 1; background: linear-gradient(135deg,#f1f5f9,#fff); border: 2px solid var(--border); border-radius: 16px; cursor: crosshair; overflow: hidden; }
-  #page-quiz .map-axis-h, #page-quiz .map-axis-v { position: absolute; background: rgb(var(--border-strong)); }
-  #page-quiz .map-axis-h { left: 0; right: 0; top: 50%; height: 2px; transform: translateY(-50%); }
-  #page-quiz .map-axis-v { top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%); }
-  #page-quiz .map-lbl { position: absolute; font-size: 11px; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; }
+  #page-quiz .map-axis-h, #page-quiz .map-axis-v { position: absolute; background: rgb(var(--border-strong) / 0.35); z-index: 1; pointer-events: none; }
+  #page-quiz .map-axis-h { left: 16%; right: 16%; top: 50%; height: 1px; transform: translateY(-50%); }
+  #page-quiz .map-axis-v { top: 14%; bottom: 14%; left: 50%; width: 1px; transform: translateX(-50%); }
+  #page-quiz .map-lbl { position: absolute; font-size: 11px; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; z-index: 3; padding: 2px 6px; border-radius: 4px; background: rgb(var(--surface) / 0.92); }
   #page-quiz .map-lbl.top { top: 10px; left: 50%; transform: translateX(-50%); }
   #page-quiz .map-lbl.bot { bottom: 10px; left: 50%; transform: translateX(-50%); }
   #page-quiz .map-lbl.left { left: 10px; top: 50%; transform: translateY(-50%) rotate(-90deg); transform-origin: center; }

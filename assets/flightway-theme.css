@@ -1655,27 +1655,31 @@ nav {
 
 #page-quiz .map-axis-h,
 #page-quiz .map-axis-v {
-  background: rgb(var(--border-strong)) !important;
-  z-index: 2;
+  background: rgb(var(--border-strong) / 0.32) !important;
+  z-index: 1;
   pointer-events: none;
 }
 
 #page-quiz .map-axis-h {
-  height: 2px !important;
+  left: 16% !important;
+  right: 16% !important;
+  height: 1px !important;
 }
 
 #page-quiz .map-axis-v {
-  width: 2px !important;
+  top: 14% !important;
+  bottom: 14% !important;
+  width: 1px !important;
 }
 
 [data-theme="light"] #page-quiz .map-axis-h,
 [data-theme="light"] #page-quiz .map-axis-v {
-  background: rgb(90 55 38) !important;
+  background: rgb(90 55 38 / 0.22) !important;
 }
 
 [data-theme="dark"] #page-quiz .map-axis-h,
 [data-theme="dark"] #page-quiz .map-axis-v {
-  background: rgb(120 110 103) !important;
+  background: rgb(148 137 129 / 0.38) !important;
 }
 
 #page-quiz .map-dot {
@@ -1687,7 +1691,10 @@ nav {
 
 #page-quiz .map-lbl {
   color: rgb(var(--text-muted)) !important;
-  z-index: 2;
+  z-index: 4 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  background: rgb(var(--surface) / 0.94) !important;
 }
 
 #page-quiz .map-hint {
